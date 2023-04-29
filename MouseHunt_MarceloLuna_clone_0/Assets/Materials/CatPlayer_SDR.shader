@@ -180,7 +180,7 @@ Shader "CatPlayer_SDR"
 }
 /*ASEBEGIN
 Version=17800
-557;473;1137;579;754.968;667.9664;1;True;False
+557;479;1137;573;754.968;664.9664;1;True;False
 Node;AmplifyShaderEditor.WorldNormalVector;1;-3501.275,-148.6526;Inherit;False;False;1;0;FLOAT3;0,0,1;False;4;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3
 Node;AmplifyShaderEditor.WorldSpaceLightDirHlpNode;2;-3501.275,-324.6524;Inherit;False;False;1;0;FLOAT;0;False;4;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3
 Node;AmplifyShaderEditor.DotProductOpNode;3;-3213.275,-244.6524;Inherit;False;2;0;FLOAT3;0,0,0;False;1;FLOAT3;0,0,0;False;1;FLOAT;0
@@ -194,8 +194,8 @@ Node;AmplifyShaderEditor.OneMinusNode;10;-2249.864,-59.54396;Inherit;False;1;0;F
 Node;AmplifyShaderEditor.StepOpNode;11;-2186.022,-239.7031;Inherit;False;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.OneMinusNode;12;-1940.38,-251.6037;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleSubtractOpNode;13;-1789.275,27.34744;Inherit;False;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.SaturateNode;14;-1581.275,-180.6525;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.SaturateNode;15;-1581.275,75.34744;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SaturateNode;14;-1581.275,-180.6525;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleAddOpNode;16;-1389.275,-100.6526;Inherit;True;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.LightAttenuation;17;-863.7086,572.1909;Inherit;False;0;1;FLOAT;0
 Node;AmplifyShaderEditor.OneMinusNode;18;-1085.275,75.34744;Inherit;True;1;0;FLOAT;0;False;1;FLOAT;0
@@ -222,8 +222,8 @@ WireConnection;11;1;8;0
 WireConnection;12;0;11;0
 WireConnection;13;0;10;0
 WireConnection;13;1;9;0
-WireConnection;14;0;12;0
 WireConnection;15;0;13;0
+WireConnection;14;0;12;0
 WireConnection;16;0;14;0
 WireConnection;16;1;15;0
 WireConnection;18;0;16;0
@@ -241,4 +241,4 @@ WireConnection;27;1;26;0
 WireConnection;28;0;27;0
 WireConnection;0;13;28;0
 ASEEND*/
-//CHKSM=779DC8A9B9E7AD60A526421DA3BEE2EE20FFEE0A
+//CHKSM=96AFCC37466E8519C130D66768530F632E5980F4
