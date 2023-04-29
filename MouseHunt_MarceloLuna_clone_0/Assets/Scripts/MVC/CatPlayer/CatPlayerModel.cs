@@ -37,7 +37,7 @@ public class CatPlayerModel : NetworkBehaviour
         _yaw = 0f;
         _pitch = 0f;
         AttackRate = 0.25f;
-        Camera = Camera.main;
+       
         RB = transform.gameObject.GetComponent<Rigidbody>();
         View = GetComponent<CatPlayerView>();
         _controller = new CatPlayerController(this, View);
@@ -45,6 +45,12 @@ public class CatPlayerModel : NetworkBehaviour
 
     public override void Spawned()
     {
+        if (Object.HasStateAuthority)
+        {
+            Camera = Camera.main;
+            Camera.GetComponent<ThirdPersonCamera>().Target = GetComponent<NetworkRigidbody>().InterpolationTarget;
+        }
+
         if (Object.HasInputAuthority) 
         {
             Local = this;

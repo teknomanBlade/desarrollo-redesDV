@@ -28,6 +28,8 @@ public class CharacterInputHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!_catPlayerModel.HasInputAuthority || !_mouseNPCModel.HasInputAuthority) return;
+
         _xMovement = Input.GetAxis("Horizontal");
         _zMovement = Input.GetAxis("Vertical");
         _isAttackPressed = Input.GetMouseButton(0);

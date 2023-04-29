@@ -39,6 +39,12 @@ public class MouseNPCModel : NetworkBehaviour
     }
     public override void Spawned()
     {
+        if (Object.HasStateAuthority)
+        {
+            Camera = Camera.main;
+            Camera.GetComponent<ThirdPersonCamera>().Target = GetComponent<NetworkRigidbody>().InterpolationTarget;
+        }
+
         if (Object.HasInputAuthority)
         {
             Local = this;
@@ -48,6 +54,8 @@ public class MouseNPCModel : NetworkBehaviour
         {
             Debug.Log("[Custom Message] Spawned other (Proxy) Player");
         }
+
+        
     }
     public void Move()
     {
