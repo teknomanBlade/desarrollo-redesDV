@@ -15,7 +15,6 @@ public class MouseNPCController : IController
 
     public void OnUpdate()
     {
-        //_m.Move();
-        //_m.TimeTick();
+        _m.PlayerActions();
     }
 }

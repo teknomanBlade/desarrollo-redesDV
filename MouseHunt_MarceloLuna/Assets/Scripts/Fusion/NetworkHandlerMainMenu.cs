@@ -16,16 +16,16 @@ public class NetworkHandlerMainMenu : MonoBehaviour
     {
         _runner = GetComponent<NetworkRunner>();
         DontDestroyOnLoad(this);
-        SceneManager.sceneLoaded += OnSceneLoaded;
+        //SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
-    private void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
+    /*private void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
     {
         if (scene.buildIndex == 2) 
         {
             gameObject.AddComponent<SpawnNetworkPlayer>();
         }
-    }
+    }*/
 
     Task InitializeNetworkRunner(NetworkRunner runner, GameMode gameMode, SceneRef scene) 
     {
@@ -44,6 +44,6 @@ public class NetworkHandlerMainMenu : MonoBehaviour
 
     public void PlayGame() 
     {
-        var clientTask = InitializeNetworkRunner(_runner, GameMode.Shared, 2);
+        var clientTask = InitializeNetworkRunner(_runner, GameMode.Shared, 0);
     }
 }

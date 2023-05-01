@@ -26,10 +26,12 @@ public class SpawnNetworkPlayer : MonoBehaviour, INetworkRunnerCallbacks
     }
     public void OnInput(NetworkRunner runner, NetworkInput input)
     {
-        if (!CatPlayerModel.Local || !MouseNPCModel.Local) return;
+        if (!CatPlayerModel.Local) return;
 
         if (!_characterInputHandler) _characterInputHandler = CatPlayerModel.Local.GetComponent<CharacterInputHandler>();
         else input.Set(_characterInputHandler.GetInputData());
+
+        if (!MouseNPCModel.Local) return;
 
         if (!_characterInputHandler) _characterInputHandler = MouseNPCModel.Local.GetComponent<CharacterInputHandler>();
         else input.Set(_characterInputHandler.GetInputData());
@@ -39,11 +41,16 @@ public class SpawnNetworkPlayer : MonoBehaviour, INetworkRunnerCallbacks
     {
         if (runner.Topology == SimulationConfig.Topologies.Shared) 
         {
-            runner.Spawn(_catPlayerPrefab, Vector3.zero, Quaternion.identity, runner.LocalPlayer);
-            Debug.Log("[Custom Message] Connected to Server - Spawning Cat Player");
-            
-            runner.Spawn(_mousePlayerPrefab, Vector3.zero, Quaternion.identity, runner.LocalPlayer);
-            Debug.Log("[Custom Message] Connected to Server - Spawning Mouse Player");
+            if (runner.LocalPlayer.PlayerId == 0)
+            {
+                runner.Spawn(_catPlayerPrefab, Vector3.zero, Quaternion.identity, runner.LocalPlayer);
+                Debug.Log("[Custom Message] Connected to Server - Spawning " + _catPlayerPrefab.name);
+            }
+            else 
+            {
+                runner.Spawn(_mousePlayerPrefab, Vector3.zero, Quaternion.identity, runner.LocalPlayer);
+                Debug.Log("[Custom Message] Connected to Server - Spawning " + _mousePlayerPrefab.name);
+            }
         }
     }
     #region Callbacks sin Usar

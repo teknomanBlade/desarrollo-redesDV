@@ -5,7 +5,8 @@ using UnityEngine;
 public class ThirdPersonCamera : MonoBehaviour
 {
     public Transform Target;
-    public float MouseSensitivity = 10f;
+    public float MouseSensitivity = 6f;
+    private float _offsetZ = -0.8f;
 
     private float verticalRotation;
     private float horizontalRotation;
@@ -17,7 +18,10 @@ public class ThirdPersonCamera : MonoBehaviour
             return;
         }
 
-        transform.position = Target.position;
+        Vector3 pos = Target.position;
+        pos.z = _offsetZ;
+
+        transform.position = pos;
 
         float mouseX = Input.GetAxis("Mouse X");
         float mouseY = Input.GetAxis("Mouse Y");

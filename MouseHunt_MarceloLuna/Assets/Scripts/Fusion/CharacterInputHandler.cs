@@ -9,6 +9,7 @@ public class CharacterInputHandler : MonoBehaviour
 
     private float _xMovement;
     private float _zMovement;
+    private bool _isSprintPressed;
     private bool _isAttackPressed;
     // Start is called before the first frame update
     void Awake()
@@ -28,10 +29,13 @@ public class CharacterInputHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!_catPlayerModel.HasInputAuthority || !_mouseNPCModel.HasInputAuthority) return;
+        if (_catPlayerModel && !_catPlayerModel.HasInputAuthority) return;
+
+        if (_mouseNPCModel && !_mouseNPCModel.HasInputAuthority) return;
 
         _xMovement = Input.GetAxis("Horizontal");
         _zMovement = Input.GetAxis("Vertical");
+        _isSprintPressed = Input.GetKey(KeyCode.LeftShift);
         _isAttackPressed = Input.GetMouseButton(0);
     }
 
@@ -41,6 +45,7 @@ public class CharacterInputHandler : MonoBehaviour
         {
             xMovement = _xMovement,
             zMovement = _zMovement,
+            _isSprintPressed = _isSprintPressed,
             _isAttackPressed = _isAttackPressed
         };
     }

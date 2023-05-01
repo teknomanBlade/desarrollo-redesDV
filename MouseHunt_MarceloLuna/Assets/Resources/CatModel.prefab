@@ -729,6 +729,7 @@ GameObject:
   - component: {fileID: 329998703929590113}
   - component: {fileID: 2314428798701919205}
   - component: {fileID: 329998703929590118}
+  - component: {fileID: 2639568918003365406}
   m_Layer: 0
   m_Name: CatModel
   m_TagString: Untagged
@@ -792,8 +793,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c4c5eb86af2fe042a7fd109aa6b911f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Animator: {fileID: 0}
-  MeshRenderer: {fileID: 0}
+  Animator: {fileID: 2705762662055530527}
+  MeshRenderer: {fileID: 3883313943890528002}
   textures: []
 --- !u!114 &6196655924377074933
 MonoBehaviour:
@@ -819,6 +820,7 @@ MonoBehaviour:
   NetworkedBehaviours:
   - {fileID: 6196655924377074932}
   - {fileID: 2314428798701919205}
+  - {fileID: 2639568918003365406}
   SimulationBehaviours: []
 --- !u!65 &329998703929590113
 BoxCollider:
@@ -877,6 +879,36 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 4
   m_CollisionDetection: 3
+--- !u!114 &2639568918003365406
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6431026377094168992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 506319458, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
+  Animator: {fileID: 2705762662055530527}
+  TotalWords: 2
+  SyncSettings: 79
+  FloatAccuracy:
+    _value: 0
+    _inverse: 0
+    _hash: -814817977
+  TimeAccuracy:
+    _value: 0
+    _inverse: 0
+    _hash: 1061325578
+  WeightAccuracy:
+    _value: 0
+    _inverse: 0
+    _hash: -814817977
+  StateHashes: 000000002b1a167c79406955f3b09ce077934a0f855035e50173e30a8b7cfd670f5f2b88562398097f41787ea58b6e810ef9b20f
+  TriggerHashes: 00000000
 --- !u!1 &6536494046845681881
 GameObject:
   m_ObjectHideFlags: 0
