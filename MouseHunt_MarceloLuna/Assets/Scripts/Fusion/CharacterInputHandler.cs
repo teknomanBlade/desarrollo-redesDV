@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class CharacterInputHandler : MonoBehaviour
 {
-    private MouseNPCModel _mouseNPCModel;
-    private CatPlayerModel _catPlayerModel;
-
     private float _xMovement;
     private float _zMovement;
     private bool _isSprintPressed;
@@ -14,25 +11,19 @@ public class CharacterInputHandler : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        if (gameObject.name.Contains("Cat"))
-        {
-            Debug.Log("GETTING CAT MODEL...");
-            _catPlayerModel = GetComponent<CatPlayerModel>();
-        }
-        else 
-        {
-            Debug.Log("GETTING MOUSE MODEL...");
-            _mouseNPCModel = GetComponent<MouseNPCModel>();
-        }
+        
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (_catPlayerModel && !_catPlayerModel.HasInputAuthority) return;
+        
+    }
 
-        if (_mouseNPCModel && !_mouseNPCModel.HasInputAuthority) return;
-
+    public void SetInputsToNetworkVariables() 
+    {
+        //TODO: PROBAR HACER SUBCLASES DE CHARACTERINPUTHANDLER Y OVERRIDEAR LOS METODOS DE CHEQUEO DE INPUT
         _xMovement = Input.GetAxis("Horizontal");
         _zMovement = Input.GetAxis("Vertical");
         _isSprintPressed = Input.GetKey(KeyCode.LeftShift);
@@ -48,5 +39,10 @@ public class CharacterInputHandler : MonoBehaviour
             _isSprintPressed = _isSprintPressed,
             _isAttackPressed = _isAttackPressed
         };
+    }
+
+    public virtual void CheckInputAuthority() 
+    {
+    
     }
 }

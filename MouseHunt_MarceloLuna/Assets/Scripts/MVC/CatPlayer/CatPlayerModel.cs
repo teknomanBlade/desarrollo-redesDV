@@ -2,6 +2,7 @@ using Fusion;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class CatPlayerModel : NetworkBehaviour
@@ -32,11 +33,11 @@ public class CatPlayerModel : NetworkBehaviour
         RotateSpeed = 2.1f;
         Damage = 20f;
         AttackRate = 0.35f;
-        DontDestroyOnLoad(this);
-
         NetworkRB = transform.gameObject.GetComponent<NetworkRigidbody>();
         View = GetComponent<CatPlayerView>();
         _controller = new CatPlayerController(this, View);
+        
+        
     }
 
     public override void Spawned()
@@ -54,10 +55,8 @@ public class CatPlayerModel : NetworkBehaviour
         if (Object.HasStateAuthority)
         {
             Camera = Camera.main;
-            //Camera.transform.position
             Camera.GetComponent<ThirdPersonCamera>().Target = GetComponent<NetworkRigidbody>().InterpolationTarget;
         }
-        
     }
     public override void FixedUpdateNetwork()
     {

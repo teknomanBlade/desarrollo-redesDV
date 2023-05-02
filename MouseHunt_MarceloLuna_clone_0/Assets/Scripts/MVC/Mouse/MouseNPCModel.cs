@@ -2,11 +2,11 @@ using Fusion;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class MouseNPCModel : NetworkBehaviour
 {
-    //private IMove _currentMove;
     public Camera Camera;
     public static MouseNPCModel Local { get; private set; }
     public MouseNPCView View { get; private set; }
@@ -33,7 +33,6 @@ public class MouseNPCModel : NetworkBehaviour
         Speed = 6f;
         RunningSpeed = 15f;
         RotateSpeed = 5f;
-        Life = 100f;
         NetworkRB = GetComponent<NetworkRigidbody>();
         View = GetComponent<MouseNPCView>();
         _controller = new MouseNPCController(this, View);
@@ -57,6 +56,7 @@ public class MouseNPCModel : NetworkBehaviour
         }
         if (Object.HasStateAuthority)
         {
+            Life = 100f;
             Camera = Camera.main;
             Camera.GetComponent<ThirdPersonCamera>().Target = GetComponent<NetworkRigidbody>().InterpolationTarget;
         }
@@ -73,10 +73,12 @@ public class MouseNPCModel : NetworkBehaviour
         {
             if (networkInputData._isSprintPressed)
             {
+                Debug.Log("MOVEMENT SPEED RUNNING...");
                 Movement(new Vector3(networkInputData.xMovement, 0, networkInputData.zMovement), RunningSpeed);
             }
             else 
             {
+                Debug.Log("MOVEMENT SPEED NORMAL...");
                 Movement(new Vector3(networkInputData.xMovement, 0, networkInputData.zMovement), Speed);
             }
         }

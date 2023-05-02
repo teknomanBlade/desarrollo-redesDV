@@ -3,10 +3,14 @@ using Fusion.Sockets;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class SpawnNetworkPlayer : MonoBehaviour, INetworkRunnerCallbacks
 {
+    public GameObject MainMenuCanvas { get; private set; }
+    public GameObject CatSpawner { get; private set; }
+    public GameObject MouseSpawner { get; private set; }
     //Prefab del Player
     [SerializeField] CatPlayerModel _catPlayerPrefab;
     [SerializeField] MouseNPCModel _mousePlayerPrefab;
@@ -15,6 +19,9 @@ public class SpawnNetworkPlayer : MonoBehaviour, INetworkRunnerCallbacks
     // Start is called before the first frame update
     void Start()
     {
+        MainMenuCanvas = FindObjectsOfType<GameObject>().Where(x => x.name.Equals("MainMenuCanvas")).FirstOrDefault();
+        CatSpawner = FindObjectsOfType<GameObject>().Where(x => x.name.Equals("CatSpawner")).FirstOrDefault();
+        MouseSpawner = FindObjectsOfType<GameObject>().Where(x => x.name.Equals("MouseSpawner")).FirstOrDefault();
         _catPlayerPrefab = Resources.Load<CatPlayerModel>("CatModel");
         _mousePlayerPrefab = Resources.Load<MouseNPCModel>("Mouse");
     }
@@ -43,12 +50,16 @@ public class SpawnNetworkPlayer : MonoBehaviour, INetworkRunnerCallbacks
         {
             if (runner.LocalPlayer.PlayerId == 0)
             {
-                runner.Spawn(_catPlayerPrefab, Vector3.zero, Quaternion.identity, runner.LocalPlayer);
+                runner.Spawn(_catPlayerPrefab, CatSpawner.transform.position, Quaternion.identity, runner.LocalPlayer);
+                if (MainMenuCanvas)
+                    MainMenuCanvas.SetActive(false);
                 Debug.Log("[Custom Message] Connected to Server - Spawning " + _catPlayerPrefab.name);
             }
             else 
             {
-                runner.Spawn(_mousePlayerPrefab, Vector3.zero, Quaternion.identity, runner.LocalPlayer);
+                runner.Spawn(_mousePlayerPrefab, MouseSpawner.transform.position, Quaternion.identity, runner.LocalPlayer);
+                if (MainMenuCanvas)
+                    MainMenuCanvas.SetActive(false);
                 Debug.Log("[Custom Message] Connected to Server - Spawning " + _mousePlayerPrefab.name);
             }
         }
