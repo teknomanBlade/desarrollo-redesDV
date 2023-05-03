@@ -5,9 +5,9 @@ using UnityEngine;
 public class ThirdPersonCamera : MonoBehaviour
 {
     public Transform Target;
+    private Vector3 offsetCat = new Vector3(0f, 0.35f, -0.8f);
+    private Vector3 offsetMouse = new Vector3(0f, 0.15f, -0.6f);
     private float MouseSensitivity = 6f;
-    private float _offsetZ = -0.8f;
-    private float _offsetY = 0.1f;
     private float verticalRotation;
     private float horizontalRotation;
 
@@ -15,16 +15,11 @@ public class ThirdPersonCamera : MonoBehaviour
     {
         if (Target == null)
         {
-            Debug.Log("TARGET NULL? ");
+            //Debug.Log("TARGET NULL? ");
             return;
         }
 
-        Vector3 pos = Target.position;
-        Debug.Log("TARGET: " + Target.name);
-        pos.z = _offsetZ;
-        pos.y = _offsetY;
-        Debug.Log("CAMERA OFFSET Z: " + _offsetZ);
-        transform.position = pos;
+        transform.position = Target.position + GetOffsetByType(Target);
 
         float mouseX = Input.GetAxis("Mouse X");
         float mouseY = Input.GetAxis("Mouse Y");
@@ -35,5 +30,17 @@ public class ThirdPersonCamera : MonoBehaviour
         horizontalRotation += mouseX * MouseSensitivity;
 
         transform.rotation = Quaternion.Euler(verticalRotation, horizontalRotation, 0);
+    }
+
+    private Vector3 GetOffsetByType(Transform Target) 
+    {
+        if (Target.gameObject.name.Contains("Cat"))
+        {
+            return offsetCat;
+        }
+        else 
+        {
+            return offsetMouse;
+        }
     }
 }

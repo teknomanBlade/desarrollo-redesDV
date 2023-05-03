@@ -5,33 +5,15 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class MouseNPCModel : NetworkBehaviour
+public class MouseNPCModel : PlayerModel
 {
-    public Camera Camera;
-    public static MouseNPCModel Local { get; private set; }
     public MouseNPCView View { get; private set; }
-    private IController _controller;
-    public NetworkRigidbody NetworkRB { get; set; }
     [Networked] float Life { get; set; }
-
-    private float _speed;
-    public float Speed
-    {
-        get
-        {
-            return _speed;
-        }
-        set
-        {
-            _speed = value;
-        }
-    }
-    public float RunningSpeed { get; set; }
-    public float RotateSpeed { get; set; }
+    
     void Awake()
     {
         Speed = 6f;
-        RunningSpeed = 15f;
+        RunningSpeed = 10f;
         RotateSpeed = 5f;
         NetworkRB = GetComponent<NetworkRigidbody>();
         View = GetComponent<MouseNPCView>();
@@ -43,24 +25,9 @@ public class MouseNPCModel : NetworkBehaviour
     {
         
     }
-    public override void Spawned()
+    public override void SetLife()
     {
-        if (Object.HasInputAuthority)
-        {
-            Local = this;
-            Debug.Log("[Custom Message] Spawned own Player");
-        }
-        else
-        {
-            Debug.Log("[Custom Message] Spawned other (Proxy) Player");
-        }
-        if (Object.HasStateAuthority)
-        {
-            Life = 100f;
-            Camera = Camera.main;
-            Camera.GetComponent<ThirdPersonCamera>().Target = GetComponent<NetworkRigidbody>().InterpolationTarget;
-        }
-
+        Life = 100f;
     }
     public override void FixedUpdateNetwork()
     {
@@ -69,16 +36,18 @@ public class MouseNPCModel : NetworkBehaviour
 
     public void PlayerActions()
     {
-        if (GetInput(out NetworkInputData networkInputData))
+        var input = GetInput(out NetworkInputData networkInputData);
+        Debug.Log("MOVEMENT SPEED ACTIONS MOUSE..." + input);
+        if (input)
         {
             if (networkInputData._isSprintPressed)
             {
-                Debug.Log("MOVEMENT SPEED RUNNING...");
+                Debug.Log("MOVEMENT SPEED RUNNING MOUSE...");
                 Movement(new Vector3(networkInputData.xMovement, 0, networkInputData.zMovement), RunningSpeed);
             }
             else 
             {
-                Debug.Log("MOVEMENT SPEED NORMAL...");
+                Debug.Log("MOVEMENT SPEED NORMAL MOUSE...");
                 Movement(new Vector3(networkInputData.xMovement, 0, networkInputData.zMovement), Speed);
             }
         }
@@ -88,7 +57,7 @@ public class MouseNPCModel : NetworkBehaviour
     {
         if (dir != Vector3.zero)
         {
-            NetworkRB.Rigidbody.MovePosition(dir * speed * Runner.DeltaTime);
+            NetworkRB.Rigidbody.MovePosition(transform.position + dir * speed * Runner.DeltaTime);
         }
     }
     public void TakeDamage(float dmg)

@@ -23,11 +23,14 @@ public class CharacterInputHandler : MonoBehaviour
 
     public void SetInputsToNetworkVariables() 
     {
-        //TODO: PROBAR HACER SUBCLASES DE CHARACTERINPUTHANDLER Y OVERRIDEAR LOS METODOS DE CHEQUEO DE INPUT
+        //Debug.Log("CARGA INPUTS? - ENTRADA");
         _xMovement = Input.GetAxis("Horizontal");
+        //Debug.Log("CARGA INPUTS? - XAXIS - " + _xMovement);
         _zMovement = Input.GetAxis("Vertical");
+        //Debug.Log("CARGA INPUTS? - ZAXIS - " + _zMovement);
         _isSprintPressed = Input.GetKey(KeyCode.LeftShift);
         _isAttackPressed = Input.GetMouseButton(0);
+        //Debug.Log("CARGA INPUTS? - SALIDA");
     }
 
     public NetworkInputData GetInputData()

@@ -33,15 +33,21 @@ public class SpawnNetworkPlayer : MonoBehaviour, INetworkRunnerCallbacks
     }
     public void OnInput(NetworkRunner runner, NetworkInput input)
     {
-        if (!CatPlayerModel.Local) return;
+        /*if (!CatPlayerModel.Local) return;
 
-        if (!_characterInputHandler) _characterInputHandler = CatPlayerModel.Local.GetComponent<CharacterInputHandler>();
+        if (!_characterInputHandler) _characterInputHandler = CatPlayerModel.Local.GetComponent<CharacterInputHandlerCat>();
         else input.Set(_characterInputHandler.GetInputData());
 
         if (!MouseNPCModel.Local) return;
 
         if (!_characterInputHandler) _characterInputHandler = MouseNPCModel.Local.GetComponent<CharacterInputHandler>();
+        else input.Set(_characterInputHandler.GetInputData());*/
+
+        if (!PlayerModel.Local) return;
+
+        if (!_characterInputHandler) _characterInputHandler = PlayerModel.Local.GetComponent<CharacterInputHandler>();
         else input.Set(_characterInputHandler.GetInputData());
+
     }
 
     public void OnConnectedToServer(NetworkRunner runner)

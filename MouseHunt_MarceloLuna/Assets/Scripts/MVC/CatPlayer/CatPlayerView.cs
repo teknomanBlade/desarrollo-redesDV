@@ -15,33 +15,20 @@ public class CatPlayerView : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        var textureSelected = textures[Random.Range(0, textures.Count)];
+        Debug.Log("TEXTURE SELECTED: " + textureSelected);
+        MeshRenderer.material.mainTexture = textureSelected;
     }
 
-    
-    /*public void LoadPlayerSkin()
-    {
-        PV.RPC("SetPlayerSkin", RpcTarget.Others);
-    }
 
-    [PunRPC]
-    public void SetPlayerSkin()
-    {
-        MeshRenderer.material.mainTexture = textures.Where(x => x.name.Contains(transform.tag)).First();
-    }*/
-
-    public CatPlayerView SetModel(CatPlayerModel model)
+    /*public CatPlayerView SetModel(CatPlayerModel model)
     {
         Model = model;
-        Animator = GetComponent<Animator>();
         textures = Resources.LoadAll<Texture>("Textures/CatPlayer").ToList();
+        Animator = GetComponent<Animator>();
         MeshRenderer = transform.GetComponentInChildren<SkinnedMeshRenderer>();
-        //LoadPlayerSkin();
-        //SpriteRenderer = GetComponent<SpriteRenderer>();
-        //SetHumanConfig();
-        //SetIdleAnimation();
         return this;
-    }
+    }*/
     // Update is called once per frame
     void Update()
     {
@@ -62,7 +49,14 @@ public class CatPlayerView : MonoBehaviour
     }
     public void AttackingAnimation()
     {
+        StartCoroutine(AttackingAnim());
+    }
+
+    IEnumerator AttackingAnim() 
+    {
         Animator.SetBool("IsAttacking", true);
+        yield return new WaitForSeconds(0.35f);
+        Animator.SetBool("IsAttacking", false);
     }
     public void StunnedAnimation()
     {
