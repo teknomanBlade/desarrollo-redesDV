@@ -58,6 +58,7 @@ public class MouseNPCModel : PlayerModel
         if (dir != Vector3.zero)
         {
             NetworkRB.Rigidbody.MovePosition(transform.position + dir * speed * Runner.DeltaTime);
+            ManageRotation(dir);
         }
     }
     public void TakeDamage(float dmg)

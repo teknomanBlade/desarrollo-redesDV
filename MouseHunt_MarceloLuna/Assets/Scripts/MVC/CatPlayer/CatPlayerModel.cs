@@ -71,18 +71,13 @@ public class CatPlayerModel : PlayerModel
 
     public void Movement(Vector3 dir, float speed) 
     {
-        if (dir != Vector3.zero) 
-        {
-            NetworkRB.Rigidbody.MovePosition(transform.position + dir * speed * Runner.DeltaTime);
-        }
-    }
-    public void Rotate(Vector3 dir, float speed)
-    {
         if (dir != Vector3.zero)
         {
-            //NetworkRB.Rigidbody.MoveRotation(transform.position + dir * speed * Runner.DeltaTime);
+            NetworkRB.Rigidbody.MovePosition(transform.position + Runner.DeltaTime * speed * dir);
+            ManageRotation(dir);
         }
     }
+    
     public void Attack()
     {
         if (Time.time - _lastAttackTime < AttackRate) return;

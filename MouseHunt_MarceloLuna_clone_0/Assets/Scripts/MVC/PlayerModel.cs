@@ -12,6 +12,10 @@ public class PlayerModel : NetworkBehaviour
     public float Speed { get; set; }
     public float RunningSpeed { get; set; }
     public float RotateSpeed { get; set; }
+    protected int _currentSignX;
+    protected int _previousSignX;
+    protected int _currentSignZ = 0;
+    protected int _previousSignZ = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,6 +26,34 @@ public class PlayerModel : NetworkBehaviour
     void Update()
     {
 
+    }
+    public void Rotate(Vector3 euler)
+    {
+        NetworkRB.Rigidbody.MoveRotation(Quaternion.Euler(euler));
+    }
+    protected void ManageRotation(Vector3 dir) 
+    {
+        _currentSignX = (int)Mathf.Sign(dir.x);
+        _currentSignZ = (int)Mathf.Sign(dir.z);
+
+        if (_previousSignX != _currentSignX)
+        {
+            _previousSignX = _currentSignX;
+            Rotate(_currentSignX * 90 * Vector3.up);
+        }
+        else if (_previousSignZ != _currentSignZ)
+        {
+            _previousSignZ = _currentSignZ;
+
+            if (_currentSignZ == -1)
+            {
+                Rotate(_currentSignZ * 180 * Vector3.up);
+            }
+            else
+            {
+                Rotate(_currentSignZ * 0 * Vector3.up);
+            }
+        }
     }
 
     public override void Spawned()

@@ -5,7 +5,7 @@ using UnityEngine;
 public class ThirdPersonCamera : MonoBehaviour
 {
     public Transform Target;
-    private Vector3 offsetCat = new Vector3(0f, 0.35f, -0.8f);
+    private Vector3 offsetCat = new Vector3(0f, 0.35f, -1f);
     private Vector3 offsetMouse = new Vector3(0f, 0.15f, -0.6f);
     private float MouseSensitivity = 6f;
     private float verticalRotation;
