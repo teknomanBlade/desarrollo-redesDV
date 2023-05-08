@@ -10,9 +10,13 @@ public class CatPlayerModel : PlayerModel
 
     #region Properties
     public event Action OnIdleAnimation = delegate { };
+    public event Action OnIdleFalseAnimation = delegate { };
     public event Action OnWalkingAnimation = delegate { };
+    public event Action OnWalkingFalseAnimation = delegate { };
     public event Action OnRunningAnimation = delegate { };
+    public event Action OnRunningFalseAnimation = delegate { };
     public event Action OnStunnedAnimation = delegate { };
+    public event Action OnStunnedFalseAnimation = delegate { };
     public event Action OnAttackingAnimation = delegate { };
     public CatPlayerView View { get; private set; }
     public float Damage { get; set; }
@@ -27,8 +31,8 @@ public class CatPlayerModel : PlayerModel
     // Start is called before the first frame update
     void Awake()
     {
-        Speed = 3.2f;
-        RunningSpeed = 6.5f;
+        Speed = 2f;
+        RunningSpeed = 4.5f;
         RotateSpeed = 2.1f;
         Damage = 20f;
         AttackRate = 0.35f;
@@ -59,6 +63,7 @@ public class CatPlayerModel : PlayerModel
             {
                 Debug.Log("MOVEMENT SPEED NORMAL CAT...");
                 OnWalkingAnimation();
+                OnRunningFalseAnimation();
                 Movement(new Vector3(networkInputData.xMovement, 0, networkInputData.zMovement), Speed);
             }
 
@@ -71,10 +76,15 @@ public class CatPlayerModel : PlayerModel
 
     public void Movement(Vector3 dir, float speed) 
     {
-        if (dir != Vector3.zero)
+        if (dir.magnitude != 0)
         {
             NetworkRB.Rigidbody.MovePosition(transform.position + Runner.DeltaTime * speed * dir);
             ManageRotation(dir);
+        }
+        else 
+        {
+            OnIdleAnimation();
+            OnWalkingFalseAnimation();
         }
     }
     

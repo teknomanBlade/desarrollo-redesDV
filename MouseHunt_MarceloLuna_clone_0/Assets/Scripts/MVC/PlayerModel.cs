@@ -36,23 +36,23 @@ public class PlayerModel : NetworkBehaviour
         _currentSignX = (int)Mathf.Sign(dir.x);
         _currentSignZ = (int)Mathf.Sign(dir.z);
 
-        if (_previousSignX != _currentSignX)
-        {
-            _previousSignX = _currentSignX;
-            Rotate(_currentSignX * 90 * Vector3.up);
-        }
-        else if (_previousSignZ != _currentSignZ)
+        if (_previousSignZ != _currentSignZ)
         {
             _previousSignZ = _currentSignZ;
 
             if (_currentSignZ == -1)
             {
-                Rotate(_currentSignZ * 180 * Vector3.up);
+                Rotate(180 * Vector3.up);
             }
             else
             {
-                Rotate(_currentSignZ * 0 * Vector3.up);
+                Rotate(0 * Vector3.up);
             }
+        }
+        else if (_previousSignX != _currentSignX)
+        {
+            _previousSignX = _currentSignX;
+            Rotate(_currentSignX * 90 * Vector3.up);
         }
     }
 

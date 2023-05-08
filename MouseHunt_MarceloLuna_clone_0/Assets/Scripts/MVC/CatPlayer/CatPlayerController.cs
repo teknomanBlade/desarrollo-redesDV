@@ -12,10 +12,14 @@ public class CatPlayerController : IController
         _m = m;
         _v = v;
         _m.OnWalkingAnimation += _v.WalkingAnimation;
+        _m.OnWalkingFalseAnimation += _v.WalkingFalseAnimation;
         _m.OnAttackingAnimation += _v.AttackingAnimation;
         _m.OnIdleAnimation += _v.IdleAnimation;
+        _m.OnIdleFalseAnimation += _v.IdleFalseAnimation;
         _m.OnRunningAnimation += _v.RunningAnimation;
+        _m.OnRunningFalseAnimation += _v.RunningFalseAnimation;
         _m.OnStunnedAnimation += _v.StunnedAnimation;
+        _m.OnStunnedFalseAnimation += _v.StunnedFalseAnimation;
     }
 
     public void OnUpdate()

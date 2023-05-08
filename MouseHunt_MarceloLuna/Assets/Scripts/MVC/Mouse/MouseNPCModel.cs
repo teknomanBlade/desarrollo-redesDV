@@ -12,8 +12,8 @@ public class MouseNPCModel : PlayerModel
     
     void Awake()
     {
-        Speed = 6f;
-        RunningSpeed = 10f;
+        Speed = 4f;
+        RunningSpeed = 8f;
         RotateSpeed = 5f;
         NetworkRB = GetComponent<NetworkRigidbody>();
         View = GetComponent<MouseNPCView>();
@@ -92,15 +92,13 @@ public class MouseNPCModel : PlayerModel
         }
     }*/
 
-    /*public void OnTriggerEnter(Collider other)
+    public void OnTriggerEnter(Collider other)
     {
         if(!Object || !Object.HasStateAuthority) return;
 
-        if (other.TryGetComponent(out CatPlayerModel catPlayerModel))
+        if (other.gameObject.layer == 6)
         {
-            Debug.Log("MOUSE HITTED - MOUSE...");
-            TakeDamage(catPlayerModel.Damage);
-            //gameObject.GetComponent<SpaceShipView>().RepaintLife(character.Life);
+            Debug.Log("MOUSE REACHED GOAL...");
         }
-    }*/
+    }
 }
