@@ -9,6 +9,7 @@ using UnityEngine;
 public class SpawnNetworkPlayer : MonoBehaviour, INetworkRunnerCallbacks
 {
     public GameObject MainMenuCanvas { get; private set; }
+    public GameObject GameHUDCanvas { get; private set; }
     public GameObject CatSpawner { get; private set; }
     public GameObject MouseSpawner { get; private set; }
     //Prefab del Player
@@ -20,6 +21,7 @@ public class SpawnNetworkPlayer : MonoBehaviour, INetworkRunnerCallbacks
     void Start()
     {
         MainMenuCanvas = FindObjectsOfType<GameObject>().Where(x => x.name.Equals("MainMenuCanvas")).FirstOrDefault();
+        GameHUDCanvas = FindObjectsOfType<GameObject>(true).Where(x => x.name.Equals("GameHUDCanvas")).FirstOrDefault();
         CatSpawner = FindObjectsOfType<GameObject>().Where(x => x.name.Equals("CatSpawner")).FirstOrDefault();
         MouseSpawner = FindObjectsOfType<GameObject>().Where(x => x.name.Equals("MouseSpawner")).FirstOrDefault();
         _catPlayerPrefab = Resources.Load<CatPlayerModel>("CatModel");
@@ -33,16 +35,6 @@ public class SpawnNetworkPlayer : MonoBehaviour, INetworkRunnerCallbacks
     }
     public void OnInput(NetworkRunner runner, NetworkInput input)
     {
-        /*if (!CatPlayerModel.Local) return;
-
-        if (!_characterInputHandler) _characterInputHandler = CatPlayerModel.Local.GetComponent<CharacterInputHandlerCat>();
-        else input.Set(_characterInputHandler.GetInputData());
-
-        if (!MouseNPCModel.Local) return;
-
-        if (!_characterInputHandler) _characterInputHandler = MouseNPCModel.Local.GetComponent<CharacterInputHandler>();
-        else input.Set(_characterInputHandler.GetInputData());*/
-
         if (!PlayerModel.Local) return;
 
         if (!_characterInputHandler) _characterInputHandler = PlayerModel.Local.GetComponent<CharacterInputHandler>();
@@ -57,17 +49,28 @@ public class SpawnNetworkPlayer : MonoBehaviour, INetworkRunnerCallbacks
             if (runner.LocalPlayer.PlayerId == 0)
             {
                 runner.Spawn(_catPlayerPrefab, CatSpawner.transform.position, Quaternion.identity, runner.LocalPlayer);
-                if (MainMenuCanvas)
-                    MainMenuCanvas.SetActive(false);
+                ShowHideGameCanvases(true, runner.LocalPlayer.PlayerId == 1);
                 Debug.Log("[Custom Message] Connected to Server - Spawning " + _catPlayerPrefab.name);
             }
             else 
             {
                 runner.Spawn(_mousePlayerPrefab, MouseSpawner.transform.position, Quaternion.identity, runner.LocalPlayer);
-                if (MainMenuCanvas)
-                    MainMenuCanvas.SetActive(false);
+                ShowHideGameCanvases(true, runner.LocalPlayer.PlayerId == 1);
                 Debug.Log("[Custom Message] Connected to Server - Spawning " + _mousePlayerPrefab.name);
             }
+        }
+    }
+    public void ShowHideGameCanvases(bool enabled, bool isPlayerTwo) 
+    {
+        if (MainMenuCanvas)
+            MainMenuCanvas.SetActive(!enabled);
+
+        if (GameHUDCanvas) 
+        {
+            GameHUDCanvas.SetActive(enabled);
+            GameHUDCanvas.GetComponentsInChildren<RectTransform>()
+                .Where(x => x.gameObject.name.Equals("GameHUDPanel"))
+                .FirstOrDefault().gameObject.SetActive(isPlayerTwo);
         }
     }
     #region Callbacks sin Usar

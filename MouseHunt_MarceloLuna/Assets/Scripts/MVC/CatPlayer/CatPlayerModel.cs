@@ -20,9 +20,9 @@ public class CatPlayerModel : PlayerModel
     public event Action OnAttackingAnimation = delegate { };
     public CatPlayerView View { get; private set; }
     public float Damage { get; set; }
-    public event Action<int> OnMiceCaptured = delegate { };// Es un tipo de delegate que te permite encapsular cualquier metodo que no devuelva ningun valor, y en este caso que pida un int como parametro
+    //public event Action<int> OnMiceCaptured = delegate { };// Es un tipo de delegate que te permite encapsular cualquier metodo que no devuelva ningun valor, y en este caso que pida un int como parametro
     
-    public int MicesCaptured { get; set; }
+    //public int MicesCaptured { get; set; }
     public float _lastAttackTime { get; private set; }
     private float AttackRate;
     

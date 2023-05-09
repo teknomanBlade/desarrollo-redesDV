@@ -4,9 +4,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MouseNPCModel : PlayerModel
 {
+    public event Action<float> OnTakeDamage = delegate { };
     public MouseNPCView View { get; private set; }
     [Networked] float Life { get; set; }
     
@@ -28,6 +30,9 @@ public class MouseNPCModel : PlayerModel
     public override void SetLife()
     {
         Life = 100f;
+        View.MouseLife = FindObjectsOfType<RectTransform>(true)
+                        .Where(x => x.gameObject.name.Equals("MouseLife"))
+                        .FirstOrDefault().GetComponent<Image>();
     }
     public override void FixedUpdateNetwork()
     {
@@ -70,7 +75,7 @@ public class MouseNPCModel : PlayerModel
     void RPC_GetDamage(float dmg) 
     {
         Life -= dmg;
-
+        OnTakeDamage(dmg);
         if (Life <= 0)
         {
             Dead();
