@@ -1,4 +1,5 @@
 using Fusion;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,6 +13,7 @@ public class PlayerModel : NetworkBehaviour
     public float Speed { get; set; }
     public float RunningSpeed { get; set; }
     public float RotateSpeed { get; set; }
+    
     protected int _currentSignX;
     protected int _previousSignX;
     protected int _currentSignZ = 0;
@@ -27,6 +29,7 @@ public class PlayerModel : NetworkBehaviour
     {
 
     }
+
     public void Rotate(Vector3 euler)
     {
         NetworkRB.Rigidbody.MoveRotation(Quaternion.Euler(euler));
@@ -80,4 +83,6 @@ public class PlayerModel : NetworkBehaviour
     {
     
     }
+
+    
 }

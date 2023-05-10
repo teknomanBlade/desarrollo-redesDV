@@ -11,7 +11,7 @@ public class MouseNPCModel : PlayerModel
     public event Action<float> OnTakeDamage = delegate { };
     public MouseNPCView View { get; private set; }
     [Networked] float Life { get; set; }
-    
+    public bool IsMouseDead { get; set; }
     void Awake()
     {
         Speed = 4f;
@@ -42,17 +42,17 @@ public class MouseNPCModel : PlayerModel
     public void PlayerActions()
     {
         var input = GetInput(out NetworkInputData networkInputData);
-        Debug.Log("MOVEMENT SPEED ACTIONS MOUSE..." + input);
+        //Debug.Log("MOVEMENT SPEED ACTIONS MOUSE..." + input);
         if (input)
         {
             if (networkInputData._isSprintPressed)
             {
-                Debug.Log("MOVEMENT SPEED RUNNING MOUSE...");
+                //Debug.Log("MOVEMENT SPEED RUNNING MOUSE...");
                 Movement(new Vector3(networkInputData.xMovement, 0, networkInputData.zMovement), RunningSpeed);
             }
             else 
             {
-                Debug.Log("MOVEMENT SPEED NORMAL MOUSE...");
+                //Debug.Log("MOVEMENT SPEED NORMAL MOUSE...");
                 Movement(new Vector3(networkInputData.xMovement, 0, networkInputData.zMovement), Speed);
             }
         }
@@ -78,10 +78,14 @@ public class MouseNPCModel : PlayerModel
         OnTakeDamage(dmg);
         if (Life <= 0)
         {
+            FindObjectsOfType<RectTransform>(true)
+                .Where(x => x.gameObject.name.Equals("MouseLoseParent"))
+                .FirstOrDefault().gameObject.SetActive(true);
+            GameManager.Instance.RPC_IsMouseDead();
             Dead();
         }
     }
-
+    
     public void Dead() 
     {
         Runner.Shutdown();
@@ -104,6 +108,10 @@ public class MouseNPCModel : PlayerModel
         if (other.gameObject.layer == 6)
         {
             Debug.Log("MOUSE REACHED GOAL...");
+            GameManager.Instance.RPC_MouseHasReachedGoal();
+            FindObjectsOfType<RectTransform>(true)
+                .Where(x => x.gameObject.name.Equals("MouseWinParent"))
+                .FirstOrDefault().gameObject.SetActive(true);
         }
     }
 }

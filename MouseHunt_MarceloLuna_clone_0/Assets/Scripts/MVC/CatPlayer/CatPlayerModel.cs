@@ -35,7 +35,7 @@ public class CatPlayerModel : PlayerModel
         RunningSpeed = 4.5f;
         RotateSpeed = 2.1f;
         Damage = 20f;
-        AttackRate = 0.35f;
+        AttackRate = 0.45f;
         NetworkRB = transform.gameObject.GetComponent<NetworkRigidbody>();
         View = GetComponent<CatPlayerView>();
         _controller = new CatPlayerController(this, View);
@@ -44,24 +44,33 @@ public class CatPlayerModel : PlayerModel
     
     public override void FixedUpdateNetwork()
     {
+        if (GameManager.Instance && GameManager.Instance.HasMouseReachedGoal)
+        {
+            FindObjectsOfType<RectTransform>(true)
+            .Where(x => x.gameObject.name.Equals("CatLoseParent"))
+            .FirstOrDefault().gameObject.SetActive(true);
+            Debug.Log("EL RATON SE HA ESCAPADO!!");
+            GameManager.Instance.RPC_MouseHasReachedGoalFalse();
+        }
+
         _controller.OnUpdate();
     }
 
     public void PlayerActions() 
     {
         var input = GetInput(out NetworkInputData networkInputData);
-        Debug.Log("MOVEMENT SPEED ACTIONS CAT..." + input);
+        //Debug.Log("MOVEMENT SPEED ACTIONS CAT..." + input);
         if (input)
         {
             if (networkInputData._isSprintPressed)
             {
-                Debug.Log("MOVEMENT SPEED RUNNING CAT...");
+                //Debug.Log("MOVEMENT SPEED RUNNING CAT...");
                 OnRunningAnimation();
                 Movement(new Vector3(networkInputData.xMovement, 0, networkInputData.zMovement), RunningSpeed);
             }
             else
             {
-                Debug.Log("MOVEMENT SPEED NORMAL CAT...");
+                //Debug.Log("MOVEMENT SPEED NORMAL CAT...");
                 OnWalkingAnimation();
                 OnRunningFalseAnimation();
                 Movement(new Vector3(networkInputData.xMovement, 0, networkInputData.zMovement), Speed);
@@ -90,15 +99,15 @@ public class CatPlayerModel : PlayerModel
     
     public void Attack()
     {
-        if (Time.time - _lastAttackTime < AttackRate) return;
+        if ((Time.time - _lastAttackTime) < AttackRate) return;
 
         _lastAttackTime = Time.time;
-
+        //Debug.Log("ATTACK TIME: " + _lastAttackTime);
         Debug.Log("ATTACK MOUSE...");
         OnAttackingAnimation();
-        Debug.Log("ACA LA REFERENCIA DE LA VISTA PARA LA ANIMACION");
     }
 
+    
     // Update is called once per frame
     void Update()
     {
@@ -113,7 +122,13 @@ public class CatPlayerModel : PlayerModel
         {
             Debug.Log("MOUSE HITTED - CAT...");
             mouseNPCModel.TakeDamage(Damage);
-            //gameObject.GetComponent<SpaceShipView>().RepaintLife(character.Life);
+            if (GameManager.Instance.IsMouseDead) 
+            {
+                FindObjectsOfType<RectTransform>(true)
+                .Where(x => x.gameObject.name.Equals("CatWinParent"))
+                .FirstOrDefault().gameObject.SetActive(true);
+                Debug.Log("EL RATON HIZO KAPUTT...");
+            }
         }
     }
 }
