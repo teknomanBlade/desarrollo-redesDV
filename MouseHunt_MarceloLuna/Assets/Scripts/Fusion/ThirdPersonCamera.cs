@@ -25,11 +25,23 @@ public class ThirdPersonCamera : MonoBehaviour
         float mouseY = Input.GetAxis("Mouse Y");
 
         verticalRotation -= mouseY * MouseSensitivity;
-        verticalRotation = Mathf.Clamp(verticalRotation, -70f, 30f);
+        verticalRotation = GetVerticalRotationByType(Target);
 
         horizontalRotation += mouseX * MouseSensitivity;
 
         transform.rotation = Quaternion.Euler(verticalRotation, horizontalRotation, 0);
+    }
+
+    private float GetVerticalRotationByType(Transform Target)
+    {
+        if (Target.gameObject.name.Contains("Cat"))
+        {
+            return Mathf.Clamp(verticalRotation, -70f, 30f);
+        }
+        else
+        {
+            return Mathf.Clamp(verticalRotation, -40f, 12f);
+        }
     }
 
     private Vector3 GetOffsetByType(Transform Target) 

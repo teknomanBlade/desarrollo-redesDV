@@ -8,7 +8,7 @@ public class CharacterInputHandlerMouse : CharacterInputHandler
     // Start is called before the first frame update
     void Awake()
     {
-        Debug.Log("GETTING MOUSE MODEL...");
+        //Debug.Log("GETTING MOUSE MODEL...");
         _mouseNPCModel = GetComponent<MouseNPCModel>();
     }
 
@@ -23,10 +23,10 @@ public class CharacterInputHandlerMouse : CharacterInputHandler
     {
         if (_mouseNPCModel)
         {
-            Debug.Log("SALE ANTES? - MOUSE NOT NULL");
+            //Debug.Log("SALE ANTES? - MOUSE NOT NULL");
             if (!_mouseNPCModel.HasInputAuthority)
             {
-                Debug.Log("SALE ANTES? - MOUSE NOT AUTHORITY INPUT");
+                //Debug.Log("SALE ANTES? - MOUSE NOT AUTHORITY INPUT");
                 return;
             }
         }

@@ -2,6 +2,7 @@ using Fusion;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class PlayerModel : NetworkBehaviour
@@ -78,7 +79,33 @@ public class PlayerModel : NetworkBehaviour
             Camera.GetComponent<ThirdPersonCamera>().Target = GetComponent<NetworkRigidbody>().InterpolationTarget;
         }
     }
+    public override void FixedUpdateNetwork()
+    {
+        if (GameManager.Instance && Runner.LocalPlayer.PlayerId == 0)
+        {
+            //Debug.Log("DEBUG EN EL ANTES PRIMER IF PARA VER SI SE VA ANTES...");
+            if (GameManager.Instance.HasMouseReachedGoal)
+            {
+                FindObjectsOfType<RectTransform>(true)
+                .Where(x => x.gameObject.name.Equals("CatLoseParent"))
+                .FirstOrDefault().gameObject.SetActive(true);
+                Debug.Log("EL RATON SE HA ESCAPADO!!");
+            }
 
+            Debug.Log("Mouse Dead: " + GameManager.Instance.IsMouseDead);
+            if (GameManager.Instance.IsMouseDead)
+            {
+                Debug.Log("INSIDE GAMEMANAGER CALL...");
+                FindObjectsOfType<RectTransform>(true)
+                .Where(x => x.gameObject.name.Equals("CatWinParent"))
+                .FirstOrDefault().gameObject.SetActive(true);
+                Debug.Log("EL RATON HIZO KAPUTT...");
+            }
+            //Debug.Log("DEBUG EN EL MEDIO PARA VER SI SE VA ANTES...");
+
+            //Debug.Log("DEBUG EN EL DESPUES SEGUNDO IF PARA VER SI SE VA ANTES...");
+        }
+    }
     public virtual void SetLife() 
     {
     

@@ -1,7 +1,5 @@
 using Fusion;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -33,7 +31,7 @@ public class CatPlayerModel : PlayerModel
     {
         Speed = 2f;
         RunningSpeed = 4.5f;
-        RotateSpeed = 2.1f;
+        RotateSpeed = 15f;
         Damage = 20f;
         AttackRate = 0.45f;
         NetworkRB = transform.gameObject.GetComponent<NetworkRigidbody>();
@@ -44,14 +42,24 @@ public class CatPlayerModel : PlayerModel
     
     public override void FixedUpdateNetwork()
     {
-        if (GameManager.Instance && GameManager.Instance.HasMouseReachedGoal)
+        base.FixedUpdateNetwork();
+        /*if (GameManager.Instance && Runner.LocalPlayer.PlayerId == 0)
         {
-            FindObjectsOfType<RectTransform>(true)
-            .Where(x => x.gameObject.name.Equals("CatLoseParent"))
-            .FirstOrDefault().gameObject.SetActive(true);
-            Debug.Log("EL RATON SE HA ESCAPADO!!");
-            GameManager.Instance.RPC_MouseHasReachedGoalFalse();
-        }
+            if (GameManager.Instance.HasMouseReachedGoal)
+            {
+                FindObjectsOfType<RectTransform>(true)
+                .Where(x => x.gameObject.name.Equals("CatLoseParent"))
+                .FirstOrDefault().gameObject.SetActive(true);
+                Debug.Log("EL RATON SE HA ESCAPADO!!");
+            } 
+            else if (GameManager.Instance.IsMouseDead) 
+            {
+                FindObjectsOfType<RectTransform>(true)
+                .Where(x => x.gameObject.name.Equals("CatWinParent"))
+                .FirstOrDefault().gameObject.SetActive(true);
+                Debug.Log("EL RATON HIZO KAPUTT...");
+            }
+        }*/
 
         _controller.OnUpdate();
     }
@@ -87,8 +95,15 @@ public class CatPlayerModel : PlayerModel
     {
         if (dir.magnitude != 0)
         {
+            Vector3 newForward = new Vector3(Camera.transform.position.x * RotateSpeed, transform.position.y, Camera.transform.position.z * RotateSpeed);
+            transform.forward = newForward;
             NetworkRB.Rigidbody.MovePosition(transform.position + Runner.DeltaTime * speed * dir);
-            ManageRotation(dir);
+            var rotation = transform.rotation;
+            rotation.x = 0f;
+            rotation.y = transform.rotation.y;
+            rotation.z = 0f;
+            transform.rotation = rotation;
+            //ManageRotation(dir);
         }
         else 
         {
@@ -99,11 +114,13 @@ public class CatPlayerModel : PlayerModel
     
     public void Attack()
     {
-        if ((Time.time - _lastAttackTime) < AttackRate) return;
+        var attackDelta = Time.time - _lastAttackTime;
+        //Debug.Log("ATTACK RATE CURRENT BEFORE RETURN: " + attackDelta);
+        if (attackDelta < AttackRate) return;
 
         _lastAttackTime = Time.time;
-        //Debug.Log("ATTACK TIME: " + _lastAttackTime);
-        Debug.Log("ATTACK MOUSE...");
+        //Debug.Log("ATTACK RATE CURRENT AFTER RETURN: " + attackDelta);
+        //Debug.Log("ATTACK MOUSE...");
         OnAttackingAnimation();
     }
 
@@ -122,13 +139,17 @@ public class CatPlayerModel : PlayerModel
         {
             Debug.Log("MOUSE HITTED - CAT...");
             mouseNPCModel.TakeDamage(Damage);
-            if (GameManager.Instance.IsMouseDead) 
+            //Debug.Log("BEFORE GAMEMANAGER CALL...");
+            /*Debug.Log("Mouse Dead: " + GameManager.Instance.IsMouseDead);
+            if (GameManager.Instance.IsMouseDead)
             {
+                Debug.Log("INSIDE GAMEMANAGER CALL...");
                 FindObjectsOfType<RectTransform>(true)
                 .Where(x => x.gameObject.name.Equals("CatWinParent"))
                 .FirstOrDefault().gameObject.SetActive(true);
                 Debug.Log("EL RATON HIZO KAPUTT...");
-            }
+            }*/
+            //Debug.Log("AFTER GAMEMANAGER CALL...");
         }
     }
 }

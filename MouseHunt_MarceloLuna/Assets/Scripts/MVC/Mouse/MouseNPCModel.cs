@@ -36,6 +36,7 @@ public class MouseNPCModel : PlayerModel
     }
     public override void FixedUpdateNetwork()
     {
+        base.FixedUpdateNetwork();
         _controller.OnUpdate();
     }
 
@@ -78,17 +79,21 @@ public class MouseNPCModel : PlayerModel
         OnTakeDamage(dmg);
         if (Life <= 0)
         {
+            GameManager.Instance.RPC_IsMouseDead();
             FindObjectsOfType<RectTransform>(true)
                 .Where(x => x.gameObject.name.Equals("MouseLoseParent"))
                 .FirstOrDefault().gameObject.SetActive(true);
-            GameManager.Instance.RPC_IsMouseDead();
-            Dead();
+            StartCoroutine(DeadCoroutine());
         }
     }
-    
+    IEnumerator DeadCoroutine() 
+    {
+        yield return new WaitForSeconds(3f);
+        Dead();
+    }
     public void Dead() 
     {
-        Runner.Shutdown();
+        Runner.Despawn(Object);
     }
     /*public static void OnLifeChanged(Changed<MouseNPCModel> changed)
     {
@@ -112,6 +117,7 @@ public class MouseNPCModel : PlayerModel
             FindObjectsOfType<RectTransform>(true)
                 .Where(x => x.gameObject.name.Equals("MouseWinParent"))
                 .FirstOrDefault().gameObject.SetActive(true);
+            
         }
     }
 }

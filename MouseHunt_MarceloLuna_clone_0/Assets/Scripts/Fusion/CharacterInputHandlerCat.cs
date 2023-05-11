@@ -8,7 +8,7 @@ public class CharacterInputHandlerCat : CharacterInputHandler
     // Start is called before the first frame update
     void Awake()
     {
-        Debug.Log("GETTING CAT MODEL...");
+        //Debug.Log("GETTING CAT MODEL...");
         _catPlayerModel = GetComponent<CatPlayerModel>();
     }
 
@@ -23,10 +23,10 @@ public class CharacterInputHandlerCat : CharacterInputHandler
     {
         if (_catPlayerModel)
         {
-            Debug.Log("SALE ANTES? - CAT MODEL NOT NULL");
+            //Debug.Log("SALE ANTES? - CAT MODEL NOT NULL");
             if (!_catPlayerModel.HasInputAuthority)
             {
-                Debug.Log("SALE ANTES? - CAT NOT AUTHORITY INPUT");
+                //Debug.Log("SALE ANTES? - CAT NOT AUTHORITY INPUT");
                 return;
             }
         }

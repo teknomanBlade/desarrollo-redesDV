@@ -21,20 +21,15 @@ public class GameManager : NetworkBehaviour
 
     }
 
-    [Rpc(RpcSources.All,RpcTargets.All)]
+    [Rpc(RpcSources.All, RpcTargets.All)]
     public void RPC_IsMouseDead() 
     {
         IsMouseDead = true;
     }
+
     [Rpc(RpcSources.All, RpcTargets.All)]
     public void RPC_MouseHasReachedGoal() 
     {
         HasMouseReachedGoal = true;
-    }
-
-    [Rpc(RpcSources.All, RpcTargets.All)]
-    public void RPC_MouseHasReachedGoalFalse()
-    {
-        HasMouseReachedGoal = false;
     }
 }
