@@ -30,6 +30,13 @@ public class GameManager : NetworkBehaviour
     {
 
     }
+    [Rpc(RpcSources.All, RpcTargets.All)]
+    public void RPC_DeactivateBlockedGoal(string name) 
+    {
+        FindObjectsOfType<MouseHoleGoal>(true)
+            .Where(x => x.gameObject.name.Equals(name))
+            .FirstOrDefault().gameObject.SetActive(false);
+    }
 
     [Rpc(RpcSources.All, RpcTargets.All)]
     public void RPC_ShowHideWaitingForPlayers(bool activate)
