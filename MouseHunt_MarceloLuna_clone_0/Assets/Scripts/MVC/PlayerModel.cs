@@ -22,7 +22,7 @@ public class PlayerModel : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        RotateSpeed = 720f;
     }
 
     // Update is called once per frame
@@ -31,32 +31,12 @@ public class PlayerModel : NetworkBehaviour
 
     }
 
-    public void Rotate(Vector3 euler)
-    {
-        NetworkRB.Rigidbody.MoveRotation(Quaternion.Euler(euler));
-    }
     protected void ManageRotation(Vector3 dir) 
     {
-        _currentSignX = (int)Mathf.Sign(dir.x);
-        _currentSignZ = (int)Mathf.Sign(dir.z);
-
-        if (_previousSignZ != _currentSignZ)
+        if (dir != Vector3.zero) 
         {
-            _previousSignZ = _currentSignZ;
-
-            if (_currentSignZ == -1)
-            {
-                Rotate(180 * Vector3.up);
-            }
-            else
-            {
-                Rotate(0 * Vector3.up);
-            }
-        }
-        else if (_previousSignX != _currentSignX)
-        {
-            _previousSignX = _currentSignX;
-            Rotate(_currentSignX * 90 * Vector3.up);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, 
+                Quaternion.LookRotation(dir, Vector3.up), RotateSpeed * Runner.DeltaTime);
         }
     }
 

@@ -15,8 +15,7 @@ public class MouseNPCModel : PlayerModel
     void Awake()
     {
         Speed = 4f;
-        RunningSpeed = 8f;
-        RotateSpeed = 5f;
+        RunningSpeed = 6f;
         NetworkRB = GetComponent<NetworkRigidbody>();
         View = GetComponent<MouseNPCView>();
         _controller = new MouseNPCController(this, View);
@@ -63,7 +62,7 @@ public class MouseNPCModel : PlayerModel
     {
         if (dir != Vector3.zero)
         {
-            NetworkRB.Rigidbody.MovePosition(transform.position + dir * speed * Runner.DeltaTime);
+            NetworkRB.Rigidbody.MovePosition(transform.position + Runner.DeltaTime * speed * dir);
             ManageRotation(dir);
         }
     }
@@ -88,7 +87,7 @@ public class MouseNPCModel : PlayerModel
     }
     IEnumerator DeadCoroutine() 
     {
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(2f);
         Dead();
     }
     public void Dead() 

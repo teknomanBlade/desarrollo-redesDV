@@ -15,6 +15,8 @@ public class SpawnNetworkPlayer : MonoBehaviour, INetworkRunnerCallbacks
     //Prefab del Player
     [SerializeField] CatPlayerModel _catPlayerPrefab;
     [SerializeField] MouseNPCModel _mousePlayerPrefab;
+    public CatPlayerModel CatPlayer { get; set; }
+    public MouseNPCModel MousePlayer { get; set; }
     CharacterInputHandler _characterInputHandler;
 
     // Start is called before the first frame update
@@ -48,13 +50,15 @@ public class SpawnNetworkPlayer : MonoBehaviour, INetworkRunnerCallbacks
         {
             if (runner.LocalPlayer.PlayerId == 0)
             {
-                runner.Spawn(_catPlayerPrefab, CatSpawner.transform.position, Quaternion.identity, runner.LocalPlayer);
+                CatPlayer = runner.Spawn(_catPlayerPrefab, CatSpawner.transform.position, Quaternion.identity, runner.LocalPlayer);
+                CatPlayer.gameObject.SetActive(false);
                 ShowHideGameCanvases(true, runner.LocalPlayer.PlayerId == 1);
                 Debug.Log("[Custom Message] Connected to Server - Spawning " + _catPlayerPrefab.name);
             }
             else 
             {
-                runner.Spawn(_mousePlayerPrefab, MouseSpawner.transform.position, Quaternion.identity, runner.LocalPlayer);
+                MousePlayer = runner.Spawn(_mousePlayerPrefab, MouseSpawner.transform.position, Quaternion.identity, runner.LocalPlayer);
+                MousePlayer.gameObject.SetActive(false);
                 ShowHideGameCanvases(true, runner.LocalPlayer.PlayerId == 1);
                 Debug.Log("[Custom Message] Connected to Server - Spawning " + _mousePlayerPrefab.name);
             }
@@ -68,10 +72,17 @@ public class SpawnNetworkPlayer : MonoBehaviour, INetworkRunnerCallbacks
         if (GameHUDCanvas) 
         {
             GameHUDCanvas.SetActive(enabled);
-            GameHUDCanvas.GetComponentsInChildren<RectTransform>()
-                .Where(x => x.gameObject.name.Equals("GameHUDPanel"))
-                .FirstOrDefault().gameObject.SetActive(isPlayerTwo);
+            ShowGameHUDPanelAndActivatePlayers(isPlayerTwo);
         }
+    }
+
+    public void ShowGameHUDPanelAndActivatePlayers(bool isPlayerTwo) 
+    {
+        Debug.Log("ENTRA ACA CUANDO ES 2DO PLAYER??");
+        GameHUDCanvas.GetComponentsInChildren<RectTransform>()
+                    .Where(x => x.gameObject.name.Equals("GameHUDPanel"))
+                    .FirstOrDefault().gameObject.SetActive(isPlayerTwo);
+
     }
     #region Callbacks sin Usar
     public void OnConnectFailed(NetworkRunner runner, NetAddress remoteAddress, NetConnectFailedReason reason)

@@ -58,7 +58,7 @@ public class CatPlayerView : MonoBehaviour
     IEnumerator AttackingAnim() 
     {
         Animator.SetBool("IsAttacking", true);
-        yield return new WaitForSeconds(0.35f);
+        yield return new WaitForSeconds(0.36f);
         Animator.SetBool("IsAttacking", false);
     }
     public void StunnedAnimation()
