@@ -16,9 +16,9 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
 
     public event Action<List<SessionInfo>> OnSessionListUpdate;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        
+        _runnerPrefab = Resources.Load<NetworkRunner>("Connection/NetworkRunner");
     }
 
     // Update is called once per frame
