@@ -48,7 +48,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 47
+  controlID: 21
 --- !u!114 &3
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -68,8 +68,8 @@ MonoBehaviour:
     y: 0
     width: 389
     height: 987
-  m_MinSize: {x: 276, y: 71}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 275, y: 50}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 14}
   m_Panes:
   - {fileID: 14}
@@ -223,7 +223,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 200}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 48
+  controlID: 27
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -248,7 +248,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 49
+  controlID: 28
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -346,22 +346,22 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Resources/Connection
+    - Assets/Resources/UI
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Resources/Connection
+  - Assets/Resources/UI
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\Marcelo\desarrollo-redesDV\MouseHunt_HostClient_MarceloLuna
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 62610000
-    m_LastClickedID: 24930
-    m_ExpandedIDs: 000000004461000046610000486100006a61000000ca9a3b
+    m_SelectedIDs: 46620000
+    m_LastClickedID: 25158
+    m_ExpandedIDs: 0000000024620000266200002862000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -389,7 +389,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000446100004661000048610000
+    m_ExpandedIDs: 00000000246200002662000028620000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -517,20 +517,20 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 5aa60000
-      m_LastClickedID: 42586
-      m_ExpandedIDs: 4826ffff6a2dffff322effff8c2effff1c39ffff2a41ffffb4b7ffffd8bfffff38d1ffff44d1ffff66d1ffff76d1ffff78d6ffff88d6ffff94d6ffffaad6ffffb6d6ffff90d9ffff88ddffff9ceaffff4cf3ffff00f8fffff8f8ffffaef9ffff36fbffff5aa60000
+      m_SelectedIDs: 
+      m_LastClickedID: 0
+      m_ExpandedIDs: 10c6ffff1ac6ffffecc8ffff94ccffff9eccffffbef7ffff02f8ffff36fbffff1e6100009c820000f2820000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
-        m_Name: LivingScene
-        m_OriginalName: LivingScene
+        m_Name: MainMenuCanvas
+        m_OriginalName: MainMenuCanvas
         m_EditFieldRect:
           serializedVersion: 2
           x: 0
           y: 0
           width: 0
           height: 0
-        m_UserData: -54218
+        m_UserData: -14822
         m_IsWaitingForDelay: 0
         m_IsRenaming: 0
         m_OriginalEventType: 0
@@ -801,9 +801,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 7.9943447, y: 2.424852, z: 6.4694157}
+    m_Target: {x: 585.5869, y: 313.3164, z: 163.04364}
     speed: 2
-    m_Value: {x: 7.9943447, y: 2.424852, z: 6.4694157}
+    m_Value: {x: 570, y: 272.5, z: 0}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -850,13 +850,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: -0.21140876, y: -0.1685149, z: 0.037030507, w: -0.9620518}
+    m_Target: {x: -0.08565558, y: -0.033772077, z: 0.00290336, w: -0.99575317}
     speed: 2
-    m_Value: {x: -0.21140815, y: -0.16851443, z: 0.037030403, w: -0.96204907}
+    m_Value: {x: -0.08717229, y: 0.89959055, z: -0.21045254, w: -0.3726226}
   m_Size:
-    m_Target: 19.149471
+    m_Target: 497.2599
     speed: 2
-    m_Value: 19.149471
+    m_Value: 631.78815
   m_Ortho:
     m_Target: 0
     speed: 2
