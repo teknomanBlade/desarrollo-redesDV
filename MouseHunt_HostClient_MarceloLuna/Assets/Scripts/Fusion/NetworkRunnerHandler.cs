@@ -79,7 +79,7 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
     {
         OnSessionListUpdate?.Invoke(sessionList);
 
-        if (sessionList.Count > 0) 
+        /*if (sessionList.Count > 0) 
         {
             sessionList.ForEach(session => 
             {
@@ -92,7 +92,7 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
             });
         }
 
-        CreateSession("SessionSarasa", "Level");
+        CreateSession("SessionSarasa", "Level");*/
     }
     #region Unused Callbacks
     public void OnConnectedToServer(NetworkRunner runner)
