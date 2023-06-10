@@ -26,6 +26,10 @@ public class MouseNPCModel : PlayerModel
     {
         
     }
+    public override CharacterInputHandler GetInputHandler()
+    {
+        return GetComponent<CharacterInputHandlerCat>();
+    }
     public override void SetLife()
     {
         Life = 100f;

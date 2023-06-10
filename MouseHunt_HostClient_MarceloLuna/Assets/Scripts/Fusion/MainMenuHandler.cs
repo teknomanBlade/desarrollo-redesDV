@@ -63,6 +63,6 @@ public class MainMenuHandler : MonoBehaviour
 
     void CreateGameSession() 
     {
-        _networkRunner.CreateSession(IF_HostSessionName.text, "Game");
+        _networkRunner.CreateSession(IF_HostSessionName.text, "Level");
     }
 }

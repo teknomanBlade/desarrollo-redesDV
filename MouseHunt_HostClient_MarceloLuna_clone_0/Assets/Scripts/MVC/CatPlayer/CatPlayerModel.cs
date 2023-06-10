@@ -99,7 +99,10 @@ public class CatPlayerModel : PlayerModel
         OnAttackingAnimation();
     }
 
-    
+    public override CharacterInputHandler GetInputHandler()
+    {
+        return GetComponent<CharacterInputHandlerCat>();
+    }
     // Update is called once per frame
     void Update()
     {

@@ -39,7 +39,10 @@ public class PlayerModel : NetworkBehaviour
                 Quaternion.LookRotation(dir, Vector3.up), RotateSpeed * Runner.DeltaTime);
         }
     }
-
+    public virtual CharacterInputHandler GetInputHandler() 
+    {
+        return GetComponent<CharacterInputHandler>();
+    }
     public override void Spawned()
     {
         if (Object.HasInputAuthority)

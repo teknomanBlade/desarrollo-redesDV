@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 1481586308128247589}
   - component: {fileID: 1481586308128247579}
   - component: {fileID: 2189288833678257745}
+  - component: {fileID: 1910450150091659196}
   m_Layer: 0
   m_Name: Mouse
   m_TagString: Untagged
@@ -148,6 +149,18 @@ MonoBehaviour:
   - {fileID: 2642139695691294573}
   - {fileID: 1481586308128247579}
   SimulationBehaviours: []
+--- !u!114 &1910450150091659196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1751565127944778352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb35abe630c7b7b4791fc34ec50d5668, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6137744755664415186
 GameObject:
   m_ObjectHideFlags: 0
