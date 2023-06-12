@@ -52,13 +52,21 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
 
     public void CreateSession(string sessionName, string sceneName) 
     {
-        var clientTask = InitializeSession(_currentRunner,GameMode.Host, sessionName, 
-            SceneUtility.GetBuildIndexByScenePath($"Scenes/{sceneName}"));
+        var scenePath = $"Assets/Scenes/{sceneName}.unity";
+        //NOTA: para que ande hay que agregarle la extensión a las Scenes.
+        //var scenePathByBuildIndex = SceneUtility.GetScenePathByBuildIndex(1); << Este metodo me ayudo a aprenderlo.
+        var buildIndex = SceneUtility.GetBuildIndexByScenePath(scenePath);
+        Debug.Log("BuildIndex: " + buildIndex);
+        var clientTask = InitializeSession(_currentRunner,GameMode.Host, sessionName,
+            buildIndex);
     }
     public void JoinSession(SessionInfo sessionInfo)
     {
-        var clientTask = InitializeSession(_currentRunner, GameMode.Client, sessionInfo.Name, 
-            SceneManager.GetActiveScene().buildIndex);
+        Debug.Log("SESSION INFO: " + sessionInfo.Name);
+        var buildIndex = SceneManager.GetActiveScene().buildIndex;
+        Debug.Log("BuildIndex JOIN: " + buildIndex);
+        var clientTask = InitializeSession(_currentRunner, GameMode.Client, sessionInfo.Name,
+            buildIndex);
     }
 
     async Task InitializeSession(NetworkRunner runner, GameMode gameMode, string sessionName, SceneRef sceneRef) 
@@ -71,105 +79,91 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
             Scene = sceneRef,
             SessionName = sessionName,
             CustomLobbyName = "Normal Lobby",
-            SceneManager = sceneManager
+            SceneManager = sceneManager,
+            PlayerCount = 3
         });
     }
 
     public void OnSessionListUpdated(NetworkRunner runner, List<SessionInfo> sessionList)
     {
+        Debug.Log("<< SESSION LIST UPDATED >>");
+        Debug.Log("HAS SESSIONS TO SHOW? " + sessionList.Count);
         OnSessionListUpdate?.Invoke(sessionList);
-
-        /*if (sessionList.Count > 0) 
-        {
-            sessionList.ForEach(session => 
-            {
-                if (session.PlayerCount < session.MaxPlayers) 
-                {
-                    JoinSession(session);
-
-                    return;
-                }
-            });
-        }
-
-        CreateSession("SessionSarasa", "Level");*/
     }
     #region Unused Callbacks
     public void OnConnectedToServer(NetworkRunner runner)
     {
-        throw new NotImplementedException();
+        
     }
 
     public void OnConnectFailed(NetworkRunner runner, NetAddress remoteAddress, NetConnectFailedReason reason)
     {
-        throw new NotImplementedException();
+        
     }
 
     public void OnConnectRequest(NetworkRunner runner, NetworkRunnerCallbackArgs.ConnectRequest request, byte[] token)
     {
-        throw new NotImplementedException();
+        
     }
 
     public void OnCustomAuthenticationResponse(NetworkRunner runner, Dictionary<string, object> data)
     {
-        throw new NotImplementedException();
+        
     }
 
     public void OnDisconnectedFromServer(NetworkRunner runner)
     {
-        throw new NotImplementedException();
+        
     }
 
     public void OnHostMigration(NetworkRunner runner, HostMigrationToken hostMigrationToken)
     {
-        throw new NotImplementedException();
+        
     }
 
     public void OnInput(NetworkRunner runner, NetworkInput input)
     {
-        throw new NotImplementedException();
+
     }
 
     public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input)
     {
-        throw new NotImplementedException();
+
     }
 
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
     {
-        throw new NotImplementedException();
+
     }
 
     public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
     {
-        throw new NotImplementedException();
+
     }
 
     public void OnReliableDataReceived(NetworkRunner runner, PlayerRef player, ArraySegment<byte> data)
     {
-        throw new NotImplementedException();
+
     }
 
     public void OnSceneLoadDone(NetworkRunner runner)
     {
-        throw new NotImplementedException();
+
     }
 
     public void OnSceneLoadStart(NetworkRunner runner)
     {
-        throw new NotImplementedException();
+
     }
-
-
 
     public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason)
     {
-        throw new NotImplementedException();
+
     }
 
     public void OnUserSimulationMessage(NetworkRunner runner, SimulationMessagePtr message)
     {
-        throw new NotImplementedException();
+
     }
     #endregion
 }

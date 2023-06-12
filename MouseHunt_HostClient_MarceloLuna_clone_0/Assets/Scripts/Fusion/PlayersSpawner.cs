@@ -43,7 +43,15 @@ public class PlayersSpawner : MonoBehaviour, INetworkRunnerCallbacks
     {
         if (runner.IsServer)
         {
-            runner.Spawn(_catPlayerPrefab, null,null, player);
+            if (player.PlayerId == 1)
+            {
+                runner.Spawn(_catPlayerPrefab, null, null, player);
+            }
+            else if (player.PlayerId == 2) 
+            {
+                runner.Spawn(_mousePlayerPrefab, null, null, player);
+            }
+            
             Debug.Log("[Custom Message] Player Joined - I'm THE LAW!!");
         }
         else 
