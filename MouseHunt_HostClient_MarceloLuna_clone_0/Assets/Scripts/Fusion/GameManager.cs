@@ -9,6 +9,8 @@ public class GameManager : NetworkBehaviour
 {
     public static GameManager Instance { get; private set; }
     public GameObject GameHUDCanvas;
+    public GameObject CatSpawner;
+    public GameObject MouseSpawner;
     public bool IsMouseDead { get; set; }
     public bool HasMouseReachedGoal { get; set; }
 
@@ -16,6 +18,8 @@ public class GameManager : NetworkBehaviour
     {
         if (Instance) Destroy(gameObject);
         else Instance = this;
+        CatSpawner = FindObjectsOfType<GameObject>().Where(x => x.name.Equals("CatSpawner")).FirstOrDefault();
+        MouseSpawner = FindObjectsOfType<GameObject>().Where(x => x.name.Equals("MouseSpawner")).FirstOrDefault();
         GameHUDCanvas = FindObjectsOfType<GameObject>(true).Where(x => x.name.Equals("GameHUDCanvas")).FirstOrDefault();
         if (Runner.ActivePlayers.ToList().Count > 1) 
         {

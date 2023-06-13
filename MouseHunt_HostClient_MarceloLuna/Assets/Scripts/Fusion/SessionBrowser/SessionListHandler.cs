@@ -39,7 +39,7 @@ public class SessionListHandler : MonoBehaviour
 
     private void ReceiveSessionList(List<SessionInfo> allSessions)
     {
-        Debug.Log("HAS SESSIONS? - COUNT:" + allSessions.Count);
+        //Debug.Log("HAS SESSIONS? - COUNT:" + allSessions.Count);
         ClearList();
 
         if (allSessions.Count == 0)
@@ -57,15 +57,15 @@ public class SessionListHandler : MonoBehaviour
 
     private void AddSessionToList(SessionInfo session)
     {
-        Debug.Log("SESSION IS LOADED? " + session.Name);
+        //Debug.Log("SESSION IS LOADED? " + session.Name);
         var sessionItem = Instantiate(_sessionPrefab, _verticalLayout.transform);
-        Debug.Log("SESSION ITEM EXISTS? - " + (sessionItem == null));
+        //Debug.Log("SESSION ITEM EXISTS? - " + (sessionItem == null));
         sessionItem.GetComponent<SessionInfoItem>().SetSessionInformation(session);
         sessionItem.GetComponent<SessionInfoItem>().OnJoinSession += (x) => 
         {
-            Debug.Log("<< BEFORE JOIN SESSION >>");
+            //Debug.Log("<< BEFORE JOIN SESSION >>");
             _networkRunner.JoinSession(x);
-            Debug.Log("<< AFTER JOIN SESSION >>");
+            //Debug.Log("<< AFTER JOIN SESSION >>");
         };
     }
 

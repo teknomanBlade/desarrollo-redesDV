@@ -34,6 +34,7 @@ public class PlayersSpawner : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnInput(NetworkRunner runner, NetworkInput input)
     {
+        Debug.Log("ON INPUT - LEVEL SCENE");
         if (!PlayerModel.Local) return;
 
         if (!_characterInputHandler) _characterInputHandler = PlayerModel.Local.GetInputHandler();
@@ -41,13 +42,14 @@ public class PlayersSpawner : MonoBehaviour, INetworkRunnerCallbacks
     }
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
     {
+        Debug.Log("ON PLAYER JOINED - LEVEL SCENE");
         if (runner.IsServer)
         {
-            if (player.PlayerId == 1)
+            if (player.PlayerId == 0)
             {
                 runner.Spawn(_catPlayerPrefab, null, null, player);
             }
-            else if (player.PlayerId == 2) 
+            else if (player.PlayerId == 1) 
             {
                 runner.Spawn(_mousePlayerPrefab, null, null, player);
             }

@@ -3,6 +3,7 @@ using Fusion.Sockets;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -15,10 +16,22 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
     public event Action OnJoinedLobby;
 
     public event Action<List<SessionInfo>> OnSessionListUpdate;
+    public GameObject GameHUDCanvas { get; private set; }
+    
+    //Prefab del Player
+    [SerializeField] CatPlayerModel _catPlayerPrefab;
+    [SerializeField] MouseNPCModel _mousePlayerPrefab;
+    public CatPlayerModel CatPlayer { get; set; }
+    public MouseNPCModel MousePlayer { get; set; }
+    CharacterInputHandler _characterInputHandler;
     // Start is called before the first frame update
     void Awake()
     {
         _runnerPrefab = Resources.Load<NetworkRunner>("Connection/NetworkRunner");
+        GameHUDCanvas = FindObjectsOfType<GameObject>(true).Where(x => x.name.Equals("GameHUDCanvas")).FirstOrDefault();
+        _catPlayerPrefab = Resources.Load<CatPlayerModel>("CatModel");
+        _mousePlayerPrefab = Resources.Load<MouseNPCModel>("Mouse");
+        DontDestroyOnLoad(this);
     }
 
     // Update is called once per frame
@@ -62,9 +75,9 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
     }
     public void JoinSession(SessionInfo sessionInfo)
     {
-        Debug.Log("SESSION INFO: " + sessionInfo.Name);
+        //Debug.Log("SESSION INFO: " + sessionInfo.Name);
         var buildIndex = SceneManager.GetActiveScene().buildIndex;
-        Debug.Log("BuildIndex JOIN: " + buildIndex);
+        //Debug.Log("BuildIndex JOIN: " + buildIndex);
         var clientTask = InitializeSession(_currentRunner, GameMode.Client, sessionInfo.Name,
             buildIndex);
     }
@@ -80,16 +93,65 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
             SessionName = sessionName,
             CustomLobbyName = "Normal Lobby",
             SceneManager = sceneManager,
-            PlayerCount = 3
+            PlayerCount = 2
         });
     }
+    public void ShowHideGameCanvases(bool enabled, bool isPlayerTwo)
+    {
+        if (GameHUDCanvas)
+        {
+            GameHUDCanvas.SetActive(enabled);
+            ShowGameHUDPanelAndActivatePlayers(isPlayerTwo);
+        }
+    }
 
+    public void ShowGameHUDPanelAndActivatePlayers(bool isPlayerTwo)
+    {
+        Debug.Log("ENTRA ACA CUANDO ES 2DO PLAYER??");
+        GameHUDCanvas.GetComponentsInChildren<RectTransform>()
+                    .Where(x => x.gameObject.name.Equals("GameHUDPanel"))
+                    .FirstOrDefault().gameObject.SetActive(isPlayerTwo);
+
+    }
     public void OnSessionListUpdated(NetworkRunner runner, List<SessionInfo> sessionList)
     {
-        Debug.Log("<< SESSION LIST UPDATED >>");
-        Debug.Log("HAS SESSIONS TO SHOW? " + sessionList.Count);
+        //Debug.Log("<< SESSION LIST UPDATED >>");
+        //Debug.Log("HAS SESSIONS TO SHOW? " + sessionList.Count);
         OnSessionListUpdate?.Invoke(sessionList);
     }
+    public void OnInput(NetworkRunner runner, NetworkInput input)
+    {
+        Debug.Log("ON INPUT - MAIN MENU SCENE");
+        if (!PlayerModel.Local) return;
+        Debug.Log("PLAYER MODEL - MAIN MENU SCENE - " + PlayerModel.Local == null);
+        if (!_characterInputHandler) _characterInputHandler = PlayerModel.Local.GetInputHandler();
+        else input.Set(_characterInputHandler.GetInputData());
+    }
+    public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
+    {
+        if (runner.IsServer)
+        {
+            if (player.PlayerId == 1)
+            {
+                Debug.Log("ON PLAYER JOINED - MAIN MENU SCENE - " + player.PlayerId);
+                runner.Spawn(_catPlayerPrefab, GameManager.Instance.CatSpawner.transform.position, Quaternion.identity, player);
+                ShowHideGameCanvases(true, runner.LocalPlayer.PlayerId == 1);
+            }
+            else if (player.PlayerId == 0)
+            {
+                Debug.Log("ON PLAYER JOINED - MAIN MENU SCENE - " + player.PlayerId);
+                runner.Spawn(_mousePlayerPrefab, GameManager.Instance.MouseSpawner.transform.position, Quaternion.identity, player);
+                ShowHideGameCanvases(true, runner.LocalPlayer.PlayerId == 1);
+            }
+
+            Debug.Log("[Custom Message] Player Joined - I'm THE LAW!!");
+        }
+        else
+        {
+            Debug.Log("[Custom Message] Player Joined - I'm NOT the Server");
+        }
+    }
+
     #region Unused Callbacks
     public void OnConnectedToServer(NetworkRunner runner)
     {
@@ -121,21 +183,11 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
         
     }
 
-    public void OnInput(NetworkRunner runner, NetworkInput input)
-    {
-
-    }
-
     public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input)
     {
 
     }
-
-    public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
-    {
-
-    }
-
+    
     public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
     {
 
