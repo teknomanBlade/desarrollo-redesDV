@@ -123,25 +123,25 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
     {
         Debug.Log("ON INPUT - MAIN MENU SCENE");
         if (!PlayerModel.Local) return;
-        Debug.Log("PLAYER MODEL - MAIN MENU SCENE - " + PlayerModel.Local == null);
-        if (!_characterInputHandler) _characterInputHandler = PlayerModel.Local.GetInputHandler();
+        if (!_characterInputHandler) _characterInputHandler = PlayerModel.Local.GetComponent<CharacterInputHandler>();
         else input.Set(_characterInputHandler.GetInputData());
     }
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
     {
+        Debug.Log("PLAYER ID: " + player.PlayerId);
         if (runner.IsServer)
         {
             if (player.PlayerId == 1)
             {
                 Debug.Log("ON PLAYER JOINED - MAIN MENU SCENE - " + player.PlayerId);
                 runner.Spawn(_catPlayerPrefab, GameManager.Instance.CatSpawner.transform.position, Quaternion.identity, player);
-                ShowHideGameCanvases(true, runner.LocalPlayer.PlayerId == 1);
+                ShowHideGameCanvases(true, player.PlayerId == 1);
             }
             else if (player.PlayerId == 0)
             {
                 Debug.Log("ON PLAYER JOINED - MAIN MENU SCENE - " + player.PlayerId);
                 runner.Spawn(_mousePlayerPrefab, GameManager.Instance.MouseSpawner.transform.position, Quaternion.identity, player);
-                ShowHideGameCanvases(true, runner.LocalPlayer.PlayerId == 1);
+                ShowHideGameCanvases(true, player.PlayerId == 1);
             }
 
             Debug.Log("[Custom Message] Player Joined - I'm THE LAW!!");

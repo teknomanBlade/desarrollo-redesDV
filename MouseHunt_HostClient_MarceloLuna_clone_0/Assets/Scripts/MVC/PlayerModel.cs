@@ -48,6 +48,8 @@ public class PlayerModel : NetworkBehaviour
         if (Object.HasInputAuthority)
         {
             Local = this;
+            Camera = Camera.main;
+            Camera.GetComponent<ThirdPersonCamera>().Target = GetComponent<NetworkRigidbody>().InterpolationTarget;
             Debug.Log("[Custom Message] Spawned own Player");
         }
         else
@@ -58,8 +60,6 @@ public class PlayerModel : NetworkBehaviour
         if (Object.HasStateAuthority)
         {
             SetLife();
-            Camera = Camera.main;
-            Camera.GetComponent<ThirdPersonCamera>().Target = GetComponent<NetworkRigidbody>().InterpolationTarget;
         }
     }
     public override void FixedUpdateNetwork()
@@ -93,6 +93,4 @@ public class PlayerModel : NetworkBehaviour
     {
     
     }
-
-    
 }

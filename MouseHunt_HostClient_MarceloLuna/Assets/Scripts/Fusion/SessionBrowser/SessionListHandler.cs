@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class SessionListHandler : MonoBehaviour
 {
     [SerializeField] NetworkRunnerHandler _networkRunner;
-    [SerializeField] Text _statusText;
+    [SerializeField] GameObject _statusText;
     [SerializeField] GameObject _sessionPrefab;
     [SerializeField] VerticalLayoutGroup _verticalLayout;
 
@@ -71,7 +71,6 @@ public class SessionListHandler : MonoBehaviour
 
     private void NoSessionsFound()
     {
-        _statusText.text = "No sessions found.";
         _statusText.gameObject.SetActive(true);
     }
 }

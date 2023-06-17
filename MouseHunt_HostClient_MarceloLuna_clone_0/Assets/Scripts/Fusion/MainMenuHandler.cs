@@ -21,9 +21,6 @@ public class MainMenuHandler : MonoBehaviour
     [Header("InputFields")]
     [SerializeField] InputField IF_HostSessionName;
 
-    [Header("Text")]
-    [SerializeField] Text TXT_Status;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -50,8 +47,6 @@ public class MainMenuHandler : MonoBehaviour
 
         _initialPanel.SetActive(false);
         _statusPanel.SetActive(true);
-
-        TXT_Status.text = "Joining Lobby...";
     }
 
     void ShowHostPanel() 

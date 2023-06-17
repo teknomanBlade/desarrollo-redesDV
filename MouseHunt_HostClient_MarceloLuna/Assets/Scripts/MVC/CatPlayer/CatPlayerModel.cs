@@ -44,6 +44,12 @@ public class CatPlayerModel : PlayerModel
         base.FixedUpdateNetwork();
         _controller.OnUpdate();
     }
+    /*public override void AssignInputAuthority()
+    {
+        var playerRef = Runner.ActivePlayers.FirstOrDefault(x => x.PlayerId == 1);
+        Debug.Log("PLAYER REF: " + playerRef);
+        Object.AssignInputAuthority(playerRef);
+    }*/
 
     public void PlayerActions() 
     {
@@ -117,17 +123,6 @@ public class CatPlayerModel : PlayerModel
         {
             Debug.Log("MOUSE HITTED - CAT...");
             mouseNPCModel.TakeDamage(Damage);
-            //Debug.Log("BEFORE GAMEMANAGER CALL...");
-            /*Debug.Log("Mouse Dead: " + GameManager.Instance.IsMouseDead);
-            if (GameManager.Instance.IsMouseDead)
-            {
-                Debug.Log("INSIDE GAMEMANAGER CALL...");
-                FindObjectsOfType<RectTransform>(true)
-                .Where(x => x.gameObject.name.Equals("CatWinParent"))
-                .FirstOrDefault().gameObject.SetActive(true);
-                Debug.Log("EL RATON HIZO KAPUTT...");
-            }*/
-            //Debug.Log("AFTER GAMEMANAGER CALL...");
         }
     }
 }

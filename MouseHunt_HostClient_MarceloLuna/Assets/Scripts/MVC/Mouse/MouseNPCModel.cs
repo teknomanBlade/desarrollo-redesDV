@@ -32,7 +32,10 @@ public class MouseNPCModel : PlayerModel
     }
     public override void SetLife()
     {
-        Life = 100f;
+        if (Object.HasStateAuthority) 
+        {
+            Life = 100f;
+        }
         View.MouseLife = FindObjectsOfType<RectTransform>(true)
                         .Where(x => x.gameObject.name.Equals("MouseLife"))
                         .FirstOrDefault().GetComponent<Image>();
@@ -42,7 +45,12 @@ public class MouseNPCModel : PlayerModel
         base.FixedUpdateNetwork();
         _controller.OnUpdate();
     }
-
+    /*public override void AssignInputAuthority()
+    {
+        var playerRef = Runner.ActivePlayers.FirstOrDefault(x => x.PlayerId == 0);
+        Debug.Log("PLAYER REF: " + playerRef);
+        Object.AssignInputAuthority(playerRef);
+    }*/
     public void PlayerActions()
     {
         var input = GetInput(out NetworkInputData networkInputData);
