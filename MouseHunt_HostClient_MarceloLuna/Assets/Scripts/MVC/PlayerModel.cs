@@ -69,9 +69,9 @@ public class PlayerModel : NetworkBehaviour
             //Debug.Log("DEBUG EN EL ANTES PRIMER IF PARA VER SI SE VA ANTES...");
             if (GameManager.Instance.HasMouseReachedGoal)
             {
-                FindObjectsOfType<RectTransform>(true)
-                .Where(x => x.gameObject.name.Equals("CatLoseParent"))
-                .FirstOrDefault().gameObject.SetActive(true);
+                GameManager.Instance.GameHUDCanvas.GetComponentsInChildren<RectTransform>(true)
+                    .Where(x => x.gameObject.name.Equals("Player1Lose"))
+                    .FirstOrDefault().gameObject.SetActive(true);
                 Debug.Log("EL RATON SE HA ESCAPADO!!");
             }
 
@@ -79,9 +79,9 @@ public class PlayerModel : NetworkBehaviour
             if (GameManager.Instance.IsMouseDead)
             {
                 Debug.Log("INSIDE GAMEMANAGER CALL...");
-                FindObjectsOfType<RectTransform>(true)
-                .Where(x => x.gameObject.name.Equals("CatWinParent"))
-                .FirstOrDefault().gameObject.SetActive(true);
+                GameManager.Instance.GameHUDCanvas.GetComponentsInChildren<RectTransform>(true)
+                    .Where(x => x.gameObject.name.Equals("Player1Win"))
+                    .FirstOrDefault().gameObject.SetActive(true);
                 Debug.Log("EL RATON HIZO KAPUTT...");
             }
             //Debug.Log("DEBUG EN EL MEDIO PARA VER SI SE VA ANTES...");

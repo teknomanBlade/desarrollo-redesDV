@@ -28,7 +28,6 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
     void Awake()
     {
         _runnerPrefab = Resources.Load<NetworkRunner>("Connection/NetworkRunner");
-        GameHUDCanvas = FindObjectsOfType<GameObject>(true).Where(x => x.name.Equals("GameHUDCanvas")).FirstOrDefault();
         _catPlayerPrefab = Resources.Load<CatPlayerModel>("CatModel");
         _mousePlayerPrefab = Resources.Load<MouseNPCModel>("Mouse");
         DontDestroyOnLoad(this);
@@ -96,23 +95,20 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
             PlayerCount = 2
         });
     }
-    public void ShowHideGameCanvases(bool enabled, bool isPlayerTwo)
+    public void ShowHideGameCanvases(bool enabled)
     {
-        if (GameHUDCanvas)
-        {
-            GameHUDCanvas.SetActive(enabled);
-            ShowGameHUDPanelAndActivatePlayers(isPlayerTwo);
-        }
+        GameManager.Instance.RPC_ShowGameHUDMouse(enabled);
     }
 
-    public void ShowGameHUDPanelAndActivatePlayers(bool isPlayerTwo)
+    /*public void ShowGameHUDPanelAndActivatePlayers(bool isPlayerTwo)
     {
         Debug.Log("ENTRA ACA CUANDO ES 2DO PLAYER??");
-        GameHUDCanvas.GetComponentsInChildren<RectTransform>()
+        var GameHUD = GameManager.Instance.GameHUDCanvas.GetComponentsInChildren<RectTransform>(true)
                     .Where(x => x.gameObject.name.Equals("GameHUDPanel"))
-                    .FirstOrDefault().gameObject.SetActive(isPlayerTwo);
+                    .FirstOrDefault();
+        GameHUD.gameObject.SetActive(isPlayerTwo);
 
-    }
+    }*/
     public void OnSessionListUpdated(NetworkRunner runner, List<SessionInfo> sessionList)
     {
         //Debug.Log("<< SESSION LIST UPDATED >>");
@@ -135,13 +131,13 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
             {
                 Debug.Log("ON PLAYER JOINED - MAIN MENU SCENE - " + player.PlayerId);
                 runner.Spawn(_catPlayerPrefab, GameManager.Instance.CatSpawner.transform.position, Quaternion.identity, player);
-                ShowHideGameCanvases(true, player.PlayerId == 1);
+                ShowHideGameCanvases(true);
             }
             else if (player.PlayerId == 0)
             {
                 Debug.Log("ON PLAYER JOINED - MAIN MENU SCENE - " + player.PlayerId);
                 runner.Spawn(_mousePlayerPrefab, GameManager.Instance.MouseSpawner.transform.position, Quaternion.identity, player);
-                ShowHideGameCanvases(true, player.PlayerId == 1);
+                ShowHideGameCanvases(true);
             }
 
             Debug.Log("[Custom Message] Player Joined - I'm THE LAW!!");

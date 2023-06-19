@@ -22,7 +22,6 @@ public class CatPlayerModel : PlayerModel
     
     //public int MicesCaptured { get; set; }
     public float _lastAttackTime { get; private set; }
-    private float AttackRate;
     
     #endregion
 
@@ -32,7 +31,6 @@ public class CatPlayerModel : PlayerModel
         Speed = 2f;
         RunningSpeed = 4.5f;
         Damage = 20f;
-        AttackRate = 0.45f;
         NetworkRB = transform.gameObject.GetComponent<NetworkRigidbody>();
         View = GetComponent<CatPlayerView>();
         _controller = new CatPlayerController(this, View);
@@ -44,12 +42,6 @@ public class CatPlayerModel : PlayerModel
         base.FixedUpdateNetwork();
         _controller.OnUpdate();
     }
-    /*public override void AssignInputAuthority()
-    {
-        var playerRef = Runner.ActivePlayers.FirstOrDefault(x => x.PlayerId == 1);
-        Debug.Log("PLAYER REF: " + playerRef);
-        Object.AssignInputAuthority(playerRef);
-    }*/
 
     public void PlayerActions() 
     {

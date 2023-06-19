@@ -45,12 +45,7 @@ public class MouseNPCModel : PlayerModel
         base.FixedUpdateNetwork();
         _controller.OnUpdate();
     }
-    /*public override void AssignInputAuthority()
-    {
-        var playerRef = Runner.ActivePlayers.FirstOrDefault(x => x.PlayerId == 0);
-        Debug.Log("PLAYER REF: " + playerRef);
-        Object.AssignInputAuthority(playerRef);
-    }*/
+   
     public void PlayerActions()
     {
         var input = GetInput(out NetworkInputData networkInputData);
@@ -78,21 +73,23 @@ public class MouseNPCModel : PlayerModel
             ManageRotation(dir);
         }
     }
+
     public void TakeDamage(float dmg)
     {
         RPC_GetDamage(dmg);
     }
 
-    [Rpc(RpcSources.Proxies, RpcTargets.StateAuthority)]
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
     void RPC_GetDamage(float dmg) 
     {
         Life -= dmg;
+        Debug.Log("CURRENT LIFE:" + Life);
         OnTakeDamage(dmg);
         if (Life <= 0)
         {
             GameManager.Instance.RPC_IsMouseDead();
             FindObjectsOfType<RectTransform>(true)
-                .Where(x => x.gameObject.name.Equals("MouseLoseParent"))
+                .Where(x => x.gameObject.name.Equals("Player2Lose"))
                 .FirstOrDefault().gameObject.SetActive(true);
             StartCoroutine(DeadCoroutine());
         }
@@ -126,7 +123,7 @@ public class MouseNPCModel : PlayerModel
             Debug.Log("MOUSE REACHED GOAL...");
             GameManager.Instance.RPC_MouseHasReachedGoal();
             FindObjectsOfType<RectTransform>(true)
-                .Where(x => x.gameObject.name.Equals("MouseWinParent"))
+                .Where(x => x.gameObject.name.Equals("Player2Win"))
                 .FirstOrDefault().gameObject.SetActive(true);
             
         }
