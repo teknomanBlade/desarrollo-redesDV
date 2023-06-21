@@ -95,9 +95,14 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
             PlayerCount = 2
         });
     }
-    public void ShowHideGameCanvases(bool enabled)
+    public void ShowHideGameCanvases(bool enabled, NetworkRunner runner = null)
     {
-        GameManager.Instance.RPC_ShowGameHUDMouse(enabled);
+        if (runner == null) return;
+
+        //Debug.Log("IS CLIENT? = " + runner.IsClient + " PLAYER: " + playerRef.PlayerId);
+        GameManager.Instance.GameHUDCanvas.GetComponentsInChildren<RectTransform>(true)
+                            .Where(x => x.gameObject.name.Equals("GameHUDPanel"))
+                            .FirstOrDefault().gameObject.SetActive(enabled);
     }
 
     /*public void ShowGameHUDPanelAndActivatePlayers(bool isPlayerTwo)
@@ -137,13 +142,14 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
             {
                 Debug.Log("ON PLAYER JOINED - MAIN MENU SCENE - " + player.PlayerId);
                 runner.Spawn(_mousePlayerPrefab, GameManager.Instance.MouseSpawner.transform.position, Quaternion.identity, player);
-                ShowHideGameCanvases(true);
+                //ShowHideGameCanvases(true, runner);
             }
 
             Debug.Log("[Custom Message] Player Joined - I'm THE LAW!!");
         }
         else
         {
+            ShowHideGameCanvases(true, runner);
             Debug.Log("[Custom Message] Player Joined - I'm NOT the Server");
         }
     }

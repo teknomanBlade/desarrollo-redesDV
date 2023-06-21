@@ -1,12 +1,12 @@
 using Fusion;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : NetworkBehaviour
 {
     public static GameManager Instance { get; private set; }
     public GameObject GameHUDCanvas;
-    public GameObject GameWinLoseCanvas;
     public GameObject CatSpawner;
     public GameObject MouseSpawner;
     public bool IsMouseDead { get; set; }
@@ -31,13 +31,6 @@ public class GameManager : NetworkBehaviour
     public override void FixedUpdateNetwork()
     {
 
-    }
-    [Rpc(RpcSources.All, RpcTargets.All)]
-    public void RPC_ShowGameHUDMouse(bool activate) 
-    {
-            GameHUDCanvas.GetComponentsInChildren<RectTransform>(true)
-                            .Where(x => x.gameObject.name.Equals("GameHUDPanel"))
-                            .FirstOrDefault().gameObject.SetActive(activate);
     }
 
     [Rpc(RpcSources.All, RpcTargets.All)]

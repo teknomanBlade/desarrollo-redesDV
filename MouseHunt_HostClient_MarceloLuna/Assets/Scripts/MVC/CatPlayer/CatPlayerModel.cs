@@ -16,6 +16,7 @@ public class CatPlayerModel : PlayerModel
     public event Action OnStunnedAnimation = delegate { };
     public event Action OnStunnedFalseAnimation = delegate { };
     public event Action OnAttackingAnimation = delegate { };
+    public event Action OnSetInitialTexture = delegate { };
     public CatPlayerView View { get; private set; }
     public float Damage { get; set; }
     //public event Action<int> OnMiceCaptured = delegate { };// Es un tipo de delegate que te permite encapsular cualquier metodo que no devuelva ningun valor, y en este caso que pida un int como parametro
@@ -36,7 +37,18 @@ public class CatPlayerModel : PlayerModel
         _controller = new CatPlayerController(this, View);
         OnIdleAnimation();
     }
-    
+
+    [Rpc(RpcSources.All, RpcTargets.All)]
+    void RPC_OnSetInitialTexture()
+    {
+        OnSetInitialTexture();
+    }
+
+    public override void SetInitialTexture()
+    {
+        RPC_OnSetInitialTexture();
+    }
+
     public override void FixedUpdateNetwork()
     {
         base.FixedUpdateNetwork();
@@ -87,13 +99,6 @@ public class CatPlayerModel : PlayerModel
     
     public void Attack()
     {
-        /*var attackDelta = Time.time - _lastAttackTime;
-        //Debug.Log("ATTACK RATE CURRENT BEFORE RETURN: " + attackDelta);
-        if (attackDelta < AttackRate) return;
-
-        _lastAttackTime = Time.time;*/
-        //Debug.Log("ATTACK RATE CURRENT AFTER RETURN: " + attackDelta);
-        //Debug.Log("ATTACK MOUSE...");
         OnAttackingAnimation();
     }
 
@@ -113,7 +118,7 @@ public class CatPlayerModel : PlayerModel
 
         if (other.TryGetComponent(out MouseNPCModel mouseNPCModel))
         {
-            Debug.Log("MOUSE HITTED - CAT...");
+            //Debug.Log("MOUSE HITTED - CAT...");
             mouseNPCModel.TakeDamage(Damage);
         }
     }

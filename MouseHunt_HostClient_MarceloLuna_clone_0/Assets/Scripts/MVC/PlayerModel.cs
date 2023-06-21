@@ -45,6 +45,7 @@ public class PlayerModel : NetworkBehaviour
     }
     public override void Spawned()
     {
+        SetInitialTexture();
         if (Object.HasInputAuthority)
         {
             Local = this;
@@ -60,6 +61,7 @@ public class PlayerModel : NetworkBehaviour
         if (Object.HasStateAuthority)
         {
             SetLife();
+            
         }
     }
     public override void FixedUpdateNetwork()
@@ -75,7 +77,7 @@ public class PlayerModel : NetworkBehaviour
                 Debug.Log("EL RATON SE HA ESCAPADO!!");
             }
 
-            Debug.Log("Mouse Dead: " + GameManager.Instance.IsMouseDead);
+            //Debug.Log("Mouse Dead: " + GameManager.Instance.IsMouseDead);
             if (GameManager.Instance.IsMouseDead)
             {
                 Debug.Log("INSIDE GAMEMANAGER CALL...");
@@ -92,5 +94,9 @@ public class PlayerModel : NetworkBehaviour
     public virtual void SetLife() 
     {
     
+    }
+    public virtual void SetInitialTexture()
+    {
+
     }
 }

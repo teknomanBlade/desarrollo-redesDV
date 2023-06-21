@@ -36,9 +36,6 @@ public class MouseNPCModel : PlayerModel
         {
             Life = 100f;
         }
-        View.MouseLife = FindObjectsOfType<RectTransform>(true)
-                        .Where(x => x.gameObject.name.Equals("MouseLife"))
-                        .FirstOrDefault().GetComponent<Image>();
     }
     public override void FixedUpdateNetwork()
     {
@@ -84,7 +81,7 @@ public class MouseNPCModel : PlayerModel
     {
         Life -= dmg;
         Debug.Log("CURRENT LIFE:" + Life);
-        OnTakeDamage(dmg);
+        RPC_OnTakeDamage(dmg);
         if (Life <= 0)
         {
             GameManager.Instance.RPC_IsMouseDead();
@@ -93,6 +90,11 @@ public class MouseNPCModel : PlayerModel
                 .FirstOrDefault().gameObject.SetActive(true);
             StartCoroutine(DeadCoroutine());
         }
+    }
+    [Rpc(RpcSources.All, RpcTargets.All)]
+    void RPC_OnTakeDamage(float dmg) 
+    {
+        OnTakeDamage(dmg);
     }
     IEnumerator DeadCoroutine() 
     {

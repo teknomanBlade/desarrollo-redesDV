@@ -14,10 +14,14 @@ public class CatPlayerView : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
+    }
+
+    public void SetInitialTexture() 
+    {
         var textureSelected = textures[Random.Range(0, textures.Count)];
         Debug.Log("TEXTURE SELECTED: " + textureSelected);
-        GetComponentInChildren<Renderer>().material.SetTexture("_MainTexture",textureSelected);
-        //MeshRenderer.material.mainTexture = textureSelected;
+        GetComponentInChildren<Renderer>().material.SetTexture("_MainTexture", textureSelected);
     }
 
     // Update is called once per frame

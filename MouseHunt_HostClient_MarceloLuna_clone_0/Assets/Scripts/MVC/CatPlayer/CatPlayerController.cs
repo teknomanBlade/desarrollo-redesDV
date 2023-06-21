@@ -20,6 +20,7 @@ public class CatPlayerController : IController
         _m.OnRunningFalseAnimation += _v.RunningFalseAnimation;
         _m.OnStunnedAnimation += _v.StunnedAnimation;
         _m.OnStunnedFalseAnimation += _v.StunnedFalseAnimation;
+        _m.OnSetInitialTexture += _v.SetInitialTexture;
     }
 
     public void OnUpdate()
