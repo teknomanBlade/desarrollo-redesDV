@@ -9,6 +9,13 @@ public class PlayerModel : NetworkBehaviour
 {
     public static PlayerModel Local { get; private set; }
     public Camera Camera;
+    public event Action OnLeft = delegate { };
+    private NicknameText _myNickname;
+    [Networked(OnChanged = nameof(OnNicknameChanged))] 
+    public NetworkString<_16> Nickname { get; set; }
+
+   
+
     protected IController _controller;
     public NetworkRigidbody NetworkRB { get; set; }
     public float Speed { get; set; }
@@ -45,12 +52,14 @@ public class PlayerModel : NetworkBehaviour
     }
     public override void Spawned()
     {
+        _myNickname = NicknamesHandler.Instance.AddNickname(this);
         SetInitialTexture();
         if (Object.HasInputAuthority)
         {
             Local = this;
             Camera = Camera.main;
             Camera.GetComponent<ThirdPersonCamera>().Target = GetComponent<NetworkRigidbody>().InterpolationTarget;
+            RPC_SetNickname(gameObject.name);
             Debug.Log("[Custom Message] Spawned own Player");
         }
         else
@@ -61,8 +70,25 @@ public class PlayerModel : NetworkBehaviour
         if (Object.HasStateAuthority)
         {
             SetLife();
-            
         }
+    }
+    [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
+    void RPC_SetNickname(string nick) 
+    {
+        Nickname = nick;
+    }
+    public static void OnNicknameChanged(Changed<PlayerModel> changed)
+    {
+        changed.Behaviour.UpdateNickName(changed.Behaviour.Nickname.ToString());
+    }
+
+    void UpdateNickName(string nickname) 
+    {
+        _myNickname.UpdateNickname(nickname);
+    }
+    public override void Despawned(NetworkRunner runner, bool hasState)
+    {
+        OnLeft();
     }
     public override void FixedUpdateNetwork()
     {

@@ -97,12 +97,15 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
     }
     public void ShowHideGameCanvases(bool enabled, NetworkRunner runner = null)
     {
-        if (runner == null) return;
-
-        //Debug.Log("IS CLIENT? = " + runner.IsClient + " PLAYER: " + playerRef.PlayerId);
         GameManager.Instance.GameHUDCanvas.GetComponentsInChildren<RectTransform>(true)
-                            .Where(x => x.gameObject.name.Equals("GameHUDPanel"))
-                            .FirstOrDefault().gameObject.SetActive(enabled);
+                           .Where(x => x.gameObject.name.Equals("GameHUDPanel"))
+                           .FirstOrDefault().gameObject.SetActive(enabled);
+        GameManager.Instance.GameHUDCanvas.GetComponentsInChildren<RectTransform>(true)
+                           .Where(x => x.gameObject.name.Equals("GameHUDPanel"))
+                           .FirstOrDefault()
+                           .GetChild(0).gameObject.SetActive((runner == null) ? !enabled : enabled);
+        //Debug.Log("IS CLIENT? = " + runner.IsClient + " PLAYER: " + playerRef.PlayerId);
+
     }
 
     /*public void ShowGameHUDPanelAndActivatePlayers(bool isPlayerTwo)
