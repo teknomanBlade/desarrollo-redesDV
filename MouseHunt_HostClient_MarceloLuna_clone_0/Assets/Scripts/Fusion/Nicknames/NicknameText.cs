@@ -10,10 +10,19 @@ public class NicknameText : MonoBehaviour
     Transform _owner;
 
     Text _myText;
-
+    RectTransform _rect;
     public NicknameText SetOwner(PlayerModel owner) 
     {
         _myText = GetComponent<Text>();
+        _rect = GetComponent<RectTransform>();
+        if (owner.gameObject.name.Contains("Cat"))
+        {
+            _rect.offsetMax = new Vector2(-2f, -1.5f);
+        }
+        else 
+        {
+            _rect.offsetMax = new Vector2(-2f, -16f);
+        }
         _owner = owner.transform;
         return this;
     }
