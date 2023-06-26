@@ -8,13 +8,12 @@ using UnityEngine;
 public class PlayerModel : NetworkBehaviour
 {
     public static PlayerModel Local { get; private set; }
+    protected Vector3 Dir;
     public Camera Camera;
     public event Action OnLeft = delegate { };
     private NicknameText _myNickname;
     [Networked(OnChanged = nameof(OnNicknameChanged))] 
     public NetworkString<_16> Nickname { get; set; }
-
-   
 
     protected IController _controller;
     public NetworkRigidbody NetworkRB { get; set; }

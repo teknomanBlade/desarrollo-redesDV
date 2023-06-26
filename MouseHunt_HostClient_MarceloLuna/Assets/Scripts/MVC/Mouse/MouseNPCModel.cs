@@ -49,15 +49,16 @@ public class MouseNPCModel : PlayerModel
         //Debug.Log("MOVEMENT SPEED ACTIONS MOUSE..." + input);
         if (input)
         {
+            Dir = new Vector3(networkInputData.xMovement, 0, networkInputData.zMovement);
             if (networkInputData._isSprintPressed)
             {
                 //Debug.Log("MOVEMENT SPEED RUNNING MOUSE...");
-                Movement(new Vector3(networkInputData.xMovement, 0, networkInputData.zMovement), RunningSpeed);
+                Movement(Dir, RunningSpeed);
             }
             else 
             {
                 //Debug.Log("MOVEMENT SPEED NORMAL MOUSE...");
-                Movement(new Vector3(networkInputData.xMovement, 0, networkInputData.zMovement), Speed);
+                Movement(Dir, Speed);
             }
         }
     }
