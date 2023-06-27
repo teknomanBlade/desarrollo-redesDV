@@ -6,10 +6,16 @@ public class ThirdPersonCamera : MonoBehaviour
 {
     public Transform Target;
     private Vector3 offsetCat = new Vector3(0f, 0.35f, -1f);
-    private Vector3 offsetMouse = new Vector3(0f, 0.15f, -0.6f);
-    private float MouseSensitivity = 6f;
+    private Vector3 offsetMouse = new Vector3(0f, -0.1f, 1.2f);
+    //private float MouseSensitivity = 6f;
     private float verticalRotation;
-    private float horizontalRotation;
+    //private float horizontalRotation;
+
+    [SerializeField]
+    private Space offsetPositionSpace = Space.Self;
+
+    [SerializeField]
+    private bool lookAt = true;
 
     void LateUpdate()
     {
@@ -18,20 +24,43 @@ public class ThirdPersonCamera : MonoBehaviour
             //Debug.Log("TARGET NULL? ");
             return;
         }
-
-        transform.position = Target.position + GetOffsetByType(Target);
+       
+        ComputePosition(GetOffsetByType(Target));
 
         float mouseX = Input.GetAxis("Mouse X");
         float mouseY = Input.GetAxis("Mouse Y");
 
-        verticalRotation -= mouseY * MouseSensitivity;
-        verticalRotation = GetVerticalRotationByType(Target);
+        //verticalRotation -= mouseY * MouseSensitivity;
+        //verticalRotation = GetVerticalRotationByType(Target);
 
-        horizontalRotation += mouseX * MouseSensitivity;
+        //horizontalRotation += mouseX * MouseSensitivity;
 
-        transform.rotation = Quaternion.Euler(verticalRotation, horizontalRotation, 0);
+        ComputeLookAt();
     }
 
+    public void ComputeLookAt(/*Quaternion rot*/)
+    {
+        if (lookAt)
+        {
+            transform.forward = Target.forward;
+        }
+        /*else
+        {
+            transform.rotation = rot;
+        }*/
+    }
+
+    public void ComputePosition(Vector3 offsetPos) 
+    {
+        if (offsetPositionSpace == Space.Self)
+        {
+            transform.position = Target.TransformPoint(offsetPos);
+        }
+        else
+        {
+            transform.position = Target.position + offsetPos;
+        }
+    }
     private float GetVerticalRotationByType(Transform Target)
     {
         if (Target.gameObject.name.Contains("Cat"))
@@ -52,6 +81,7 @@ public class ThirdPersonCamera : MonoBehaviour
         }
         else 
         {
+            Camera.main.nearClipPlane = 0.1f;
             return offsetMouse;
         }
     }

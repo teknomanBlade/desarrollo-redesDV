@@ -278,6 +278,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Target: {fileID: 0}
+  offsetPositionSpace: 1
+  lookAt: 1
 --- !u!1001 &160020767
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -364,7 +366,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9107511169540255131, guid: 2723987fc82485244884f7b8c14dc25e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.14
+      value: 0.115
       objectReference: {fileID: 0}
     - target: {fileID: 9107511169540255131, guid: 2723987fc82485244884f7b8c14dc25e, type: 3}
       propertyPath: m_LocalPosition.z

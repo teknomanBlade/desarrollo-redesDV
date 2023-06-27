@@ -11,6 +11,7 @@ public class PlayerModel : NetworkBehaviour
     protected Vector3 Dir;
     public Camera Camera;
     public event Action OnLeft = delegate { };
+    protected string _nick;
     private NicknameText _myNickname;
     [Networked(OnChanged = nameof(OnNicknameChanged))] 
     public NetworkString<_16> Nickname { get; set; }
@@ -37,6 +38,8 @@ public class PlayerModel : NetworkBehaviour
 
     }
 
+    
+
     protected void ManageRotation(Vector3 dir) 
     {
         if (dir != Vector3.zero) 
@@ -58,7 +61,6 @@ public class PlayerModel : NetworkBehaviour
             Local = this;
             Camera = Camera.main;
             Camera.GetComponent<ThirdPersonCamera>().Target = GetComponent<NetworkRigidbody>().InterpolationTarget;
-            RPC_SetNickname(gameObject.name);
             Debug.Log("[Custom Message] Spawned own Player");
         }
         else
@@ -71,8 +73,15 @@ public class PlayerModel : NetworkBehaviour
             SetLife();
         }
     }
+    public PlayerModel SetNickname(string nick)
+    {
+        _nick = nick;
+        RPC_SetNickname(_nick);
+        return this;
+    }
+
     [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
-    void RPC_SetNickname(string nick) 
+    void RPC_SetNickname(string nick)
     {
         Nickname = nick;
     }

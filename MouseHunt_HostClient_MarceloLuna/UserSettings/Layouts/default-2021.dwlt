@@ -48,7 +48,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 18
+  controlID: 23
 --- !u!114 &3
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -268,8 +268,8 @@ MonoBehaviour:
     y: 0
     width: 1152
     height: 597
-  m_MinSize: {x: 202, y: 221}
-  m_MaxSize: {x: 4002, y: 4021}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 17}
   m_Panes:
   - {fileID: 17}
@@ -411,22 +411,22 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scripts/MVC/Mouse
+    - Assets/Scripts/Fusion
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Scripts/MVC/Mouse
+  - Assets/Scripts/Fusion
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\Marcelo\desarrollo-redesDV\MouseHunt_HostClient_MarceloLuna
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 135}
-    m_SelectedIDs: 56720000
-    m_LastClickedID: 29270
-    m_ExpandedIDs: 00000000fe63000000640000026400000464000006640000086400000a6400000c6400002c6400003a64000000ca9a3b
+    scrollPos: {x: 0, y: 87}
+    m_SelectedIDs: 56630000
+    m_LastClickedID: 25430
+    m_ExpandedIDs: 00000000526300005463000056630000586300005a6300005c6300005e630000606300008663000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -454,7 +454,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000fe63000000640000026400000464000006640000086400000a6400000c640000
+    m_ExpandedIDs: 00000000526300005463000056630000586300005a6300005c6300005e63000060630000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -582,9 +582,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 6a6d0000
-      m_LastClickedID: 28010
-      m_ExpandedIDs: 6eccffff74ccffffece3fffffee3ffff52e5ffff2ee9ffff2ef9ffff40f9ffff08fbffff926d0000546e0000
+      m_SelectedIDs: 
+      m_LastClickedID: 0
+      m_ExpandedIDs: 8a9cffff14a4ffff58b1ffff54bfffff5cc6ffff14cdffff22daffff58e3ffff54eaffff36fbfffff4ffffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -866,9 +866,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 860.50604, y: 640.1747, z: 0.35473633}
+    m_Target: {x: 960, y: 540, z: 0}
     speed: 2
-    m_Value: {x: 860.50604, y: 640.1747, z: 0.35473633}
+    m_Value: {x: 960, y: 540, z: 0}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -915,13 +915,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: -0.09914494, y: -0.0068702023, z: 0.0006801294, w: -0.99505824}
+    m_Target: {x: -0.121390164, y: -0.044061087, z: 0.0053893863, w: -0.99162185}
     speed: 2
-    m_Value: {x: -0.102129795, y: 0.0050691077, z: -0.000524836, w: -0.99475807}
+    m_Value: {x: -0.121388964, y: -0.04406065, z: 0.005389333, w: -0.991612}
   m_Size:
-    m_Target: 573.1221
+    m_Target: 605.3549
     speed: 2
-    m_Value: 573.1221
+    m_Value: 605.3549
   m_Ortho:
     m_Target: 0
     speed: 2

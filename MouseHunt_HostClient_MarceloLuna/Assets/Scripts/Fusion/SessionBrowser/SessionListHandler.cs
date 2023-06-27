@@ -34,7 +34,7 @@ public class SessionListHandler : MonoBehaviour
             Destroy(child.gameObject);
         }
 
-        _statusText.gameObject.SetActive(false);
+        _statusText.SetActive(false);
     }
 
     private void ReceiveSessionList(List<SessionInfo> allSessions)
@@ -71,6 +71,6 @@ public class SessionListHandler : MonoBehaviour
 
     private void NoSessionsFound()
     {
-        _statusText.gameObject.SetActive(true);
+        _statusText.SetActive(true);
     }
 }

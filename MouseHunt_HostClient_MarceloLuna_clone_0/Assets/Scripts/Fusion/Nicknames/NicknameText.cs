@@ -21,7 +21,7 @@ public class NicknameText : MonoBehaviour
         }
         else 
         {
-            _rect.offsetMax = new Vector2(-2f, -16f);
+            _rect.offsetMax = new Vector2(-2f, -35f);
         }
         _owner = owner.transform;
         return this;

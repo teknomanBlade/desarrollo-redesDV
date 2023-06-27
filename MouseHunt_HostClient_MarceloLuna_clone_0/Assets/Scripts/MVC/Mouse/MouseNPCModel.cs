@@ -9,6 +9,7 @@ using UnityEngine.UI;
 public class MouseNPCModel : PlayerModel
 {
     public event Action<float> OnTakeDamage = delegate { };
+    
     public MouseNPCView View { get; private set; }
     [Networked] float Life { get; set; }
     public bool IsMouseDead { get; set; }
@@ -30,6 +31,7 @@ public class MouseNPCModel : PlayerModel
     {
         return GetComponent<CharacterInputHandlerCat>();
     }
+
     public override void SetLife()
     {
         if (Object.HasStateAuthority) 

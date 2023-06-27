@@ -1,3 +1,4 @@
+using Fusion;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +10,7 @@ public class MainMenuHandler : MonoBehaviour
 
     [Header("Panels")]
     [SerializeField] GameObject _initialPanel;
+    [SerializeField] GameObject _nicknamePanel;
     [SerializeField] GameObject _statusPanel;
     [SerializeField] GameObject _sessionBrowserPanel;
     [SerializeField] GameObject _hostGamePanel;
@@ -17,9 +19,12 @@ public class MainMenuHandler : MonoBehaviour
     [SerializeField] Button BTN_JoinLobby;
     [SerializeField] Button BTN_OpenHostPanel;
     [SerializeField] Button BTN_HostGame;
+    [SerializeField] Button BTN_SaveNickname;
+    [SerializeField] Button BTN_NicknamePanel;
 
     [Header("InputFields")]
     [SerializeField] InputField IF_HostSessionName;
+    [SerializeField] InputField IF_SetNickname;
 
     // Start is called before the first frame update
     void Start()
@@ -27,11 +32,13 @@ public class MainMenuHandler : MonoBehaviour
         BTN_JoinLobby.onClick.AddListener(JoinLobby);
         BTN_OpenHostPanel.onClick.AddListener(ShowHostPanel);
         BTN_HostGame.onClick.AddListener(CreateGameSession);
+        BTN_SaveNickname.onClick.AddListener(SetNickname);
+        BTN_NicknamePanel.onClick.AddListener(ShowNicknamePanel);
 
         _networkRunner.OnJoinedLobby += () =>
         {
-            _statusPanel.SetActive(false);
             _sessionBrowserPanel.SetActive(true);
+            _statusPanel.SetActive(false);
         };
     }
 
@@ -59,5 +66,18 @@ public class MainMenuHandler : MonoBehaviour
     void CreateGameSession() 
     {
         _networkRunner.CreateSession(IF_HostSessionName.text, "Level");
+    }
+
+    void ShowNicknamePanel() 
+    {
+        _nicknamePanel.SetActive(true);
+        _sessionBrowserPanel.SetActive(false);
+    }
+
+    void SetNickname() 
+    {
+        _networkRunner.Nick = IF_SetNickname.text;
+        _sessionBrowserPanel.SetActive(true);
+        _nicknamePanel.SetActive(false);
     }
 }

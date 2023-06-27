@@ -12,7 +12,7 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
 {
     [SerializeField] NetworkRunner _runnerPrefab;
     NetworkRunner _currentRunner;
-
+    public string Nick;
     public event Action OnJoinedLobby;
 
     public event Action<List<SessionInfo>> OnSessionListUpdate;
@@ -138,14 +138,15 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
             if (player.PlayerId == 1)
             {
                 Debug.Log("ON PLAYER JOINED - MAIN MENU SCENE - " + player.PlayerId);
-                runner.Spawn(_catPlayerPrefab, GameManager.Instance.CatSpawner.transform.position, Quaternion.identity, player);
+                runner.Spawn(_catPlayerPrefab, GameManager.Instance.CatSpawner.transform.position, Quaternion.identity, player)
+                    .SetNickname(Nick);
                 ShowHideGameCanvases(true);
             }
             else if (player.PlayerId == 0)
             {
                 Debug.Log("ON PLAYER JOINED - MAIN MENU SCENE - " + player.PlayerId);
-                runner.Spawn(_mousePlayerPrefab, GameManager.Instance.MouseSpawner.transform.position, Quaternion.identity, player);
-                //ShowHideGameCanvases(true, runner);
+                runner.Spawn(_mousePlayerPrefab, GameManager.Instance.MouseSpawner.transform.position, Quaternion.identity, player)
+                    .SetNickname(Nick);
             }
 
             Debug.Log("[Custom Message] Player Joined - I'm THE LAW!!");
