@@ -11,7 +11,6 @@ public class PlayerModel : NetworkBehaviour
     protected Vector3 Dir;
     public Camera Camera;
     public event Action OnLeft = delegate { };
-    protected string _nick;
     private NicknameText _myNickname;
     [Networked(OnChanged = nameof(OnNicknameChanged))] 
     public NetworkString<_16> Nickname { get; set; }
@@ -75,16 +74,16 @@ public class PlayerModel : NetworkBehaviour
     }
     public PlayerModel SetNickname(string nick)
     {
-        _nick = nick;
-        RPC_SetNickname(_nick);
+        RPC_SendNickname(nick);
         return this;
     }
 
     [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
-    void RPC_SetNickname(string nick)
+    public void RPC_SendNickname(string nick, RpcInfo info = default)
     {
         Nickname = nick;
     }
+    
     public static void OnNicknameChanged(Changed<PlayerModel> changed)
     {
         changed.Behaviour.UpdateNickName(changed.Behaviour.Nickname.ToString());

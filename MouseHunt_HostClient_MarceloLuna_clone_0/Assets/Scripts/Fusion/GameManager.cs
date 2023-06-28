@@ -11,7 +11,7 @@ public class GameManager : NetworkBehaviour
     public GameObject MouseSpawner;
     public bool IsMouseDead { get; set; }
     public bool HasMouseReachedGoal { get; set; }
-
+    //public string Nickname;
     public override void Spawned()
     {
         if (Instance) Destroy(gameObject);
@@ -32,6 +32,12 @@ public class GameManager : NetworkBehaviour
     {
 
     }
+
+    /*[Rpc(RpcSources.All, RpcTargets.All)]
+    public void RPC_SendNickname(string nick) 
+    {
+        Nickname = nick;
+    }*/
 
     [Rpc(RpcSources.All, RpcTargets.All)]
     public void RPC_DeactivateBlockedGoal(string name) 

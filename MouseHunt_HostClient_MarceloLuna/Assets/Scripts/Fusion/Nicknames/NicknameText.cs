@@ -15,12 +15,15 @@ public class NicknameText : MonoBehaviour
     {
         _myText = GetComponent<Text>();
         _rect = GetComponent<RectTransform>();
+        
         if (owner.gameObject.name.Contains("Cat"))
         {
+            gameObject.name += " Cat";
             _rect.offsetMax = new Vector2(-2f, -1.5f);
         }
         else 
         {
+            gameObject.name += " Mouse";
             _rect.offsetMax = new Vector2(-2f, -35f);
         }
         _owner = owner.transform;
@@ -29,7 +32,7 @@ public class NicknameText : MonoBehaviour
 
     public void UpdateNickname(string nick) 
     {
-        _myText.text = nick + "\n";
+        _myText.text = nick;
     }
 
     public void UpdatePosition() 

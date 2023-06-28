@@ -97,6 +97,10 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
     }
     public void ShowHideGameCanvases(bool enabled, NetworkRunner runner = null)
     {
+        if (GameManager.Instance == null) return;
+
+       
+
         GameManager.Instance.GameHUDCanvas.GetComponentsInChildren<RectTransform>(true)
                            .Where(x => x.gameObject.name.Equals("GameHUDPanel"))
                            .FirstOrDefault().gameObject.SetActive(enabled);
@@ -104,8 +108,6 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
                            .Where(x => x.gameObject.name.Equals("GameHUDPanel"))
                            .FirstOrDefault()
                            .GetChild(0).gameObject.SetActive((runner == null) ? !enabled : enabled);
-        //Debug.Log("IS CLIENT? = " + runner.IsClient + " PLAYER: " + playerRef.PlayerId);
-
     }
 
     /*public void ShowGameHUDPanelAndActivatePlayers(bool isPlayerTwo)
@@ -145,8 +147,7 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
             else if (player.PlayerId == 0)
             {
                 Debug.Log("ON PLAYER JOINED - MAIN MENU SCENE - " + player.PlayerId);
-                runner.Spawn(_mousePlayerPrefab, GameManager.Instance.MouseSpawner.transform.position, Quaternion.identity, player)
-                    .SetNickname(Nick);
+                runner.Spawn(_mousePlayerPrefab, GameManager.Instance.MouseSpawner.transform.position, Quaternion.identity, player);
             }
 
             Debug.Log("[Custom Message] Player Joined - I'm THE LAW!!");
@@ -154,6 +155,9 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
         else
         {
             ShowHideGameCanvases(true, runner);
+            GameManager.Instance.GameHUDCanvas.GetComponentsInChildren<NicknameText>()
+                .FirstOrDefault(x => x.gameObject.name.Contains("Mouse")).UpdateNickname(Nick);
+
             Debug.Log("[Custom Message] Player Joined - I'm NOT the Server");
         }
     }

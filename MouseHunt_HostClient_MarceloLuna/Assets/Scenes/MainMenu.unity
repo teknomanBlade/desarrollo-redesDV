@@ -2956,7 +2956,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _runnerPrefab: {fileID: 0}
-  Nick: 
   _catPlayerPrefab: {fileID: 0}
   _mousePlayerPrefab: {fileID: 0}
 --- !u!1 &1167203078
