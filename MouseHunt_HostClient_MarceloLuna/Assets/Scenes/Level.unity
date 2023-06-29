@@ -413,93 +413,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 664727982031109314, guid: 90a8e4af334282f48b1af8fbadd30c4a, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1192978450625669380, guid: 90a8e4af334282f48b1af8fbadd30c4a, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 5.348051
-      objectReference: {fileID: 0}
-    - target: {fileID: 1192978450625669380, guid: 90a8e4af334282f48b1af8fbadd30c4a, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1.2292825
-      objectReference: {fileID: 0}
-    - target: {fileID: 1192978450625669380, guid: 90a8e4af334282f48b1af8fbadd30c4a, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 2.4672
-      objectReference: {fileID: 0}
     - target: {fileID: 1192978450625669381, guid: 90a8e4af334282f48b1af8fbadd30c4a, type: 3}
       propertyPath: m_IsActive
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1192978451212330966, guid: 90a8e4af334282f48b1af8fbadd30c4a, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1192978451585467753, guid: 90a8e4af334282f48b1af8fbadd30c4a, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 5.348051
-      objectReference: {fileID: 0}
-    - target: {fileID: 1192978451585467753, guid: 90a8e4af334282f48b1af8fbadd30c4a, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1.2292825
-      objectReference: {fileID: 0}
-    - target: {fileID: 1192978451585467753, guid: 90a8e4af334282f48b1af8fbadd30c4a, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 2.4672
       objectReference: {fileID: 0}
     - target: {fileID: 1192978451585467758, guid: 90a8e4af334282f48b1af8fbadd30c4a, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1192978451957117338, guid: 90a8e4af334282f48b1af8fbadd30c4a, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 5.348051
-      objectReference: {fileID: 0}
-    - target: {fileID: 1192978451957117338, guid: 90a8e4af334282f48b1af8fbadd30c4a, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1.2292825
-      objectReference: {fileID: 0}
-    - target: {fileID: 1192978451957117338, guid: 90a8e4af334282f48b1af8fbadd30c4a, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 2.4672
-      objectReference: {fileID: 0}
     - target: {fileID: 1192978451957117339, guid: 90a8e4af334282f48b1af8fbadd30c4a, type: 3}
       propertyPath: m_IsActive
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1192978452307283750, guid: 90a8e4af334282f48b1af8fbadd30c4a, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1.5767044
-      objectReference: {fileID: 0}
-    - target: {fileID: 1192978452307283750, guid: 90a8e4af334282f48b1af8fbadd30c4a, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1.5767044
-      objectReference: {fileID: 0}
-    - target: {fileID: 1192978452307283750, guid: 90a8e4af334282f48b1af8fbadd30c4a, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1.5767044
-      objectReference: {fileID: 0}
-    - target: {fileID: 1192978452307283750, guid: 90a8e4af334282f48b1af8fbadd30c4a, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 831
-      objectReference: {fileID: 0}
-    - target: {fileID: 1192978452307283750, guid: 90a8e4af334282f48b1af8fbadd30c4a, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 437
-      objectReference: {fileID: 0}
-    - target: {fileID: 1192978452610688150, guid: 90a8e4af334282f48b1af8fbadd30c4a, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 5.348051
-      objectReference: {fileID: 0}
-    - target: {fileID: 1192978452610688150, guid: 90a8e4af334282f48b1af8fbadd30c4a, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1.2292825
-      objectReference: {fileID: 0}
-    - target: {fileID: 1192978452610688150, guid: 90a8e4af334282f48b1af8fbadd30c4a, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 2.4672
       objectReference: {fileID: 0}
     - target: {fileID: 1192978452610688151, guid: 90a8e4af334282f48b1af8fbadd30c4a, type: 3}
       propertyPath: m_IsActive
@@ -593,37 +517,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameHUDCanvas
       objectReference: {fileID: 0}
-    - target: {fileID: 1192978452618466616, guid: 90a8e4af334282f48b1af8fbadd30c4a, type: 3}
+    - target: {fileID: 8369802201036691862, guid: 90a8e4af334282f48b1af8fbadd30c4a, type: 3}
       propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1192978452618466618, guid: 90a8e4af334282f48b1af8fbadd30c4a, type: 3}
-      propertyPath: m_UiScaleMode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1192978452618466618, guid: 90a8e4af334282f48b1af8fbadd30c4a, type: 3}
-      propertyPath: m_MatchWidthOrHeight
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1192978452618466618, guid: 90a8e4af334282f48b1af8fbadd30c4a, type: 3}
-      propertyPath: m_ReferenceResolution.x
-      value: 1920
-      objectReference: {fileID: 0}
-    - target: {fileID: 1192978452618466618, guid: 90a8e4af334282f48b1af8fbadd30c4a, type: 3}
-      propertyPath: m_ReferenceResolution.y
-      value: 1080
-      objectReference: {fileID: 0}
-    - target: {fileID: 4956433723128565452, guid: 90a8e4af334282f48b1af8fbadd30c4a, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 2.5203
-      objectReference: {fileID: 0}
-    - target: {fileID: 4956433723128565452, guid: 90a8e4af334282f48b1af8fbadd30c4a, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 2.5203
-      objectReference: {fileID: 0}
-    - target: {fileID: 4956433723128565452, guid: 90a8e4af334282f48b1af8fbadd30c4a, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 2.5203
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 90a8e4af334282f48b1af8fbadd30c4a, type: 3}

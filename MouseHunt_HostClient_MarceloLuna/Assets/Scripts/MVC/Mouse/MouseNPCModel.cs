@@ -31,6 +31,16 @@ public class MouseNPCModel : PlayerModel
     {
         return GetComponent<CharacterInputHandlerCat>();
     }
+    public override void DeactivateMouse()
+    {
+        RPC_DeactivateMouse();
+    }
+
+    [Rpc(RpcSources.All, RpcTargets.All)]
+    void RPC_DeactivateMouse() 
+    {
+        gameObject.SetActive(false);
+    }
 
     public override void SetLife()
     {
@@ -91,6 +101,9 @@ public class MouseNPCModel : PlayerModel
             FindObjectsOfType<RectTransform>(true)
                 .Where(x => x.gameObject.name.Equals("Player2Lose"))
                 .FirstOrDefault().gameObject.SetActive(true);
+            FindObjectsOfType<RectTransform>(true)
+                .Where(x => x.gameObject.name.Equals("BtnRestart"))
+                .FirstOrDefault().gameObject.SetActive(true);
             StartCoroutine(DeadCoroutine());
         }
     }
@@ -130,7 +143,10 @@ public class MouseNPCModel : PlayerModel
             FindObjectsOfType<RectTransform>(true)
                 .Where(x => x.gameObject.name.Equals("Player2Win"))
                 .FirstOrDefault().gameObject.SetActive(true);
-            
+            FindObjectsOfType<RectTransform>(true)
+                .Where(x => x.gameObject.name.Equals("BtnRestart"))
+                .FirstOrDefault().gameObject.SetActive(true);
+
         }
     }
 }

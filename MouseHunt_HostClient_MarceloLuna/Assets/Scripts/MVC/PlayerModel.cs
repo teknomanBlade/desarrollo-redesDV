@@ -107,17 +107,25 @@ public class PlayerModel : NetworkBehaviour
                 GameManager.Instance.GameHUDCanvas.GetComponentsInChildren<RectTransform>(true)
                     .Where(x => x.gameObject.name.Equals("Player1Lose"))
                     .FirstOrDefault().gameObject.SetActive(true);
-                Debug.Log("EL RATON SE HA ESCAPADO!!");
+                GameManager.Instance.GameHUDCanvas.GetComponentsInChildren<RectTransform>(true)
+                    .Where(x => x.gameObject.name.Equals("BtnRestart"))
+                    .FirstOrDefault().gameObject.SetActive(true);
+
+                DeactivateMouse();
+                //Debug.Log("EL RATON SE HA ESCAPADO!!");
             }
 
             //Debug.Log("Mouse Dead: " + GameManager.Instance.IsMouseDead);
             if (GameManager.Instance.IsMouseDead)
             {
-                Debug.Log("INSIDE GAMEMANAGER CALL...");
+                //Debug.Log("INSIDE GAMEMANAGER CALL...");
                 GameManager.Instance.GameHUDCanvas.GetComponentsInChildren<RectTransform>(true)
                     .Where(x => x.gameObject.name.Equals("Player1Win"))
                     .FirstOrDefault().gameObject.SetActive(true);
-                Debug.Log("EL RATON HIZO KAPUTT...");
+                GameManager.Instance.GameHUDCanvas.GetComponentsInChildren<RectTransform>(true)
+                    .Where(x => x.gameObject.name.Equals("BtnRestart"))
+                    .FirstOrDefault().gameObject.SetActive(true);
+                //Debug.Log("EL RATON HIZO KAPUTT...");
             }
             //Debug.Log("DEBUG EN EL MEDIO PARA VER SI SE VA ANTES...");
 
@@ -131,5 +139,10 @@ public class PlayerModel : NetworkBehaviour
     public virtual void SetInitialTexture()
     {
 
+    }
+
+    public virtual void DeactivateMouse() 
+    {
+    
     }
 }

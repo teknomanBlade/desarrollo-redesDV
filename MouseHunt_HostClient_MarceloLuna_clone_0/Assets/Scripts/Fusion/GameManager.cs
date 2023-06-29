@@ -34,9 +34,9 @@ public class GameManager : NetworkBehaviour
     }
 
     /*[Rpc(RpcSources.All, RpcTargets.All)]
-    public void RPC_SendNickname(string nick) 
+    public void RPC_SendNickname(PlayerModel model, string nick) 
     {
-        Nickname = nick;
+        model.Nickname = nick;
     }*/
 
     [Rpc(RpcSources.All, RpcTargets.All)]
@@ -59,6 +59,22 @@ public class GameManager : NetworkBehaviour
     public void RPC_ActivatePlayers()
     {
         FindObjectsOfType<PlayerModel>(true).ToList().ForEach(x => x.gameObject.SetActive(true));
+    }
+
+    [Rpc(RpcSources.All, RpcTargets.All)]
+    public void RPC_RepositioningAndActivatePlayers()
+    {
+        FindObjectsOfType<PlayerModel>(true).ToList().ForEach(x => {
+            if (x.gameObject.name.Contains("Cat"))
+            {
+                x.gameObject.transform.position = CatSpawner.transform.position;
+            }
+            else 
+            {
+                x.gameObject.transform.position = MouseSpawner.transform.position;
+            }    
+            x.gameObject.SetActive(true); 
+        });
     }
 
     [Rpc(RpcSources.All, RpcTargets.All)]

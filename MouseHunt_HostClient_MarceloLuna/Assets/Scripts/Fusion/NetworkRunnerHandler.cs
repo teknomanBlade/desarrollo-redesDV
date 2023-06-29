@@ -98,9 +98,7 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
     public void ShowHideGameCanvases(bool enabled, NetworkRunner runner = null)
     {
         if (GameManager.Instance == null) return;
-
-       
-
+        
         GameManager.Instance.GameHUDCanvas.GetComponentsInChildren<RectTransform>(true)
                            .Where(x => x.gameObject.name.Equals("GameHUDPanel"))
                            .FirstOrDefault().gameObject.SetActive(enabled);
@@ -141,23 +139,26 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
             {
                 Debug.Log("ON PLAYER JOINED - MAIN MENU SCENE - " + player.PlayerId);
                 runner.Spawn(_catPlayerPrefab, GameManager.Instance.CatSpawner.transform.position, Quaternion.identity, player)
-                    .SetNickname(Nick);
+                    .SetNickname(Nick).gameObject.SetActive(false);
                 ShowHideGameCanvases(true);
             }
             else if (player.PlayerId == 0)
             {
                 Debug.Log("ON PLAYER JOINED - MAIN MENU SCENE - " + player.PlayerId);
-                runner.Spawn(_mousePlayerPrefab, GameManager.Instance.MouseSpawner.transform.position, Quaternion.identity, player);
+                runner.Spawn(_mousePlayerPrefab, GameManager.Instance.MouseSpawner.transform.position, Quaternion.identity, player)
+                    .gameObject.SetActive(false);
+                
             }
 
             Debug.Log("[Custom Message] Player Joined - I'm THE LAW!!");
         }
         else
         {
+            if(GameManager.Instance)
+                GameManager.Instance.GameHUDCanvas.GetComponentsInChildren<NicknameText>()
+                    .FirstOrDefault(x => x.gameObject.name.Contains("Mouse")).UpdateNickname(Nick);
+            
             ShowHideGameCanvases(true, runner);
-            GameManager.Instance.GameHUDCanvas.GetComponentsInChildren<NicknameText>()
-                .FirstOrDefault(x => x.gameObject.name.Contains("Mouse")).UpdateNickname(Nick);
-
             Debug.Log("[Custom Message] Player Joined - I'm NOT the Server");
         }
     }
