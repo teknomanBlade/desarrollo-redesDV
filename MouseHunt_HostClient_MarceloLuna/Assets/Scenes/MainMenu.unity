@@ -388,6 +388,7 @@ MonoBehaviour:
   _sessionBrowserPanel: {fileID: 2112371463}
   _hostGamePanel: {fileID: 887822457}
   BTN_JoinLobby: {fileID: 713158170}
+  BTN_Quit: {fileID: 713158171}
   BTN_OpenHostPanel: {fileID: 1030239920}
   BTN_HostGame: {fileID: 483404711}
   BTN_SaveNickname: {fileID: 148856046}
@@ -1816,6 +1817,17 @@ GameObject:
 --- !u!114 &713158170 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4786232971681601362, guid: f641afafd81f8fe47807b885eb6ea852, type: 3}
+  m_PrefabInstance: {fileID: 713158167}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &713158171 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 454004383277957244, guid: f641afafd81f8fe47807b885eb6ea852, type: 3}
   m_PrefabInstance: {fileID: 713158167}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}

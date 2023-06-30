@@ -1,4 +1,5 @@
 using Fusion;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,6 +18,7 @@ public class MainMenuHandler : MonoBehaviour
 
     [Header("Buttons")]
     [SerializeField] Button BTN_JoinLobby;
+    [SerializeField] Button BTN_Quit;
     [SerializeField] Button BTN_OpenHostPanel;
     [SerializeField] Button BTN_HostGame;
     [SerializeField] Button BTN_SaveNickname;
@@ -30,6 +32,7 @@ public class MainMenuHandler : MonoBehaviour
     void Start()
     {
         BTN_JoinLobby.onClick.AddListener(JoinLobby);
+        BTN_Quit.onClick.AddListener(QuitGame);
         BTN_OpenHostPanel.onClick.AddListener(ShowHostPanel);
         BTN_HostGame.onClick.AddListener(CreateGameSession);
         BTN_SaveNickname.onClick.AddListener(SetNickname);
@@ -42,10 +45,16 @@ public class MainMenuHandler : MonoBehaviour
         };
     }
 
+    
+
     // Update is called once per frame
     void Update()
     {
         
+    }
+    private void QuitGame()
+    {
+        Application.Quit();
     }
 
     void JoinLobby() 
