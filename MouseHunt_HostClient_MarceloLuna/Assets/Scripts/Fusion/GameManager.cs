@@ -9,6 +9,7 @@ public class GameManager : NetworkBehaviour
     public GameObject GameHUDCanvas;
     public GameObject CatSpawner;
     public GameObject MouseSpawner;
+    public Button BtnRestart;
     public bool IsMouseDead { get; set; }
     public bool HasMouseReachedGoal { get; set; }
     //public string Nickname;
@@ -19,6 +20,8 @@ public class GameManager : NetworkBehaviour
         CatSpawner = FindObjectsOfType<GameObject>().Where(x => x.name.Equals("CatSpawner")).FirstOrDefault();
         MouseSpawner = FindObjectsOfType<GameObject>().Where(x => x.name.Equals("MouseSpawner")).FirstOrDefault();
         GameHUDCanvas = FindObjectsOfType<GameObject>(true).Where(x => x.name.Equals("GameHUDCanvas")).FirstOrDefault();
+        BtnRestart = GameHUDCanvas.GetComponentsInChildren<Button>(true).Where(x => x.gameObject.name.Equals("BtnRestart")).FirstOrDefault();
+        BtnRestart.onClick.AddListener(Restart);
         if (Runner.ActivePlayers.ToList().Count > 1) 
         {
             Debug.Log("<< ESTAN LOS DOS JUGADORES >>");
@@ -33,6 +36,10 @@ public class GameManager : NetworkBehaviour
 
     }
 
+    public void Restart() 
+    {
+        RPC_RepositioningAndActivatePlayers();
+    }
     /*[Rpc(RpcSources.All, RpcTargets.All)]
     public void RPC_SendNickname(PlayerModel model, string nick) 
     {
@@ -64,6 +71,9 @@ public class GameManager : NetworkBehaviour
     [Rpc(RpcSources.All, RpcTargets.All)]
     public void RPC_RepositioningAndActivatePlayers()
     {
+        RPC_MouseHasReachedGoalFalse();
+        RPC_IsMouseDeadFalse();
+        RPC_HideAllWinLosePopups();
         FindObjectsOfType<PlayerModel>(true).ToList().ForEach(x => {
             if (x.gameObject.name.Contains("Cat"))
             {
@@ -78,6 +88,20 @@ public class GameManager : NetworkBehaviour
     }
 
     [Rpc(RpcSources.All, RpcTargets.All)]
+    public void RPC_HideAllWinLosePopups() 
+    {
+        FindObjectsOfType<RectTransform>(true)
+                .Where(x => x.gameObject.name.Equals("GameWinLosePanel"))
+                .First().GetComponentsInChildren<RectTransform>().Skip(1).ToList()
+                .ForEach(x => 
+                {
+                    //Debug.Log(x.gameObject.name);
+                    if(!x.gameObject.name.Contains("TXT"))
+                        x.gameObject.SetActive(false);
+                });
+    }
+
+    [Rpc(RpcSources.All, RpcTargets.All)]
     public void RPC_IsMouseDead() 
     {
         IsMouseDead = true;
@@ -87,5 +111,17 @@ public class GameManager : NetworkBehaviour
     public void RPC_MouseHasReachedGoal() 
     {
         HasMouseReachedGoal = true;
+    }
+
+    [Rpc(RpcSources.All, RpcTargets.All)]
+    public void RPC_MouseHasReachedGoalFalse()
+    {
+        HasMouseReachedGoal = false;
+    }
+
+    [Rpc(RpcSources.All, RpcTargets.All)]
+    public void RPC_IsMouseDeadFalse()
+    {
+        IsMouseDead = false;
     }
 }

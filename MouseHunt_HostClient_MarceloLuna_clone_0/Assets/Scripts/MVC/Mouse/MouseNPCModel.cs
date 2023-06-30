@@ -104,7 +104,7 @@ public class MouseNPCModel : PlayerModel
             FindObjectsOfType<RectTransform>(true)
                 .Where(x => x.gameObject.name.Equals("BtnRestart"))
                 .FirstOrDefault().gameObject.SetActive(true);
-            StartCoroutine(DeadCoroutine());
+            RPC_DeactivateMouse();
         }
     }
     [Rpc(RpcSources.All, RpcTargets.All)]
