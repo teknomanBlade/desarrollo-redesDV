@@ -10,6 +10,10 @@ public class GameManager : NetworkBehaviour
     public GameObject CatSpawner;
     public GameObject MouseSpawner;
     public Button BtnRestart;
+    public Button BtnPlayer1Ready;
+    public Button BtnPlayer2Ready;
+    public bool IsPlayer1Ready { get; set; }
+    public bool IsPlayer2Ready { get; set; }
     public bool IsMouseDead { get; set; }
     public bool HasMouseReachedGoal { get; set; }
     //public string Nickname;
@@ -45,6 +49,26 @@ public class GameManager : NetworkBehaviour
     {
         model.Nickname = nick;
     }*/
+
+    public void Player1Ready() 
+    {
+        RPC_Player1Ready();
+    }
+    public void Player2Ready()
+    {
+        RPC_Player2Ready();
+    }
+
+    [Rpc(RpcSources.All, RpcTargets.All)]
+    public void RPC_Player1Ready() 
+    {
+        IsPlayer1Ready = true;
+    }
+    [Rpc(RpcSources.All, RpcTargets.All)]
+    public void RPC_Player2Ready()
+    {
+        IsPlayer2Ready = true;
+    }
 
     [Rpc(RpcSources.All, RpcTargets.All)]
     public void RPC_DeactivateBlockedGoal(string name) 
