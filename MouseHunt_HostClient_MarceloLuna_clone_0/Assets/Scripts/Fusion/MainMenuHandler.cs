@@ -74,7 +74,7 @@ public class MainMenuHandler : MonoBehaviour
 
     void CreateGameSession() 
     {
-        _networkRunner.CreateSession(IF_HostSessionName.text, "Level");
+        _networkRunner.CreateSession(IF_HostSessionName.text, "Lobby");
     }
 
     void ShowNicknamePanel() 

@@ -17,7 +17,7 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
 
     public event Action<List<SessionInfo>> OnSessionListUpdate;
     public GameObject GameHUDCanvas { get; private set; }
-    
+    Vector3 initialPos = Vector3.zero;
     //Prefab del Player
     [SerializeField] CatPlayerModel _catPlayerPrefab;
     [SerializeField] MouseNPCModel _mousePlayerPrefab;
@@ -135,26 +135,35 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
         Debug.Log("PLAYER ID: " + player.PlayerId);
         if (runner.IsServer)
         {
-            if (player.PlayerId == 1)
+            /*if (runner.CurrentScene == 1)
             {
-                Debug.Log("ON PLAYER JOINED - MAIN MENU SCENE - " + player.PlayerId);
-                runner.Spawn(_catPlayerPrefab, GameManager.Instance.CatSpawner.transform.position, Quaternion.identity, player)
-                    .SetNickname(Nick).gameObject.SetActive(false);
-                ShowHideGameCanvases(true);
+                Debug.Log("<< IS LOBBY SCENE >>");
             }
-            else if (player.PlayerId == 0)
-            {
-                Debug.Log("ON PLAYER JOINED - MAIN MENU SCENE - " + player.PlayerId);
-                runner.Spawn(_mousePlayerPrefab, GameManager.Instance.MouseSpawner.transform.position, Quaternion.identity, player)
-                    .gameObject.SetActive(false);
-                
-            }
+            else 
+            {*/
+                if (player.PlayerId == 1)
+                {
+                    Debug.Log("ON PLAYER JOINED - MAIN MENU SCENE - " + player.PlayerId);
+                    GameManager.Instance.Player1Joined();
+                    runner.Spawn(_catPlayerPrefab, initialPos, Quaternion.identity, player)
+                        .SetNickname(Nick).gameObject.SetActive(false);
+                    ShowHideGameCanvases(true);
+                }
+                else if (player.PlayerId == 0)
+                {
+                    Debug.Log("ON PLAYER JOINED - MAIN MENU SCENE - " + player.PlayerId);
+                    GameManager.Instance.Player2Joined();
+                    runner.Spawn(_mousePlayerPrefab, initialPos, Quaternion.identity, player)
+                        .gameObject.SetActive(false);
+
+                }
+            //}
 
             Debug.Log("[Custom Message] Player Joined - I'm THE LAW!!");
         }
         else
         {
-            if(GameManager.Instance)
+            if(GameManager.Instance && GameManager.Instance.GameHUDCanvas)
                 GameManager.Instance.GameHUDCanvas.GetComponentsInChildren<NicknameText>()
                     .FirstOrDefault(x => x.gameObject.name.Contains("Mouse")).UpdateNickname(Nick);
             
