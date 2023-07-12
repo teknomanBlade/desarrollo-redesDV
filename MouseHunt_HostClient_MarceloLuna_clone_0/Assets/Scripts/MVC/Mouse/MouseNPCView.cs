@@ -11,9 +11,11 @@ public class MouseNPCView : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        MouseLife = FindObjectsOfType<RectTransform>(true)
+        var MouseLifeRect = FindObjectsOfType<RectTransform>(true)
                         .Where(x => x.gameObject.name.Equals("MouseLife"))
-                        .FirstOrDefault().GetComponent<Image>();
+                        .FirstOrDefault();
+        if(MouseLifeRect)
+            MouseLife = MouseLifeRect.GetComponent<Image>();
     }
 
     // Update is called once per frame

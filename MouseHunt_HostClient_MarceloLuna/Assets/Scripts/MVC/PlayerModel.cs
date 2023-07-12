@@ -27,7 +27,7 @@ public class PlayerModel : NetworkBehaviour
     protected int _previousSignZ = 0;
     // Start is called before the first frame update
     void Start()
-    {
+    {   
         RotateSpeed = 720f;
     }
 
@@ -53,13 +53,18 @@ public class PlayerModel : NetworkBehaviour
     }
     public override void Spawned()
     {
-        _myNickname = NicknamesHandler.Instance.AddNickname(this);
+        if(NicknamesHandler.Instance)
+            _myNickname = NicknamesHandler.Instance.AddNickname(this);
+        
         SetInitialTexture();
         if (Object.HasInputAuthority)
         {
             Local = this;
             Camera = Camera.main;
-            Camera.GetComponent<ThirdPersonCamera>().Target = GetComponent<NetworkRigidbody>().InterpolationTarget;
+            var ThirdPersonCamera = Camera.GetComponent<ThirdPersonCamera>();
+            if(ThirdPersonCamera)
+                ThirdPersonCamera.Target = GetComponent<NetworkRigidbody>().InterpolationTarget;
+            
             Debug.Log("[Custom Message] Spawned own Player");
         }
         else
@@ -91,7 +96,8 @@ public class PlayerModel : NetworkBehaviour
 
     void UpdateNickName(string nickname) 
     {
-        _myNickname.UpdateNickname(nickname);
+        if(_myNickname)
+            _myNickname.UpdateNickname(nickname);
     }
     public override void Despawned(NetworkRunner runner, bool hasState)
     {

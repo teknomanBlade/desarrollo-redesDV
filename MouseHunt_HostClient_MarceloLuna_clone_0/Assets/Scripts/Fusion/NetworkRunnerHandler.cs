@@ -98,14 +98,17 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
     public void ShowHideGameCanvases(bool enabled, NetworkRunner runner = null)
     {
         if (GameManager.Instance == null) return;
-        
-        GameManager.Instance.GameHUDCanvas.GetComponentsInChildren<RectTransform>(true)
-                           .Where(x => x.gameObject.name.Equals("GameHUDPanel"))
-                           .FirstOrDefault().gameObject.SetActive(enabled);
-        GameManager.Instance.GameHUDCanvas.GetComponentsInChildren<RectTransform>(true)
-                           .Where(x => x.gameObject.name.Equals("GameHUDPanel"))
-                           .FirstOrDefault()
-                           .GetChild(0).gameObject.SetActive((runner == null) ? !enabled : enabled);
+
+        if (GameManager.Instance.GameHUDCanvas) 
+        {
+            GameManager.Instance.GameHUDCanvas.GetComponentsInChildren<RectTransform>(true)
+                               .Where(x => x.gameObject.name.Equals("GameHUDPanel"))
+                               .FirstOrDefault().gameObject.SetActive(enabled);
+            GameManager.Instance.GameHUDCanvas.GetComponentsInChildren<RectTransform>(true)
+                               .Where(x => x.gameObject.name.Equals("GameHUDPanel"))
+                               .FirstOrDefault()
+                               .GetChild(0).gameObject.SetActive((runner == null) ? !enabled : enabled);
+        }
     }
 
     /*public void ShowGameHUDPanelAndActivatePlayers(bool isPlayerTwo)
@@ -163,15 +166,19 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
         }
         else
         {
-            if(GameManager.Instance && GameManager.Instance.GameHUDCanvas)
+            if (GameManager.Instance && GameManager.Instance.GameHUDCanvas)
                 GameManager.Instance.GameHUDCanvas.GetComponentsInChildren<NicknameText>()
                     .FirstOrDefault(x => x.gameObject.name.Contains("Mouse")).UpdateNickname(Nick);
-            
+            ShowLobbyModels();
             ShowHideGameCanvases(true, runner);
             Debug.Log("[Custom Message] Player Joined - I'm NOT the Server");
         }
     }
-
+    public void ShowLobbyModels() 
+    {
+        GameManager.Instance.CatLobbyModel.SetActive(true);
+        GameManager.Instance.MouseLobbyModel.SetActive(true);
+    }
     #region Unused Callbacks
     public void OnConnectedToServer(NetworkRunner runner)
     {
