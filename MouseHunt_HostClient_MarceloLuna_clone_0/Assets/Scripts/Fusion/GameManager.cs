@@ -1,6 +1,7 @@
 using Fusion;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameManager : NetworkBehaviour
@@ -46,6 +47,9 @@ public class GameManager : NetworkBehaviour
             BTN_Player2Ready = FindObjectsOfType<Button>(true).Where(x => x.name.Equals("BtnReadyPlayer2")).FirstOrDefault();
             BTN_Player1Ready.onClick.AddListener(Player1Ready);
             BTN_Player2Ready.onClick.AddListener(Player2Ready);
+            //var players = FindObjectsOfType<GameObject>(true).Where(player => player.CompareTag("Player")).ToList();
+            //players.ForEach(player => DontDestroyOnLoad(player));
+
             if (Runner.LocalPlayer == 1)
             {
                 BTN_Player2Ready.interactable = false;
@@ -206,4 +210,20 @@ public class GameManager : NetworkBehaviour
     {
         IsMouseDead = false;
     }
+
+    /*private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name.Equals("Level")) 
+        {
+            if (Object.HasInputAuthority && Object.HasStateAuthority) 
+            {
+                Spawned();
+            }
+        }
+    }*/
 }

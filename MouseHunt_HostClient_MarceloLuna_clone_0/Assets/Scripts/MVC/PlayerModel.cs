@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerModel : NetworkBehaviour
 {
@@ -53,6 +54,7 @@ public class PlayerModel : NetworkBehaviour
     }
     public override void Spawned()
     {
+        DontDestroyOnLoad(gameObject);
         if(NicknamesHandler.Instance)
             _myNickname = NicknamesHandler.Instance.AddNickname(this);
         
@@ -151,4 +153,17 @@ public class PlayerModel : NetworkBehaviour
     {
     
     }
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name.Equals("Level"))
+        {
+             Spawned();
+        }
+    }
+
 }

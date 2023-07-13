@@ -732,7 +732,7 @@ GameObject:
   - component: {fileID: 8338668974815379228}
   m_Layer: 0
   m_Name: CatModel
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -767,6 +767,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
   Camera: {fileID: 0}
+  _Nickname:
+    _length: 0
+    _data:
+      Data: 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 --- !u!114 &6196655924377074935
 MonoBehaviour:
   m_ObjectHideFlags: 0
