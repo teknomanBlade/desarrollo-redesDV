@@ -50,6 +50,15 @@ public class MouseNPCModel : PlayerModel
             Life = 100f;
         }
     }
+    public override void SetPlayerInSpawner()
+    {
+        transform.position = GameManager.Instance.MouseSpawner.transform.position;
+        GameManager.Instance.RPC_ActivateGameHUD(true, gameObject.name);
+    }
+    public override void SetPlayerNick()
+    {
+        MyNickname = NicknamesHandler.Instance.AddNickname(this);
+    }
     public override void FixedUpdateNetwork()
     {
         base.FixedUpdateNetwork();

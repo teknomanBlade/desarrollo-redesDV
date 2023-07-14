@@ -63,7 +63,7 @@ public class GameManager : NetworkBehaviour
 
     public override void FixedUpdateNetwork()
     {
-        Debug.Log("<< CHECK BEFORE PLAYERS READY >>");
+        //Debug.Log("<< CHECK BEFORE PLAYERS READY >>");
         if (IsPlayer1Ready && IsPlayer2Ready)
         {
             Debug.Log("<< ESTAN LOS DOS JUGADORES >>");
@@ -141,12 +141,22 @@ public class GameManager : NetworkBehaviour
     }
 
     [Rpc(RpcSources.All, RpcTargets.All)]
-    public void RPC_ShowHideWaitingForPlayers(bool activate)
+    public void RPC_ActivateGameHUD(bool enabled, string name) 
+    {
+        GameHUDCanvas.GetComponentsInChildren<RectTransform>(true)
+                                   .Where(x => x.gameObject.name.Equals("GameHUDPanel"))
+                                   .FirstOrDefault().gameObject.SetActive(enabled);
+        GameHUDCanvas.GetComponentsInChildren<RectTransform>(true)
+                           .Where(x => x.gameObject.name.Equals("GameHUDPanel"))
+                           .FirstOrDefault()
+                           .GetChild(0).gameObject.SetActive(name.Contains("Cat") ? enabled : !enabled);
+    }
+    /*public void RPC_ShowHideWaitingForPlayers(bool activate)
     {
         GameHUDCanvas.GetComponentsInChildren<RectTransform>()
                     .Where(x => x.gameObject.name.Equals("GameHUDWaitingForPlayers"))
                     .FirstOrDefault().gameObject.SetActive(activate);
-    }
+    }*/
     
     [Rpc(RpcSources.All, RpcTargets.All)]
     public void RPC_ActivatePlayers()

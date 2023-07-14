@@ -13,6 +13,7 @@ public class PlayerModel : NetworkBehaviour
     public Camera Camera;
     public event Action OnLeft = delegate { };
     private NicknameText _myNickname;
+    public NicknameText MyNickname { get { return _myNickname; }  set { _myNickname = value; } }
     [Networked(OnChanged = nameof(OnNicknameChanged))] 
     public NetworkString<_16> Nickname { get; set; }
 
@@ -55,9 +56,13 @@ public class PlayerModel : NetworkBehaviour
     public override void Spawned()
     {
         DontDestroyOnLoad(gameObject);
-        if(NicknamesHandler.Instance)
+        Debug.Log("NicknamesHandler INSTANCE IS NULL? " + (NicknamesHandler.Instance == null));
+        StartCoroutine(SetNickname());
+        /*if (NicknamesHandler.Instance) 
+        {
+            Debug.Log("<< NicknamesHandler INSTANCE INSIDE >>");
             _myNickname = NicknamesHandler.Instance.AddNickname(this);
-        
+        }*/
         SetInitialTexture();
         if (Object.HasInputAuthority)
         {
@@ -153,6 +158,15 @@ public class PlayerModel : NetworkBehaviour
     {
     
     }
+
+    public virtual void SetPlayerInSpawner() 
+    {
+    
+    }
+    public virtual void SetPlayerNick()
+    {
+
+    }
     private void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
@@ -162,8 +176,18 @@ public class PlayerModel : NetworkBehaviour
     {
         if (scene.name.Equals("Level"))
         {
-             Spawned();
+            Spawned();
+            StartCoroutine(SetPlayersToSpawner());
         }
     }
-
+    IEnumerator SetPlayersToSpawner()
+    {
+        yield return new WaitUntil(() => GameManager.Instance != null);
+        SetPlayerInSpawner();
+    }
+    IEnumerator SetNickname() 
+    {
+        yield return new WaitUntil(() => NicknamesHandler.Instance != null);
+        SetPlayerNick();
+    }
 }

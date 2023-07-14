@@ -50,6 +50,16 @@ public class CatPlayerModel : PlayerModel
         RPC_OnSetInitialTexture();
     }
 
+    public override void SetPlayerInSpawner()
+    {
+        transform.position = GameManager.Instance.CatSpawner.transform.position;
+        GameManager.Instance.RPC_ActivateGameHUD(true, gameObject.name);
+    }
+    public override void SetPlayerNick()
+    {
+        MyNickname = NicknamesHandler.Instance.AddNickname(this);
+    }
+
     public override void FixedUpdateNetwork()
     {
         base.FixedUpdateNetwork();
