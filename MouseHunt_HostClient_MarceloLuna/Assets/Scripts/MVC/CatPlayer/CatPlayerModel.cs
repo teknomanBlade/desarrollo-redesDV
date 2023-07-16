@@ -57,7 +57,12 @@ public class CatPlayerModel : PlayerModel
     }
     public override void SetPlayerNick()
     {
-        MyNickname = NicknamesHandler.Instance.AddNickname(this);
+        if (_isFirst) 
+        {
+            MyNickname = NicknamesHandler.Instance.AddNickname(this);
+            SetNickname(GameManager.Instance.NicknamePlayer1);
+            _isFirst = false;
+        }
     }
 
     public override void FixedUpdateNetwork()

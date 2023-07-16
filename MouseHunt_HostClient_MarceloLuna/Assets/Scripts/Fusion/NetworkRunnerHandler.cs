@@ -95,31 +95,6 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
             PlayerCount = 2
         });
     }
-    public void ShowHideGameCanvases(bool enabled, NetworkRunner runner = null)
-    {
-        if (GameManager.Instance == null) return;
-
-        if (GameManager.Instance.GameHUDCanvas) 
-        {
-            GameManager.Instance.GameHUDCanvas.GetComponentsInChildren<RectTransform>(true)
-                               .Where(x => x.gameObject.name.Equals("GameHUDPanel"))
-                               .FirstOrDefault().gameObject.SetActive(enabled);
-            GameManager.Instance.GameHUDCanvas.GetComponentsInChildren<RectTransform>(true)
-                               .Where(x => x.gameObject.name.Equals("GameHUDPanel"))
-                               .FirstOrDefault()
-                               .GetChild(0).gameObject.SetActive((runner == null) ? !enabled : enabled);
-        }
-    }
-
-    /*public void ShowGameHUDPanelAndActivatePlayers(bool isPlayerTwo)
-    {
-        Debug.Log("ENTRA ACA CUANDO ES 2DO PLAYER??");
-        var GameHUD = GameManager.Instance.GameHUDCanvas.GetComponentsInChildren<RectTransform>(true)
-                    .Where(x => x.gameObject.name.Equals("GameHUDPanel"))
-                    .FirstOrDefault();
-        GameHUD.gameObject.SetActive(isPlayerTwo);
-
-    }*/
     public void OnSessionListUpdated(NetworkRunner runner, List<SessionInfo> sessionList)
     {
         //Debug.Log("<< SESSION LIST UPDATED >>");
@@ -142,17 +117,15 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
             {
                 //Debug.Log("ON PLAYER JOINED - MAIN MENU SCENE - " + player.PlayerId);
                 GameManager.Instance.Player1Joined();
-                runner.Spawn(_catPlayerPrefab, initialPos, Quaternion.identity, player)
-                    .SetNickname(Nick).gameObject.SetActive(false);
-                ShowHideGameCanvases(true);
+                GameManager.Instance.RPC_SetNicknamePlayer1(Nick);
+                runner.Spawn(_catPlayerPrefab, initialPos, Quaternion.identity, player).gameObject.SetActive(false);
             }
             else if (player.PlayerId == 0)
             {
                 //Debug.Log("ON PLAYER JOINED - MAIN MENU SCENE - " + player.PlayerId);
                 GameManager.Instance.Player2Joined();
-                runner.Spawn(_mousePlayerPrefab, initialPos, Quaternion.identity, player)
-                    .gameObject.SetActive(false);
-
+                GameManager.Instance.RPC_SetNicknamePlayer2(Nick);
+                runner.Spawn(_mousePlayerPrefab, initialPos, Quaternion.identity, player).gameObject.SetActive(false);
             }
 
             Debug.Log("[Custom Message] Player Joined - I'm THE LAW!!");
@@ -163,7 +136,6 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
                 GameManager.Instance.GameHUDCanvas.GetComponentsInChildren<NicknameText>()
                     .FirstOrDefault(x => x.gameObject.name.Contains("Mouse")).UpdateNickname(Nick);
             ShowLobbyModels();
-            ShowHideGameCanvases(true, runner);
             Debug.Log("[Custom Message] Player Joined - I'm NOT the Server");
         }
     }

@@ -24,7 +24,8 @@ public class GameManager : NetworkBehaviour
     [Header("Ready Images")]
     [SerializeField] Sprite CatReady;
     [SerializeField] Sprite MouseReady;
-    //public string Nickname;
+    public string NicknamePlayer1;
+    public string NicknamePlayer2;
     public override void Spawned()
     {
         if (Instance) Destroy(gameObject);
@@ -37,7 +38,7 @@ public class GameManager : NetworkBehaviour
             BtnRestart = GameHUDCanvas.GetComponentsInChildren<Button>(true).Where(x => x.gameObject.name.Equals("BtnRestart")).FirstOrDefault();
             BtnRestart.onClick.AddListener(Restart);
         }
-        else 
+        else if (Runner.CurrentScene == 1)
         {
             CatReady = Resources.Load<Sprite>("UI/BTN_CatReady_Pressed");
             MouseReady = Resources.Load<Sprite>("UI/BTN_MouseReady_Pressed");
@@ -47,8 +48,6 @@ public class GameManager : NetworkBehaviour
             BTN_Player2Ready = FindObjectsOfType<Button>(true).Where(x => x.name.Equals("BtnReadyPlayer2")).FirstOrDefault();
             BTN_Player1Ready.onClick.AddListener(Player1Ready);
             BTN_Player2Ready.onClick.AddListener(Player2Ready);
-            //var players = FindObjectsOfType<GameObject>(true).Where(player => player.CompareTag("Player")).ToList();
-            //players.ForEach(player => DontDestroyOnLoad(player));
 
             if (Runner.LocalPlayer == 1)
             {
@@ -72,6 +71,16 @@ public class GameManager : NetworkBehaviour
             RPC_InitializeGame();
             RPC_ActivatePlayers();
         }
+    }
+    [Rpc(RpcSources.All, RpcTargets.All)]
+    public void RPC_SetNicknamePlayer1(string nick) 
+    {
+        NicknamePlayer1 = nick;
+    }
+    [Rpc(RpcSources.All, RpcTargets.All)]
+    public void RPC_SetNicknamePlayer2(string nick)
+    {
+        NicknamePlayer2 = nick;
     }
     public void Restart() 
     {

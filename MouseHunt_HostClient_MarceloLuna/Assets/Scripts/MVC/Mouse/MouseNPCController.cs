@@ -12,6 +12,7 @@ public class MouseNPCController : IController
         _m = m;
         _v = v;
         _m.OnTakeDamage += _v.TakeLife;
+        _m.OnSetLifeSprite += _v.SetSpriteLife;
     }
 
     public void OnUpdate()

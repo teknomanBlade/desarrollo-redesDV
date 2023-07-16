@@ -10,7 +10,7 @@ using UnityEngine.UI;
 public class MouseNPCModel : PlayerModel
 {
     public event Action<float> OnTakeDamage = delegate { };
-    
+    public event Action OnSetLifeSprite = delegate { };
     public MouseNPCView View { get; private set; }
     [Networked] float Life { get; set; }
     public bool IsMouseDead { get; set; }
@@ -48,8 +48,17 @@ public class MouseNPCModel : PlayerModel
         if (Object.HasStateAuthority) 
         {
             Life = 100f;
+            if (Runner.CurrentScene == 2)
+                RPC_OnSetLifeSprite();
         }
     }
+
+    [Rpc(RpcSources.All, RpcTargets.All)]
+    void RPC_OnSetLifeSprite()
+    {
+        OnSetLifeSprite();
+    }
+
     public override void SetPlayerInSpawner()
     {
         transform.position = GameManager.Instance.MouseSpawner.transform.position;
@@ -57,7 +66,12 @@ public class MouseNPCModel : PlayerModel
     }
     public override void SetPlayerNick()
     {
-        MyNickname = NicknamesHandler.Instance.AddNickname(this);
+        if (_isFirst)
+        {
+            MyNickname = NicknamesHandler.Instance.AddNickname(this);
+            SetNickname(GameManager.Instance.NicknamePlayer2);
+            _isFirst = false;
+        }
     }
     public override void FixedUpdateNetwork()
     {

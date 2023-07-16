@@ -27,9 +27,11 @@ public class PlayerModel : NetworkBehaviour
     protected int _previousSignX;
     protected int _currentSignZ = 0;
     protected int _previousSignZ = 0;
+    protected bool _isFirst;
     // Start is called before the first frame update
     void Start()
-    {   
+    {
+        _isFirst = true;
         RotateSpeed = 720f;
     }
 
@@ -56,13 +58,7 @@ public class PlayerModel : NetworkBehaviour
     public override void Spawned()
     {
         DontDestroyOnLoad(gameObject);
-        Debug.Log("NicknamesHandler INSTANCE IS NULL? " + (NicknamesHandler.Instance == null));
         StartCoroutine(SetNickname());
-        /*if (NicknamesHandler.Instance) 
-        {
-            Debug.Log("<< NicknamesHandler INSTANCE INSIDE >>");
-            _myNickname = NicknamesHandler.Instance.AddNickname(this);
-        }*/
         SetInitialTexture();
         if (Object.HasInputAuthority)
         {
@@ -103,8 +99,13 @@ public class PlayerModel : NetworkBehaviour
 
     void UpdateNickName(string nickname) 
     {
-        if(_myNickname)
-            _myNickname.UpdateNickname(nickname);
+        if(gameObject.activeSelf)
+            StartCoroutine(UpdateNick(nickname));
+    }
+    IEnumerator UpdateNick(string nickname) 
+    {
+        yield return new WaitUntil(() => MyNickname != null);
+        MyNickname.UpdateNickname(nickname);
     }
     public override void Despawned(NetworkRunner runner, bool hasState)
     {
@@ -167,6 +168,7 @@ public class PlayerModel : NetworkBehaviour
     {
 
     }
+
     private void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;

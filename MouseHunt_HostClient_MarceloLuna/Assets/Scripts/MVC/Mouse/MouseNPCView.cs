@@ -11,17 +11,20 @@ public class MouseNPCView : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        var MouseLifeRect = FindObjectsOfType<RectTransform>(true)
-                        .Where(x => x.gameObject.name.Equals("MouseLife"))
-                        .FirstOrDefault();
-        if(MouseLifeRect)
-            MouseLife = MouseLifeRect.GetComponent<Image>();
+        
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    public void SetSpriteLife() 
+    {
+        MouseLife = FindObjectsOfType<RectTransform>(true)
+                        .Where(x => x.gameObject.name.Equals("MouseLife"))
+                        .FirstOrDefault().GetComponent<Image>();
     }
 
     public void TakeLife(float damage) 

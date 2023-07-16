@@ -9,20 +9,19 @@ public class NicknamesHandler : MonoBehaviour
     [SerializeField] NicknameText _nicknamePrefab;
 
     private List<NicknameText> _allNicknames;
+
     // Start is called before the first frame update
     void Awake()
     {
         if (Instance) Destroy(gameObject);
         else Instance = this;
-
         _allNicknames = new List<NicknameText>();
     }
 
     public NicknameText AddNickname(PlayerModel owner) 
     {
-        var newNickname = Instantiate(_nicknamePrefab, transform)
-            .SetOwner(owner);
-
+        NicknameText newNickname = null;
+        newNickname = Instantiate(_nicknamePrefab, transform).SetOwner(owner);
         _allNicknames.Add(newNickname);
 
         owner.OnLeft += () =>
@@ -30,7 +29,6 @@ public class NicknamesHandler : MonoBehaviour
             _allNicknames.Remove(newNickname);
             Destroy(newNickname.gameObject);
         };
-
         return newNickname;
     }
 
