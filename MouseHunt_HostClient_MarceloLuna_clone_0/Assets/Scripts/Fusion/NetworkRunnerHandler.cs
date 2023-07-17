@@ -132,13 +132,11 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
         }
         else
         {
-            if (GameManager.Instance && GameManager.Instance.GameHUDCanvas)
-                GameManager.Instance.GameHUDCanvas.GetComponentsInChildren<NicknameText>()
-                    .FirstOrDefault(x => x.gameObject.name.Contains("Mouse")).UpdateNickname(Nick);
             ShowLobbyModels();
             Debug.Log("[Custom Message] Player Joined - I'm NOT the Server");
         }
     }
+    
     public void ShowLobbyModels() 
     {
         GameManager.Instance.CatLobbyModel.SetActive(true);

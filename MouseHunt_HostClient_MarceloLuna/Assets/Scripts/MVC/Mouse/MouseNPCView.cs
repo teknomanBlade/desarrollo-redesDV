@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class MouseNPCView : MonoBehaviour
 {
     public Image MouseLife;
+    public ParticleSystem HitFeedback;
     // Start is called before the first frame update
     void Awake()
     {
@@ -30,6 +31,7 @@ public class MouseNPCView : MonoBehaviour
     public void TakeLife(float damage) 
     {
         MouseLife.fillAmount -= (damage / 100);
+        HitFeedback.Play();
     }
 
 }

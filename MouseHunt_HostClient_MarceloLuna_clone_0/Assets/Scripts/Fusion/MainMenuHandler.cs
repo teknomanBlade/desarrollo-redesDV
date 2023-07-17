@@ -86,6 +86,7 @@ public class MainMenuHandler : MonoBehaviour
     void SetNickname() 
     {
         _networkRunner.Nick = IF_SetNickname.text;
+
         _sessionBrowserPanel.SetActive(true);
         _nicknamePanel.SetActive(false);
     }

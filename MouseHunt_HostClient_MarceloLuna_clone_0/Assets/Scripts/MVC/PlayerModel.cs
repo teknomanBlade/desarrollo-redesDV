@@ -86,7 +86,7 @@ public class PlayerModel : NetworkBehaviour
         return this;
     }
 
-    [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
+    [Rpc(RpcSources.All, RpcTargets.All)]
     public void RPC_SendNickname(string nick, RpcInfo info = default)
     {
         Nickname = nick;
