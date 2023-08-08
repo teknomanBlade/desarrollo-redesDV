@@ -11,6 +11,12 @@ public class MouseNPCModel : PlayerModel
 {
     public event Action<float> OnTakeDamage = delegate { };
     public event Action OnSetLifeSprite = delegate { };
+    public event Action OnIdleAnimation = delegate { };
+    public event Action OnIdleFalseAnimation = delegate { };
+    public event Action OnWalkingAnimation = delegate { };
+    public event Action OnWalkingFalseAnimation = delegate { };
+    public event Action OnRunningAnimation = delegate { };
+    public event Action OnRunningFalseAnimation = delegate { };
     public MouseNPCView View { get; private set; }
     [Networked] float Life { get; set; }
     public bool IsMouseDead { get; set; }
@@ -21,6 +27,7 @@ public class MouseNPCModel : PlayerModel
         NetworkRB = GetComponent<NetworkRigidbody>();
         View = GetComponent<MouseNPCView>();
         _controller = new MouseNPCController(this, View);
+        OnIdleAnimation();
     }
 
     // Update is called once per frame
@@ -88,11 +95,14 @@ public class MouseNPCModel : PlayerModel
             Dir = new Vector3(networkInputData.xMovement, 0, networkInputData.zMovement);
             if (networkInputData._isSprintPressed)
             {
+                OnRunningAnimation();
                 //Debug.Log("MOVEMENT SPEED RUNNING MOUSE...");
                 Movement(Dir, RunningSpeed);
             }
             else 
             {
+                OnWalkingAnimation();
+                OnRunningFalseAnimation();
                 //Debug.Log("MOVEMENT SPEED NORMAL MOUSE...");
                 Movement(Dir, Speed);
             }
@@ -101,10 +111,15 @@ public class MouseNPCModel : PlayerModel
 
     public void Movement(Vector3 dir, float speed)
     {
-        if (dir != Vector3.zero)
+        if (dir.magnitude != 0)
         {
             NetworkRB.Rigidbody.MovePosition(transform.position + Runner.DeltaTime * speed * dir);
             ManageRotation(dir);
+        }
+        else
+        {
+            OnIdleAnimation();
+            OnWalkingFalseAnimation();
         }
     }
 

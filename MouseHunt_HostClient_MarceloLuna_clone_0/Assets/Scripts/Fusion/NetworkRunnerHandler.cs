@@ -139,8 +139,11 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
     
     public void ShowLobbyModels() 
     {
-        GameManager.Instance.CatLobbyModel.SetActive(true);
-        GameManager.Instance.MouseLobbyModel.SetActive(true);
+        if (GameManager.Instance) 
+        {
+            GameManager.Instance.CatLobbyModel.SetActive(true);
+            GameManager.Instance.MouseLobbyModel.SetActive(true);
+        }
     }
     #region Unused Callbacks
     public void OnConnectedToServer(NetworkRunner runner)

@@ -11,6 +11,12 @@ public class MouseNPCController : IController
     {
         _m = m;
         _v = v;
+        _m.OnWalkingAnimation += _v.WalkingAnimation;
+        _m.OnWalkingFalseAnimation += _v.WalkingFalseAnimation;
+        _m.OnIdleAnimation += _v.IdleAnimation;
+        _m.OnIdleFalseAnimation += _v.IdleFalseAnimation;
+        _m.OnRunningAnimation += _v.RunningAnimation;
+        _m.OnRunningFalseAnimation += _v.RunningFalseAnimation;
         _m.OnTakeDamage += _v.TakeLife;
         _m.OnSetLifeSprite += _v.SetSpriteLife;
     }

@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class MouseNPCView : MonoBehaviour
 {
+    public Animator Animator;
     public Image MouseLife;
     public ParticleSystem HitFeedback;
     // Start is called before the first frame update
@@ -32,6 +33,30 @@ public class MouseNPCView : MonoBehaviour
     {
         MouseLife.fillAmount -= (damage / 100);
         HitFeedback.Play();
+    }
+    public void IdleAnimation()
+    {
+        Animator.SetBool("IsIdle", true);
+    }
+    public void IdleFalseAnimation()
+    {
+        Animator.SetBool("IsIdle", false);
+    }
+    public void RunningAnimation()
+    {
+        Animator.SetBool("IsRunning", true);
+    }
+    public void RunningFalseAnimation()
+    {
+        Animator.SetBool("IsRunning", false);
+    }
+    public void WalkingAnimation()
+    {
+        Animator.SetBool("IsWalking", true);
+    }
+    public void WalkingFalseAnimation()
+    {
+        Animator.SetBool("IsWalking", false);
     }
 
 }
