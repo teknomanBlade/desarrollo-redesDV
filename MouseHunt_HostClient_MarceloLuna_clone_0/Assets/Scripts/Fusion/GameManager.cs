@@ -1,4 +1,5 @@
 using Fusion;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -17,6 +18,9 @@ public class GameManager : NetworkBehaviour
     public bool IsPlayer2Ready { get; set; }
     public bool IsMouseDead { get; set; }
     public bool HasMouseReachedGoal { get; set; }
+    public List<AudioClip> AudioClips;
+    public Dictionary<string, AudioClip> SoundLibrary;
+    private AudioClip clip;
     [Header("Ready Buttons")]
     [SerializeField] Button BTN_Player1Ready;
     [SerializeField] Button BTN_Player2Ready;
@@ -30,6 +34,9 @@ public class GameManager : NetworkBehaviour
     {
         if (Instance) Destroy(gameObject);
         else Instance = this;
+        SoundLibrary = new Dictionary<string, AudioClip>();
+        AudioClips = Resources.LoadAll<AudioClip>("Sounds").ToList();
+        AudioClips.ForEach(x => SoundLibrary.Add(x.name, x));
         if (Runner.CurrentScene == 2)
         {
             CatSpawner = FindObjectsOfType<GameObject>().Where(x => x.name.Equals("CatSpawner")).FirstOrDefault();
@@ -103,11 +110,14 @@ public class GameManager : NetworkBehaviour
     public void RPC_Player1Joined() 
     {
         CatLobbyModel.SetActive(true);
+        PlaySoundAtPoint("catMeow", CatLobbyModel.transform.position, 0.25f);
     }
     [Rpc(RpcSources.All, RpcTargets.All)]
     public void RPC_Player2Joined()
     {
+        PlaySoundAtPoint("catHiss", CatLobbyModel.transform.position, 0.25f);
         MouseLobbyModel.SetActive(true);
+        PlaySoundAtPoint("mouseStartSqueaks", MouseLobbyModel.transform.position, 0.25f);
     }
     public void Player1Ready() 
     {
@@ -228,6 +238,42 @@ public class GameManager : NetworkBehaviour
     public void RPC_IsMouseDeadFalse()
     {
         IsMouseDead = false;
+    }
+
+    public void PlaySoundOnce(AudioSource sound, string clipName, float volume, bool loop)
+    {
+        if (SoundLibrary.TryGetValue(clipName, out clip))
+        {
+            sound.clip = clip;
+            sound.volume = volume;
+            sound.loop = loop;
+            sound.spatialBlend = 0f;
+            sound.PlayOneShot(clip);
+        }
+    }
+
+
+    public void PlaySound(AudioSource sound, string clipName, float volume, bool loop, float spatialBlend)
+    {
+        if (SoundLibrary.TryGetValue(clipName, out clip))
+        {
+            sound.clip = clip;
+            sound.volume = volume;
+            sound.loop = loop;
+            sound.minDistance = 2f;
+            sound.maxDistance = 400f;
+            sound.spatialBlend = spatialBlend;
+            sound.Play();
+        }
+    }
+
+
+    public void PlaySoundAtPoint(string clipName, Vector3 position, float volume)
+    {
+        if (SoundLibrary.TryGetValue(clipName, out clip))
+        {
+            AudioSource.PlayClipAtPoint(clip, position, volume);
+        }
     }
 
     /*private void OnEnable()

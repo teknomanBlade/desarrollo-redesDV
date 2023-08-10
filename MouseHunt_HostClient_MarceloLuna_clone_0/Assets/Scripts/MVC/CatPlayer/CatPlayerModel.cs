@@ -18,6 +18,8 @@ public class CatPlayerModel : PlayerModel
     public event Action OnStunnedFalseAnimation = delegate { };
     public event Action OnAttackingAnimation = delegate { };
     public event Action OnSetInitialTexture = delegate { };
+    public event Action OnCatStartSound = delegate { };
+    public event Action OnCatAttackSound = delegate { };
     public CatPlayerView View { get; private set; }
     public float Damage { get; set; }
     //public event Action<int> OnMiceCaptured = delegate { };// Es un tipo de delegate que te permite encapsular cualquier metodo que no devuelva ningun valor, y en este caso que pida un int como parametro
@@ -53,6 +55,7 @@ public class CatPlayerModel : PlayerModel
     public override void SetPlayerInSpawner()
     {
         transform.position = GameManager.Instance.CatSpawner.transform.position;
+        OnCatStartSound();
         GameManager.Instance.RPC_ActivateGameHUD(true, gameObject.name);
     }
     public override void SetPlayerNick()
@@ -117,6 +120,7 @@ public class CatPlayerModel : PlayerModel
     public void Attack()
     {
         OnAttackingAnimation();
+        OnCatAttackSound();
     }
 
     public override CharacterInputHandler GetInputHandler()

@@ -21,6 +21,8 @@ public class CatPlayerController : IController
         _m.OnStunnedAnimation += _v.StunnedAnimation;
         _m.OnStunnedFalseAnimation += _v.StunnedFalseAnimation;
         _m.OnSetInitialTexture += _v.SetInitialTexture;
+        _m.OnCatAttackSound += _v.PlayAttackSound;
+        _m.OnCatStartSound += _v.PlayStartMeowSound;
     }
 
     public void OnUpdate()

@@ -10,6 +10,7 @@ public class MouseNPCView : MonoBehaviour
     public Animator Animator;
     public Image MouseLife;
     public ParticleSystem HitFeedback;
+    public AudioSource AudioSource;
     // Start is called before the first frame update
     void Awake()
     {
@@ -21,7 +22,24 @@ public class MouseNPCView : MonoBehaviour
     {
         
     }
+    public void PlayMovementSqueaks() 
+    {
+        StartCoroutine(MovementSqueaksCoroutine());
+    }
+    IEnumerator MovementSqueaksCoroutine() 
+    {
+        yield return new WaitForSecondsRealtime(1.5f);
+        GameManager.Instance.PlaySoundAtPoint("mouseMovementSqueaks", transform.position, 0.25f);
+    }
+    public void PlayHittedSound()
+    {
+        GameManager.Instance.PlaySoundAtPoint("mouseHitted", transform.position, 0.45f);
+    }
 
+    public void PlayStartSqueaks() 
+    {
+       GameManager.Instance.PlaySoundAtPoint("mouseStartSqueaks", transform.position, 0.25f);
+    }
     public void SetSpriteLife() 
     {
         MouseLife = FindObjectsOfType<RectTransform>(true)

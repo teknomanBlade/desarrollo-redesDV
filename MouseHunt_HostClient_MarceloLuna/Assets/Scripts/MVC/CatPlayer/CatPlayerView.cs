@@ -8,6 +8,7 @@ public class CatPlayerView : MonoBehaviour
     public Animator Animator;
     public SkinnedMeshRenderer MeshRenderer;
     public List<Texture> textures;
+    public AudioSource AudioSource;
     // Start is called before the first frame update
     //public LifeBar Life;
 
@@ -29,7 +30,19 @@ public class CatPlayerView : MonoBehaviour
     {
         
     }
-
+    public void PlayAttackSound()
+    {
+        StartCoroutine(AttackSoundCoroutine());
+    }
+    IEnumerator AttackSoundCoroutine()
+    {
+        yield return new WaitForSecondsRealtime(1.5f);
+        GameManager.Instance.PlaySoundAtPoint("catAttack", transform.position, 0.45f);
+    }
+    public void PlayStartMeowSound()
+    {
+        GameManager.Instance.PlaySoundAtPoint("catStart", transform.position, 0.25f);
+    }
     public void IdleAnimation()
     {
         Animator.SetBool("IsIdle", true);

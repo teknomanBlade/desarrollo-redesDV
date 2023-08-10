@@ -19,6 +19,9 @@ public class MouseNPCController : IController
         _m.OnRunningFalseAnimation += _v.RunningFalseAnimation;
         _m.OnTakeDamage += _v.TakeLife;
         _m.OnSetLifeSprite += _v.SetSpriteLife;
+        _m.OnStartSqueaksSound += _v.PlayStartSqueaks;
+        _m.OnMovementSqueaksSound += _v.PlayMovementSqueaks;
+        _m.OnHittedSound += _v.PlayHittedSound;
     }
 
     public void OnUpdate()

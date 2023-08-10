@@ -10,6 +10,9 @@ using UnityEngine.UI;
 public class MouseNPCModel : PlayerModel
 {
     public event Action<float> OnTakeDamage = delegate { };
+    public event Action OnStartSqueaksSound = delegate { };
+    public event Action OnMovementSqueaksSound = delegate { };
+    public event Action OnHittedSound = delegate { };
     public event Action OnSetLifeSprite = delegate { };
     public event Action OnIdleAnimation = delegate { };
     public event Action OnIdleFalseAnimation = delegate { };
@@ -69,6 +72,7 @@ public class MouseNPCModel : PlayerModel
     public override void SetPlayerInSpawner()
     {
         transform.position = GameManager.Instance.MouseSpawner.transform.position;
+        OnStartSqueaksSound();
         GameManager.Instance.RPC_ActivateGameHUD(true, gameObject.name);
     }
     public override void SetPlayerNick()
@@ -93,6 +97,7 @@ public class MouseNPCModel : PlayerModel
         if (input)
         {
             Dir = new Vector3(networkInputData.xMovement, 0, networkInputData.zMovement);
+            //OnMovementSqueaksSound();
             if (networkInputData._isSprintPressed)
             {
                 OnRunningAnimation();
@@ -150,6 +155,7 @@ public class MouseNPCModel : PlayerModel
     void RPC_OnTakeDamage(float dmg) 
     {
         OnTakeDamage(dmg);
+        OnHittedSound();
     }
     IEnumerator DeadCoroutine() 
     {
