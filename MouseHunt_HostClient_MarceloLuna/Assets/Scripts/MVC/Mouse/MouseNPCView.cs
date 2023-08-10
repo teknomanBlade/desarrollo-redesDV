@@ -60,6 +60,7 @@ public class MouseNPCView : MonoBehaviour
     {
         Animator.SetBool("IsIdle", false);
     }
+
     public void RunningAnimation()
     {
         Animator.SetBool("IsRunning", true);

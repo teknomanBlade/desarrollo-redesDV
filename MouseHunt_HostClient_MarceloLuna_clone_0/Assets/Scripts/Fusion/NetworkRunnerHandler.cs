@@ -24,12 +24,14 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
     public CatPlayerModel CatPlayer { get; set; }
     public MouseNPCModel MousePlayer { get; set; }
     CharacterInputHandler _characterInputHandler;
+    public AudioSource AudioSource;
     // Start is called before the first frame update
     void Awake()
     {
         _runnerPrefab = Resources.Load<NetworkRunner>("Connection/NetworkRunner");
         _catPlayerPrefab = Resources.Load<CatPlayerModel>("CatModel");
         _mousePlayerPrefab = Resources.Load<MouseNPCModel>("Mouse");
+        AudioSource = GetComponent<AudioSource>();
         DontDestroyOnLoad(this);
     }
 

@@ -140,6 +140,7 @@ public class GameManager : NetworkBehaviour
         IsPlayer1Ready = true;
         BTN_Player1Ready.image.sprite = CatReady;
         BTN_Player1Ready.gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(280f, 30f);
+        PlaySoundAtPoint("mouseTrapButtons", CatLobbyModel.transform.position, 0.45f);
         Debug.Log("PLAYER 1 READY: " + IsPlayer1Ready);
     }
     [Rpc(RpcSources.All, RpcTargets.All)]
@@ -148,6 +149,7 @@ public class GameManager : NetworkBehaviour
         IsPlayer2Ready = true;
         BTN_Player2Ready.image.sprite = MouseReady;
         BTN_Player2Ready.gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(290f, 30f);
+        PlaySoundAtPoint("mouseTrapButtons", MouseLobbyModel.transform.position, 0.45f);
         Debug.Log("PLAYER 2 READY: " + IsPlayer2Ready);
     }
 

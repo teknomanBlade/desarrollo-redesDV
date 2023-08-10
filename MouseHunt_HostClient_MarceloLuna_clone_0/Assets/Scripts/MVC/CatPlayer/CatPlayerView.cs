@@ -36,7 +36,7 @@ public class CatPlayerView : MonoBehaviour
     }
     IEnumerator AttackSoundCoroutine()
     {
-        yield return new WaitForSecondsRealtime(1.5f);
+        yield return new WaitForSecondsRealtime(1.8f);
         GameManager.Instance.PlaySoundAtPoint("catAttack", transform.position, 0.45f);
     }
     public void PlayStartMeowSound()
