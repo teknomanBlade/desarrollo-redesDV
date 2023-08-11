@@ -106,16 +106,16 @@ Shader "Scene_SDR"
 }
 /*ASEBEGIN
 Version=17800
-351;291;1137;579;264.3153;521.1274;1.817553;True;False
+315;568;1137;458;826.9317;-318.8567;1.156078;True;False
 Node;AmplifyShaderEditor.WorldNormalVector;1;-2817.388,-11.42773;Inherit;False;False;1;0;FLOAT3;0,0,1;False;4;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3
 Node;AmplifyShaderEditor.WorldSpaceLightDirHlpNode;2;-2817.388,-187.4275;Inherit;False;False;1;0;FLOAT;0;False;4;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3
 Node;AmplifyShaderEditor.DotProductOpNode;3;-2529.388,-107.4275;Inherit;False;2;0;FLOAT3;0,0,0;False;1;FLOAT3;0,0,0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleAddOpNode;4;-2321.388,-75.42755;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;1;False;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;5;-2129.388,-123.4276;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0.5;False;1;FLOAT;0
-Node;AmplifyShaderEditor.RangedFloatNode;6;-1928.695,182.1528;Inherit;False;Property;_SecondPosition2;SecondPosition;2;0;Create;True;0;0;False;0;0;0.22;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;6;-1928.695,182.1528;Inherit;False;Property;_SecondPosition2;SecondPosition;2;0;Create;True;0;0;False;0;0;0.68;0;0;0;1;FLOAT;0
 Node;AmplifyShaderEditor.StepOpNode;7;-1740.05,129.635;Inherit;False;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.RangedFloatNode;8;-1794.148,-124.8746;Inherit;False;Property;_FirstPosition2;FirstPosition;1;0;Create;True;0;0;False;0;0;0.86;0;0;0;1;FLOAT;0
-Node;AmplifyShaderEditor.RangedFloatNode;9;-1415.412,293.8245;Inherit;False;Property;_SecondPositionIntensity2;SecondPositionIntensity;3;0;Create;True;0;0;False;0;0;0.03;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;9;-1415.412,293.8245;Inherit;False;Property;_SecondPositionIntensity2;SecondPositionIntensity;3;0;Create;True;0;0;False;0;0;0.02;0;0;0;1;FLOAT;0
 Node;AmplifyShaderEditor.OneMinusNode;10;-1565.977,77.68086;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.StepOpNode;11;-1502.135,-102.4782;Inherit;False;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.OneMinusNode;12;-1256.493,-114.3788;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
@@ -125,14 +125,14 @@ Node;AmplifyShaderEditor.SaturateNode;14;-897.3884,-43.42765;Inherit;False;1;0;F
 Node;AmplifyShaderEditor.SimpleAddOpNode;16;-705.3882,36.57227;Inherit;True;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.LightAttenuation;17;-179.8216,709.4158;Inherit;False;0;1;FLOAT;0
 Node;AmplifyShaderEditor.OneMinusNode;18;-401.3882,212.5723;Inherit;True;1;0;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.RangedFloatNode;19;-433.3883,468.5722;Inherit;False;Property;_ShadowIntensity2;ShadowIntensity;4;0;Create;True;0;0;False;0;0;0.35;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;19;-433.3883,468.5722;Inherit;False;Property;_ShadowIntensity2;ShadowIntensity;4;0;Create;True;0;0;False;0;0;0.21;0;0;0;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;20;-145.3883,308.5724;Inherit;True;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.StepOpNode;21;95.20099,663.8052;Inherit;False;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.LightColorNode;22;-97.16229,578.8074;Inherit;False;0;3;COLOR;0;FLOAT3;1;FLOAT;2
 Node;AmplifyShaderEditor.OneMinusNode;23;269.9921,510.201;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleAddOpNode;24;46.6118,68.57227;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.LightColorNode;22;-108.7231,541.8129;Inherit;False;0;3;COLOR;0;FLOAT3;1;FLOAT;2
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;25;398.991,-35.66973;Inherit;True;3;3;0;FLOAT;0;False;1;COLOR;0,0,0,0;False;2;FLOAT;0;False;1;COLOR;0
-Node;AmplifyShaderEditor.SamplerNode;26;377.0701,-395.9999;Inherit;True;Property;_MainTexture2;Main Texture;0;0;Create;True;0;0;False;0;-1;e4cda15359d957e469e41c918965345b;3fc8f3be258eebf4d9ac48aee15a9955;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;6;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.SamplerNode;26;377.0701,-395.9999;Inherit;True;Property;_MainTexture2;Main Texture;0;0;Create;True;0;0;False;0;-1;e4cda15359d957e469e41c918965345b;70a83d97845f48e498a616ccdd174400;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;6;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;27;927.3447,-196.1547;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
 Node;AmplifyShaderEditor.SaturateNode;28;1100.119,-24.17945;Inherit;False;1;0;COLOR;0,0,0,0;False;1;COLOR;0
 Node;AmplifyShaderEditor.StandardSurfaceOutputNode;0;1349.813,-154.1125;Float;False;True;-1;2;ASEMaterialInspector;0;0;CustomLighting;Scene_SDR;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;Back;0;False;-1;0;False;-1;False;0;False;-1;0;False;-1;False;0;Opaque;0.5;True;False;0;False;Opaque;;Geometry;All;14;all;True;True;True;True;0;False;-1;False;0;False;-1;255;False;-1;255;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;-1;False;2;15;10;25;False;0.5;False;0;0;False;-1;0;False;-1;0;0;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;0;0,0,0,0;VertexOffset;True;False;Cylindrical;False;Relative;0;;-1;-1;-1;-1;0;False;0;0;False;-1;-1;0;False;-1;0;0;0;False;0.1;False;-1;0;False;-1;15;0;FLOAT3;0,0,0;False;1;FLOAT3;0,0,0;False;2;FLOAT3;0,0,0;False;3;FLOAT3;0,0,0;False;4;FLOAT;0;False;6;FLOAT3;0,0,0;False;7;FLOAT3;0,0,0;False;8;FLOAT;0;False;9;FLOAT;0;False;10;FLOAT;0;False;13;FLOAT3;0,0,0;False;11;FLOAT3;0,0,0;False;12;FLOAT3;0,0,0;False;14;FLOAT4;0,0,0,0;False;15;FLOAT3;0,0,0;False;0
@@ -167,4 +167,4 @@ WireConnection;27;1;25;0
 WireConnection;28;0;27;0
 WireConnection;0;13;28;0
 ASEEND*/
-//CHKSM=39237799C5976945E2011B843693D3091BFF69F7
+//CHKSM=E55B0F8208B39B8994C3448469A7014718543E39
