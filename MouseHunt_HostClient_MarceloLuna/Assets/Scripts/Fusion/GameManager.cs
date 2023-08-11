@@ -199,6 +199,7 @@ public class GameManager : NetworkBehaviour
             else 
             {
                 x.gameObject.transform.position = MouseSpawner.transform.position;
+                x.ResetLife();
             }    
             x.gameObject.SetActive(true); 
         });

@@ -2,6 +2,7 @@ using Fusion;
 using System;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.SceneManagement;
 
 public class CatPlayerModel : PlayerModel
@@ -51,7 +52,11 @@ public class CatPlayerModel : PlayerModel
     {
         RPC_OnSetInitialTexture();
     }
-
+    public override void SetPostProcessVolume()
+    {
+        if (Runner.CurrentScene == 2)
+            volume = Camera.gameObject.GetComponent<PostProcessVolume>();
+    }
     public override void SetPlayerInSpawner()
     {
         transform.position = GameManager.Instance.CatSpawner.transform.position;

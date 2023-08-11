@@ -52,6 +52,10 @@ public class MouseNPCView : MonoBehaviour
         MouseLife.fillAmount -= (damage / 100);
         HitFeedback.Play();
     }
+    public void ResetLifeSprite() 
+    {
+        MouseLife.fillAmount = 1f;
+    }
     public void IdleAnimation()
     {
         Animator.SetBool("IsIdle", true);

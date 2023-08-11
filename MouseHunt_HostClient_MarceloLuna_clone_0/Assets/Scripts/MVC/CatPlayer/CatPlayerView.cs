@@ -32,12 +32,13 @@ public class CatPlayerView : MonoBehaviour
     }
     public void PlayAttackSound()
     {
-        StartCoroutine(AttackSoundCoroutine());
+        GameManager.Instance.PlaySoundOnce(AudioSource, "catAttack", 0.45f, false);
+        //StartCoroutine(AttackSoundCoroutine());
     }
     IEnumerator AttackSoundCoroutine()
     {
         yield return new WaitForSecondsRealtime(1.8f);
-        GameManager.Instance.PlaySoundAtPoint("catAttack", transform.position, 0.45f);
+        //GameManager.Instance.PlaySoundAtPoint("catAttack", transform.position, 0.45f);
     }
     public void PlayStartMeowSound()
     {

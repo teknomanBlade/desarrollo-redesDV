@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.SceneManagement;
 
 public class PlayerModel : NetworkBehaviour
@@ -11,6 +12,10 @@ public class PlayerModel : NetworkBehaviour
     public static PlayerModel Local { get; private set; }
     protected Vector3 Dir;
     public Camera Camera;
+    public PostProcessVolume volume;
+    private Coroutine StunnedPlayerCoroutine;
+    private Coroutine UnstunnedPlayerCoroutine;
+    public StunnedPlayerPPSSettings postProcessStunnedPlayer;
     public event Action OnLeft = delegate { };
     private NicknameText _myNickname;
     public NicknameText MyNickname { get { return _myNickname; }  set { _myNickname = value; } }
@@ -67,7 +72,7 @@ public class PlayerModel : NetworkBehaviour
             var ThirdPersonCamera = Camera.GetComponent<ThirdPersonCamera>();
             if(ThirdPersonCamera)
                 ThirdPersonCamera.Target = GetComponent<NetworkRigidbody>().InterpolationTarget;
-            
+            SetPostProcessVolume();
             Debug.Log("[Custom Message] Spawned own Player");
         }
         else
@@ -146,6 +151,63 @@ public class PlayerModel : NetworkBehaviour
             //Debug.Log("DEBUG EN EL DESPUES SEGUNDO IF PARA VER SI SE VA ANTES...");
         }
     }
+
+    public void ActiveStunnedEffect(Action actionStaggeredOff = null)
+    {
+        if (Object.HasInputAuthority)
+        {
+            if (volume.profile.TryGetSettings(out postProcessStunnedPlayer))
+            {
+                if (StunnedPlayerCoroutine != null) StopCoroutine(StunnedPlayerCoroutine);
+                StunnedPlayerCoroutine = StartCoroutine(LerpStunnedEffect(2f, actionStaggeredOff));
+            }
+        }
+    }
+
+    public void ActiveUnstunnedEffect(Action actionStaggeredOff = null)
+    {
+        if (Object.HasInputAuthority)
+        {
+            if (volume.profile.TryGetSettings(out postProcessStunnedPlayer))
+            {
+                if (UnstunnedPlayerCoroutine != null) StopCoroutine(UnstunnedPlayerCoroutine);
+                UnstunnedPlayerCoroutine = StartCoroutine(LerpUnstunnedEffect(2f, actionStaggeredOff));
+            }
+        }
+    }
+
+    IEnumerator LerpStunnedEffect(float duration, Action actionStaggeredOff = null)
+    {
+        float time = 0f;
+
+        while (time < duration)
+        {
+            time += Time.deltaTime;
+
+            postProcessStunnedPlayer._Intensity.value = Mathf.Clamp01(time / duration);
+            yield return null;
+        }
+        ActiveUnstunnedEffect(actionStaggeredOff);
+    }
+
+    IEnumerator LerpUnstunnedEffect(float duration, Action actionStaggeredOff = null)
+    {
+        float time = 0.98f;
+
+        while (time > 0 && time < duration)
+        {
+            time -= Time.deltaTime;
+
+            postProcessStunnedPlayer._Intensity.value = Mathf.Clamp01(time / duration);
+            yield return null;
+        }
+        actionStaggeredOff();
+    }
+    public virtual void ResetLife()
+    {
+
+    }
+
     public virtual void SetLife() 
     {
     
@@ -167,6 +229,11 @@ public class PlayerModel : NetworkBehaviour
     public virtual void SetPlayerNick()
     {
 
+    }
+
+    public virtual void SetPostProcessVolume() 
+    {
+    
     }
 
     private void OnEnable()

@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -14,6 +15,7 @@ public class MouseNPCModel : PlayerModel
     public event Action OnMovementSqueaksSound = delegate { };
     public event Action OnHittedSound = delegate { };
     public event Action OnSetLifeSprite = delegate { };
+    public event Action OnResetLifeSprite = delegate { };
     public event Action OnIdleAnimation = delegate { };
     public event Action OnIdleFalseAnimation = delegate { };
     public event Action OnWalkingAnimation = delegate { };
@@ -23,10 +25,13 @@ public class MouseNPCModel : PlayerModel
     public MouseNPCView View { get; private set; }
     [Networked] float Life { get; set; }
     public bool IsMouseDead { get; set; }
+    public bool IsMouseStaggered;
+    public float StaggeredCoef { get; set; }
     void Awake()
     {
-        Speed = 4f;
-        RunningSpeed = 6f;
+        Speed = 2.8f;
+        RunningSpeed = 4f;
+        StaggeredCoef = 1.2f;
         NetworkRB = GetComponent<NetworkRigidbody>();
         View = GetComponent<MouseNPCView>();
         _controller = new MouseNPCController(this, View);
@@ -53,6 +58,15 @@ public class MouseNPCModel : PlayerModel
         gameObject.SetActive(false);
     }
 
+    public override void SetPostProcessVolume()
+    {
+        if (Runner.CurrentScene == 2)
+            volume = Camera.gameObject.GetComponent<PostProcessVolume>();
+    }
+    public override void ResetLife()
+    {
+        RPC_OnResetLifeSprite();
+    }
     public override void SetLife()
     {
         if (Object.HasStateAuthority) 
@@ -67,6 +81,13 @@ public class MouseNPCModel : PlayerModel
     void RPC_OnSetLifeSprite()
     {
         OnSetLifeSprite();
+    }
+
+    [Rpc(RpcSources.All, RpcTargets.All)]
+    void RPC_OnResetLifeSprite()
+    {
+        Life = 100f;
+        OnResetLifeSprite();
     }
 
     public override void SetPlayerInSpawner()
@@ -92,6 +113,13 @@ public class MouseNPCModel : PlayerModel
    
     public void PlayerActions()
     {
+        if (IsMouseStaggered)
+        {
+            Speed = 2.3f;
+            RunningSpeed = 3.3f;
+            Debug.Log("SPEED REDUCED: " + Speed);
+            Debug.Log("RUNNING SPEED REDUCED: " + RunningSpeed);
+        }
         var input = GetInput(out NetworkInputData networkInputData);
         //Debug.Log("MOVEMENT SPEED ACTIONS MOUSE..." + input);
         if (input)
@@ -139,6 +167,7 @@ public class MouseNPCModel : PlayerModel
         Life -= dmg;
         Debug.Log("CURRENT LIFE:" + Life);
         RPC_OnTakeDamage(dmg);
+        
         if (Life <= 0)
         {
             GameManager.Instance.RPC_IsMouseDead();
@@ -154,8 +183,19 @@ public class MouseNPCModel : PlayerModel
     [Rpc(RpcSources.All, RpcTargets.All)]
     void RPC_OnTakeDamage(float dmg) 
     {
+        IsMouseStaggered = true;
         OnTakeDamage(dmg);
+        ActiveStunnedEffect(() => { RPC_MouseStaggeredModeOff(); });
         OnHittedSound();
+    }
+
+    [Rpc(RpcSources.All, RpcTargets.All)]
+    void RPC_MouseStaggeredModeOff() 
+    {
+        IsMouseStaggered = false;
+        Speed = 2.8f;
+        RunningSpeed = 4f;
+        Debug.Log("SPEED RESTORED");
     }
     IEnumerator DeadCoroutine() 
     {
