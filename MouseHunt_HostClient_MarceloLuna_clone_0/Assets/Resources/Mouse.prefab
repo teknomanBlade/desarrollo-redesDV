@@ -143,10 +143,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
   Camera: {fileID: 0}
-  _Nickname:
-    _length: 0
-    _data:
-      Data: 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+  volume: {fileID: 0}
+  postProcessStunnedPlayer: {fileID: 0}
+  IsMouseStaggered: 0
 --- !u!114 &2642139695691294572
 MonoBehaviour:
   m_ObjectHideFlags: 0
